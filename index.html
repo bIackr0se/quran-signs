@@ -412,7 +412,7 @@ for(const sc of SCENES){
   sc.est=sc.keys.map(k=>Math.max(norm(AYAT[k].ar).replace(/\s/g,'').length*.1,AYAT[k].en.length*.052)+1);
   const s0=sc.keys[0].split(':'),s1=sc.keys[sc.keys.length-1].split(':');sc.ref=`${AYAT[sc.keys[0]].sname} ${s0[0]}:${s0[1]}${sc.keys.length>1?'–'+s1[1]:''}`;sc.refAr=`${AYAT[sc.keys[0]].sar.replace(MARKS,'')} \u2066${arNum(s0[1])}${sc.keys.length>1?'–'+arNum(s1[1]):''}\u2069`;
   sc.long=AYAT[sc.keys[0]].ar.length>220;
-  let g=0;sc.html=sc.ay.map((a,i)=>{const[,n]=a.key.split(':');return`<span class="ay" data-i="${i}">`+a.toks.map(tk=>{const id=g++;return`<span class="w" id="w-${sc.id}-${id}" style="animation-delay:${(.12+id*.055).toFixed(2)}s">${tk}</span>`}).join(' ')+` <span class="num">${arNum(n)}</span></span>`}).join(' ');
+  let g=0;const nW=sc.ay.reduce((n,a)=>n+a.toks.length,0),step=Math.min(.055,1.4/nW);sc.html=sc.ay.map((a,i)=>{const[,n]=a.key.split(':');return`<span class="ay" data-i="${i}">`+a.toks.map(tk=>{const id=g++;return`<span class="w" id="w-${sc.id}-${id}" style="animation-delay:${(.12+id*step).toFixed(2)}s">${tk}</span>`}).join(' ')+` <span class="num">${arNum(n)}</span></span>`}).join(' ');
 }
 
 // ───────────────────────── audio: quran.com reciters carry word timestamps
@@ -474,7 +474,7 @@ function showVerse(){const v=$('#verse'),sc=R.sc,my=++vTok;v.classList.remove('o
     void v.offsetWidth;v.classList.add('on');R.ayk=-1;R.say=-1;applyHL()},420)}
 function applyHL(){document.querySelectorAll('#verse .w.hl').forEach(e=>e.classList.remove('hl'));const p=R.sc.ph[Math.max(0,R.phase)];if(!p||p.g<0)return;for(let j=0;j<p.n;j++){const e=document.getElementById(`w-${R.sc.id}-${p.g+j}`);if(e)e.classList.add('hl')}}
 function onPhase(){const sc=R.sc,P=sc.phases[R.phase],L=$('#label');L.classList.add('out');clearTimeout(lTm);lTm=setTimeout(()=>{if(R.sc!==sc)return;L.querySelector('.ar').textContent=P.ar.replace(MARKS,'');L.querySelector('.tr').textContent=P.tr||'';L.querySelector('.en').textContent=P.en||'';L.classList.remove('out')},380);
-  applyHL();if(P.sign){const S=$('#sign');hideSign();sTm=setTimeout(()=>{if(R.sc!==sc)return;const G=isAr()&&P.sign.ar?P.sign.ar:P.sign;S.querySelector('.tag span').textContent=G.tag;S.querySelector('.tx').textContent=G.text;S.classList.add('on');document.body.classList.add('signon');
+  applyHL();if(P.sign){const S=$('#sign');hideSign();sTm=setTimeout(()=>{if(R.sc!==sc)return;const G=isAr()&&P.sign.ar?P.sign.ar:P.sign;S.querySelector('.tag span').textContent=G.tag;S.querySelector('.tx').textContent=G.text;S.classList.add('on');const a=S.getBoundingClientRect(),b=$('#verse .ar').getBoundingClientRect();document.body.classList.toggle('signon',b.height>0&&a.bottom>b.top+4);
     // film time, so a paused film keeps the card: it leaves at the first phase change after a skim read, or after a full read
     const words=G.text.split(/\s+/).length;SG={age:0,min:Math.max(4.5,words*.17),max:Math.max(7,words*.3),ph:R.phase}},520)}
   else if(SG&&SG.ph!==R.phase)SG.moved=true}
