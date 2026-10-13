@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Signs Within Yourselves · The Human Cycle in the Qur’an</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Amiri:wght@400;700&family=Reem+Kufi:wght@400;500;600&family=Alegreya:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Alegreya+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#f4ecdc;--dim:rgba(244,236,220,.7);--gold:#e9c87c;--scrim:5,6,16}
+body.light{--ink:#16203a;--dim:rgba(22,32,58,.74);--gold:#8a4f12;--scrim:238,216,180}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#05060f;overflow:hidden;color:var(--ink);font-family:"Alegreya",Georgia,serif;transition:color 1.2s}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block}
+body::before{content:"";position:fixed;left:0;right:0;top:0;height:30vh;pointer-events:none;z-index:1;background:linear-gradient(to bottom,rgba(var(--scrim),.62),rgba(var(--scrim),.28) 50%,rgba(var(--scrim),0))}
+body::after{content:"";position:fixed;left:0;right:0;bottom:0;height:46vh;pointer-events:none;background:linear-gradient(to top,rgba(var(--scrim),.82),rgba(var(--scrim),.5) 45%,rgba(var(--scrim),0));transition:background 1.2s}
+.ar{font-family:"Amiri Quran","Amiri","Geeza Pro",serif;direction:rtl}
+#label{position:fixed;top:max(3vh,14px);left:50%;transform:translateX(-50%);text-align:center;pointer-events:none;transition:opacity .45s,transform .45s;width:min(760px,80vw);z-index:2}
+#label.out{opacity:0;transform:translate(-50%,-6px)}
+#label .ar{font-family:"Reem Kufi","Amiri",serif;font-weight:500;font-size:clamp(26px,3.2vw,44px);color:var(--gold);line-height:1.5;text-shadow:0 1px 3px rgba(var(--scrim),.7),0 0 26px rgba(var(--scrim),.85)}
+#label .tr,#label .en{text-shadow:0 1px 2px rgba(var(--scrim),.8),0 0 16px rgba(var(--scrim),.9)}
+#label .tr{font-style:italic;font-size:clamp(16px,1.4vw,20px);color:var(--dim);margin-top:2px}
+#label .en{font-size:clamp(15px,1.25vw,18px);color:var(--dim);margin-top:1px}
+#sign{position:fixed;right:3.2vw;top:24vh;width:min(320px,26vw);opacity:0;transform:translateY(10px);transition:opacity 1s,transform 1s cubic-bezier(.2,.8,.2,1);pointer-events:none;text-shadow:0 1px 14px rgba(var(--scrim),.9),0 0 2px rgba(var(--scrim),.8);z-index:2}
+#sign.on{opacity:1;transform:none}
+#sign .tag{display:flex;align-items:center;gap:9px;font-weight:600;font-size:18px;color:var(--gold);margin-bottom:5px}
+#sign .tag svg{flex:none;width:15px;height:15px}
+#sign .tx{font-size:17px;line-height:1.42}
+#verse{position:fixed;left:50%;bottom:calc(58px + 2vh);transform:translateX(-50%);width:min(1040px,94vw);text-align:center;transition:opacity .38s;opacity:0;z-index:2}
+#verse.on{opacity:1}
+#verse .ar{font-size:clamp(22px,2.5vw,38px);line-height:2.05;color:var(--ink);text-shadow:0 1px 18px rgba(var(--scrim),.7)}
+#verse.long .ar{font-size:clamp(18px,1.85vw,29px);line-height:1.95}
+#verse .w{display:inline-block;opacity:0;filter:blur(7px);transform:translateY(7px);animation:wIn .9s cubic-bezier(.2,.75,.25,1) forwards;transition:color .5s,text-shadow .5s}
+@keyframes wIn{to{opacity:1;filter:blur(0);transform:none}}
+#verse .w.hl{color:var(--gold);text-shadow:0 0 20px rgba(233,200,124,.5)}
+#verse .w.say{text-shadow:0 0 14px rgba(255,236,200,.75),0 0 2px rgba(255,236,200,.6)}
+#verse .ay{transition:opacity .6s}
+#verse .ay.dim{opacity:.36}
+#verse .num{display:inline-flex;align-items:center;justify-content:center;width:1.55em;height:1.55em;font-size:.52em;border:1px solid var(--gold);border-radius:50%;color:var(--gold);margin:0 .35em;vertical-align:.25em;font-family:"Amiri",serif;line-height:1}
+@keyframes fadeIn{to{opacity:1}}
+#verse .ref{font-size:15px;color:var(--gold);margin-top:6px}
+#path{position:fixed;left:50%;bottom:10px;transform:translateX(-50%);display:flex;gap:0;align-items:flex-start;max-width:97vw;overflow-x:auto;scrollbar-width:none;padding:4px 6px;transition:opacity .6s;z-index:3}
+#path::-webkit-scrollbar{display:none}
+#path button{all:unset;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;padding:2px 7px;opacity:.45;transition:opacity .4s}
+#path button svg{width:11px;height:11px;transition:transform .5s}
+#path button .l{font-family:"Reem Kufi","Amiri",serif;font-size:13.5px;color:var(--ink);white-space:nowrap;direction:rtl}
+#path button.done{opacity:.7}
+#path button.cur{opacity:1}#path button.cur svg{transform:rotate(45deg) scale(1.35)}
+#path button.cur svg path{fill:var(--gold)}
+#path button:hover,#path button:focus-visible{opacity:1}
+#ctl{position:fixed;top:16px;right:18px;display:flex;gap:16px;align-items:center;transition:opacity .6s;z-index:5;font-size:15px;font-family:"Alegreya Sans",sans-serif}
+#ctl button{all:unset;cursor:pointer;color:var(--dim);display:flex;align-items:center;transition:color .3s}
+#ctl button:hover,#ctl button:focus-visible{color:var(--gold)}
+#ctl svg{width:17px;height:17px}
+#ctl select{all:unset;cursor:pointer;color:var(--dim);border-bottom:1px solid transparent}
+#ctl select:hover{color:var(--gold);border-bottom-color:currentColor}
+#ctl select option,.ov select option{color:#111}
+body.idle #ctl{opacity:0}
+body.idle #path{opacity:.35}
+body.idle{cursor:none}
+body.pre #ctl,body.pre #path,body.pre #label{opacity:0;pointer-events:none}
+#toast{position:fixed;top:18px;left:50%;transform:translateX(-50%);font-size:16px;font-family:"Alegreya Sans",sans-serif;padding:4px 2px;color:var(--ink);text-shadow:0 1px 12px #000;opacity:0;transition:opacity .5s;pointer-events:none;z-index:9}
+#toast.on{opacity:1}
+.ov{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;z-index:10;transition:opacity 1.4s;background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(4,5,14,.78),rgba(4,5,14,.35) 70%,rgba(4,5,14,0))}
+.ov.hide{opacity:0;pointer-events:none}
+.ov .in{max-width:760px;padding:24px}
+.ov .big{font-size:clamp(38px,5.6vw,76px);color:#ecd29a;line-height:1.7;text-shadow:0 0 40px rgba(233,200,124,.35)}
+.ov .q1{font-size:clamp(17px,1.6vw,21px);color:rgba(244,236,220,.78);margin-top:8px}
+.ov h1{font-weight:500;font-size:clamp(34px,4vw,56px);margin-top:22px;color:#f4ecdc;letter-spacing:.005em}
+.ov .sub{font-size:clamp(17px,1.5vw,21px);line-height:1.5;color:rgba(244,236,220,.74);margin:10px auto 0;max-width:600px}
+#go{all:unset;cursor:pointer;display:block;margin:30px auto 0;width:118px;height:118px;position:relative}
+#go svg{width:100%;height:100%;overflow:visible;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+#go:hover svg,#go:focus-visible svg{transform:scale(1.06)}
+#go .orbit{transform-origin:0 0;animation:orbit 40s linear infinite}
+@keyframes orbit{to{transform:rotate(360deg)}}
+#go .tri{transition:opacity .4s}
+.ov .alt{margin-top:14px;font-size:18px;color:rgba(244,236,220,.78)}
+.ov .alt button{all:unset;cursor:pointer;color:#ecd29a;border-bottom:1px solid rgba(233,200,124,.45)}
+.ov .alt button:hover{border-bottom-color:#ecd29a}
+#sQari0,#ctl select{field-sizing:content}
+.ov select{all:unset;cursor:pointer;color:#ecd29a;border-bottom:1px solid rgba(233,200,124,.45)}
+.ov .fine{margin-top:18px;font-size:14px;font-family:"Alegreya Sans",sans-serif;color:rgba(244,236,220,.46)}
+#end .list{margin-top:20px;font-size:16px;line-height:1.75;color:rgba(244,236,220,.62);columns:2;column-gap:36px;text-align:left;max-width:560px;margin-left:auto;margin-right:auto}
+body.ended #label,body.ended #sign,body.ended #verse,body.ended #path{opacity:0!important;pointer-events:none}
+#end{background:rgba(4,5,14,.84)}
+#end .again{all:unset;cursor:pointer;margin-top:24px;display:inline-block;font-size:20px;color:#ecd29a;border-bottom:1px solid rgba(233,200,124,.45)}
+@media (max-width:820px){
+  #sign{top:calc(3vh + 118px);right:5vw;left:5vw;width:auto;text-align:center}
+  #sign .tag{justify-content:center}
+  #sign .tx{font-size:15.5px}
+  #sign{z-index:4;text-shadow:0 0 3px rgba(var(--scrim),.95),0 1px 10px rgba(var(--scrim),.95),0 0 26px rgba(var(--scrim),.85)}
+  body.signon #verse.on{opacity:.08}
+  #path button .l{display:none}
+  #path button.cur .l{display:block}
+  #ctl{gap:13px;right:12px;top:10px}
+  #label{top:46px}
+  #sign{top:calc(46px + 128px)}
+  #end .list{columns:1}
+}
+@media (prefers-reduced-motion:reduce){#verse .w{animation-duration:.01s}}
+</style>
+</head>
+<body class="pre">
+<canvas id="c"></canvas>
+<div id="label" class="out"><div class="ar"></div><div class="tr"></div><div class="en"></div></div>
+<div id="sign"><div class="tag"><svg viewBox="-10 -10 20 20" aria-hidden="true"><circle r="7.5" fill="none" stroke="currentColor" stroke-width="1.1" opacity=".55"/><circle r="2.8" fill="currentColor"/></svg><span></span></div><div class="tx"></div></div>
+<div id="verse"><div class="ar"></div><div class="ref"></div></div>
+<nav id="path" aria-label="Stages"></nav>
+<div id="ctl">
+  <button id="bPrev" title="Previous (←)" aria-label="Previous"><svg viewBox="0 0 20 20"><path d="M13 4 6 10l7 6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
+  <button id="bPlay" title="Pause (Space)" aria-label="Pause"><svg viewBox="0 0 20 20"><path d="M7 4v12M13 4v12" stroke="currentColor" stroke-width="1.8"/></svg></button>
+  <button id="bNext" title="Next (→)" aria-label="Next"><svg viewBox="0 0 20 20"><path d="m7 4 7 6-7 6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
+  <button id="bRec" title="Recitation on or off (M)">Recitation on</button>
+  <select id="sQari" title="Reciter"></select>
+  <button id="bFs" title="Fullscreen (F)" aria-label="Fullscreen"><svg viewBox="0 0 20 20"><path d="M3 8V3h5M12 3h5v5M17 12v5h-5M8 17H3v-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+</div>
+<div id="toast"></div>
+<div id="intro" class="ov">
+  <div class="in">
+    <div class="big ar" id="introAr"></div>
+    <div class="q1">“And in yourselves. Then will you not see?” (51:21)</div>
+    <h1>Signs Within Yourselves</h1>
+    <p class="sub">The human cycle in the Qur’an, from dust to resurrection, in fifteen passages. Painted scenes and live light follow each recited word, and each stage in the womb sits beside what embryology found centuries later.</p>
+    <button id="go" aria-label="Begin with recitation"><svg viewBox="-60 -60 120 120"><g fill="none" stroke="#e9c87c" stroke-width="1"><circle r="56" opacity=".55"/><circle r="44" opacity=".3"/></g><g class="orbit" fill="#f3dca6"><circle cx="0" cy="-56" r="1.8"/><circle cx="48.5" cy="-28" r="1.4" opacity=".7"/><circle cx="48.5" cy="28" r="1.8"/><circle cx="0" cy="56" r="1.4" opacity=".7"/><circle cx="-48.5" cy="28" r="1.8"/><circle cx="-48.5" cy="-28" r="1.4" opacity=".7"/></g><circle r="30" fill="#e9c87c" opacity=".14"/><path class="tri" d="M-8-12 13 0-8 12Z" fill="#ecd29a"/></svg></button>
+    <div class="alt">Begin with the recitation of <select id="sQari0"></select>, or <button id="goS">watch in silence</button>.</div>
+    <div class="fine">Space pauses, the arrow keys move between passages, F is fullscreen. Headphones help.</div>
+  </div>
+</div>
+<div id="end" class="ov hide">
+  <div class="in">
+    <div class="big ar" style="font-size:clamp(30px,4.4vw,60px)" id="endAr"></div>
+    <div class="q1" style="margin-top:6px">“We will show them Our signs in the horizons and within themselves until it becomes clear to them that it is the truth.” (41:53)</div>
+    <div class="list" id="endList"></div>
+    <button class="again" id="again">Watch again</button>
+  </div>
+</div>
+<script>
+const AYAT={"51:21": {"ar": "وَفِىٓ أَنفُسِكُمْ ۚ أَفَلَا تُبْصِرُونَ", "en": "And in yourselves. Then will you not see?", "sname": "Adh-Dhariyat", "sar": "سُورَةُ الذَّارِيَاتِ"}, "76:1": {"ar": "هَلْ أَتَىٰ عَلَى ٱلْإِنسَٰنِ حِينٌۭ مِّنَ ٱلدَّهْرِ لَمْ يَكُن شَيْـًۭٔا مَّذْكُورًا", "en": "Has there [not] come upon man a period of time when he was not a thing [even] mentioned?", "sname": "Al-Insan", "sar": "سُورَةُ الإِنسَانِ"}, "23:12": {"ar": "وَلَقَدْ خَلَقْنَا ٱلْإِنسَٰنَ مِن سُلَٰلَةٍۢ مِّن طِينٍۢ", "en": "And certainly did We create man from an extract of clay.", "sname": "Al-Mu’minun", "sar": "سُورَةُ المُؤۡمِنُونَ"}, "23:13": {"ar": "ثُمَّ جَعَلْنَٰهُ نُطْفَةًۭ فِى قَرَارٍۢ مَّكِينٍۢ", "en": "Then We placed him as a sperm-drop in a firm lodging.", "sname": "Al-Mu’minun", "sar": "سُورَةُ المُؤۡمِنُونَ"}, "23:14": {"ar": "ثُمَّ خَلَقْنَا ٱلنُّطْفَةَ عَلَقَةًۭ فَخَلَقْنَا ٱلْعَلَقَةَ مُضْغَةًۭ فَخَلَقْنَا ٱلْمُضْغَةَ عِظَٰمًۭا فَكَسَوْنَا ٱلْعِظَٰمَ لَحْمًۭا ثُمَّ أَنشَأْنَٰهُ خَلْقًا ءَاخَرَ ۚ فَتَبَارَكَ ٱللَّهُ أَحْسَنُ ٱلْخَٰلِقِينَ", "en": "Then We made the sperm-drop into a clinging clot, and We made the clot into a lump [of flesh], and We made [from] the lump, bones, and We covered the bones with flesh; then We developed him into another creation. So blessed is Allah, the best of creators.", "sname": "Al-Mu’minun", "sar": "سُورَةُ المُؤۡمِنُونَ"}, "32:9": {"ar": "ثُمَّ سَوَّىٰهُ وَنَفَخَ فِيهِ مِن رُّوحِهِۦ ۖ وَجَعَلَ لَكُمُ ٱلسَّمْعَ وَٱلْأَبْصَٰرَ وَٱلْأَفْـِٔدَةَ ۚ قَلِيلًۭا مَّا تَشْكُرُونَ", "en": "Then He proportioned him and breathed into him from His [created] soul and made for you hearing and vision and hearts; little are you grateful.", "sname": "As-Sajdah", "sar": "سُورَةُ السَّجۡدَةِ"}, "16:78": {"ar": "وَٱللَّهُ أَخْرَجَكُم مِّنۢ بُطُونِ أُمَّهَٰتِكُمْ لَا تَعْلَمُونَ شَيْـًۭٔا وَجَعَلَ لَكُمُ ٱلسَّمْعَ وَٱلْأَبْصَٰرَ وَٱلْأَفْـِٔدَةَ ۙ لَعَلَّكُمْ تَشْكُرُونَ", "en": "And Allah has extracted you from the wombs of your mothers not knowing a thing, and He made for you hearing and vision and intellect that perhaps you would be grateful.", "sname": "An-Nahl", "sar": "سُورَةُ النَّحۡلِ"}, "46:15": {"ar": "وَوَصَّيْنَا ٱلْإِنسَٰنَ بِوَٰلِدَيْهِ إِحْسَٰنًا ۖ حَمَلَتْهُ أُمُّهُۥ كُرْهًۭا وَوَضَعَتْهُ كُرْهًۭا ۖ وَحَمْلُهُۥ وَفِصَٰلُهُۥ ثَلَٰثُونَ شَهْرًا ۚ حَتَّىٰٓ إِذَا بَلَغَ أَشُدَّهُۥ وَبَلَغَ أَرْبَعِينَ سَنَةًۭ قَالَ رَبِّ أَوْزِعْنِىٓ أَنْ أَشْكُرَ نِعْمَتَكَ ٱلَّتِىٓ أَنْعَمْتَ عَلَىَّ وَعَلَىٰ وَٰلِدَىَّ وَأَنْ أَعْمَلَ صَٰلِحًۭا تَرْضَىٰهُ وَأَصْلِحْ لِى فِى ذُرِّيَّتِىٓ ۖ إِنِّى تُبْتُ إِلَيْكَ وَإِنِّى مِنَ ٱلْمُسْلِمِينَ", "en": "And We have enjoined upon man, to his parents, good treatment. His mother carried him with hardship and gave birth to him with hardship, and his gestation and weaning [period] is thirty months. [He grows] until, when he reaches maturity and reaches [the age of] forty years, he says, \"My Lord, enable me to be grateful for Your favor which You have bestowed upon me and upon my parents and to work righteousness of which You will approve and make righteous for me my offspring. Indeed, I have repented to You, and indeed, I am of the Muslims.\"", "sname": "Al-Ahqaf", "sar": "سُورَةُ الأَحۡقَافِ"}, "30:54": {"ar": "ٱللَّهُ ٱلَّذِى خَلَقَكُم مِّن ضَعْفٍۢ ثُمَّ جَعَلَ مِنۢ بَعْدِ ضَعْفٍۢ قُوَّةًۭ ثُمَّ جَعَلَ مِنۢ بَعْدِ قُوَّةٍۢ ضَعْفًۭا وَشَيْبَةًۭ ۚ يَخْلُقُ مَا يَشَآءُ ۖ وَهُوَ ٱلْعَلِيمُ ٱلْقَدِيرُ", "en": "Allah is the one who created you from weakness, then made after weakness strength, then made after strength weakness and white hair. He creates what He wills, and He is the Knowing, the Competent.", "sname": "Ar-Rum", "sar": "سُورَةُ الرُّومِ"}, "40:67": {"ar": "هُوَ ٱلَّذِى خَلَقَكُم مِّن تُرَابٍۢ ثُمَّ مِن نُّطْفَةٍۢ ثُمَّ مِنْ عَلَقَةٍۢ ثُمَّ يُخْرِجُكُمْ طِفْلًۭا ثُمَّ لِتَبْلُغُوٓا۟ أَشُدَّكُمْ ثُمَّ لِتَكُونُوا۟ شُيُوخًۭا ۚ وَمِنكُم مَّن يُتَوَفَّىٰ مِن قَبْلُ ۖ وَلِتَبْلُغُوٓا۟ أَجَلًۭا مُّسَمًّۭى وَلَعَلَّكُمْ تَعْقِلُونَ", "en": "It is He who created you from dust, then from a sperm-drop, then from a clinging clot; then He brings you out as a child; then [He develops you] that you reach your [time of] maturity, then [further] that you become elders. And among you is he who is taken in death before [that], so that you reach a specified term; and perhaps you will use reason.", "sname": "Ghafir", "sar": "سُورَةُ غَافِرٍ"}, "29:57": {"ar": "كُلُّ نَفْسٍۢ ذَآئِقَةُ ٱلْمَوْتِ ۖ ثُمَّ إِلَيْنَا تُرْجَعُونَ", "en": "Every soul will taste death. Then to Us will you be returned.", "sname": "Al-‘Ankabut", "sar": "سُورَةُ العَنكَبُوتِ"}, "89:27": {"ar": "يَٰٓأَيَّتُهَا ٱلنَّفْسُ ٱلْمُطْمَئِنَّةُ", "en": "[To the righteous it will be said], \"O reassured soul,", "sname": "Al-Fajr", "sar": "سُورَةُ الفَجۡرِ"}, "89:28": {"ar": "ٱرْجِعِىٓ إِلَىٰ رَبِّكِ رَاضِيَةًۭ مَّرْضِيَّةًۭ", "en": "Return to your Lord, well-pleased and pleasing [to Him],", "sname": "Al-Fajr", "sar": "سُورَةُ الفَجۡرِ"}, "89:29": {"ar": "فَٱدْخُلِى فِى عِبَٰدِى", "en": "And enter among My [righteous] servants", "sname": "Al-Fajr", "sar": "سُورَةُ الفَجۡرِ"}, "89:30": {"ar": "وَٱدْخُلِى جَنَّتِى", "en": "And enter My Paradise.\"", "sname": "Al-Fajr", "sar": "سُورَةُ الفَجۡرِ"}, "20:55": {"ar": "مِنْهَا خَلَقْنَٰكُمْ وَفِيهَا نُعِيدُكُمْ وَمِنْهَا نُخْرِجُكُمْ تَارَةً أُخْرَىٰ", "en": "From the earth We created you, and into it We will return you, and from it We will extract you another time.", "sname": "Ta-Ha", "sar": "سُورَةُ طه"}, "2:28": {"ar": "كَيْفَ تَكْفُرُونَ بِٱللَّهِ وَكُنتُمْ أَمْوَٰتًۭا فَأَحْيَٰكُمْ ۖ ثُمَّ يُمِيتُكُمْ ثُمَّ يُحْيِيكُمْ ثُمَّ إِلَيْهِ تُرْجَعُونَ", "en": "How can you disbelieve in Allah when you were lifeless and He brought you to life; then He will cause you to die, then He will bring you [back] to life, and then to Him you will be returned.", "sname": "Al-Baqarah", "sar": "سُورَةُ البَقَرَةِ"}, "41:53": {"ar": "سَنُرِيهِمْ ءَايَٰتِنَا فِى ٱلْءَافَاقِ وَفِىٓ أَنفُسِهِمْ حَتَّىٰ يَتَبَيَّنَ لَهُمْ أَنَّهُ ٱلْحَقُّ ۗ أَوَلَمْ يَكْفِ بِرَبِّكَ أَنَّهُۥ عَلَىٰ كُلِّ شَىْءٍۢ شَهِيدٌ", "en": "We will show them Our signs in the horizons and within themselves until it becomes clear to them that it is the truth. But is it not sufficient concerning your Lord that He is, over all things, a Witness?", "sname": "Fussilat", "sar": "سُورَةُ فُصِّلَتۡ"}};const TIMING={"qc7": {"51:21": {"url": "https://verses.quran.com/Alafasy/mp3/051021.mp3", "seg": [[1, 40, 2690], [2, 2700, 4970], [3, 4980, 5830], [4, 5840, 8490]]}, "76:1": {"url": "https://verses.quran.com/Alafasy/mp3/076001.mp3", "seg": [[1, 50, 370], [2, 380, 850], [3, 860, 1480], [4, 1490, 3100], [5, 3110, 4700], [6, 4710, 4980], [7, 4990, 5790], [8, 5800, 6110], [9, 6120, 7270], [10, 7280, 7960], [11, 7970, 9880]]}, "23:12": {"url": "https://verses.quran.com/Alafasy/mp3/023012.mp3", "seg": [[1, 80, 740], [2, 750, 1620], [3, 1630, 3830], [4, 3840, 4910], [5, 4920, 7030], [6, 7040, 8100], [7, 8110, 10500]]}, "23:13": {"url": "https://verses.quran.com/Alafasy/mp3/023013.mp3", "seg": [[1, 30, 1080], [2, 1090, 2400], [3, 2410, 4050], [4, 4060, 4460], [5, 4470, 6560], [6, 6570, 8530]]}, "23:14": {"url": "https://verses.quran.com/Alafasy/mp3/023014.mp3", "seg": [[1, 150, 1650], [2, 1660, 2560], [3, 2570, 4000], [4, 4010, 5690], [5, 5700, 6760], [6, 6770, 7830], [7, 7840, 9460], [8, 9470, 10530], [9, 10540, 11630], [10, 11640, 17800], [11, 17810, 18880], [12, 18890, 20020], [13, 20030, 20660], [14, 20670, 23010], [15, 23020, 25180], [16, 25190, 26110], [17, 26120, 27610], [18, 27620, 28880], [19, 28890, 29750], [20, 29760, 30570], [21, 30580, 33790]]}, "32:9": {"url": "https://verses.quran.com/Alafasy/mp3/032009.mp3", "seg": [[1, 50, 1190], [2, 1200, 2140], [3, 2150, 2860], [4, 2870, 3460], [5, 3470, 3560], [6, 3570, 4860], [7, 4870, 5460], [8, 5470, 6090], [9, 6100, 6880], [10, 6890, 8190], [11, 8200, 9640], [12, 9650, 10370], [13, 10380, 11510], [14, 11520, 13940]]}, "16:78": {"url": "https://verses.quran.com/Alafasy/mp3/016078.mp3", "seg": [[1, 40, 1220], [2, 1230, 3230], [3, 3240, 4170], [4, 4180, 5200], [5, 5210, 7530], [6, 7540, 8030], [7, 8040, 9460], [8, 9470, 10220], [9, 10230, 11830], [10, 11840, 14690], [11, 14700, 15650], [12, 15660, 17260], [13, 17270, 18950], [14, 18960, 20350], [15, 20360, 23060]]}, "46:15": {"url": "https://verses.quran.com/Alafasy/mp3/046015.mp3", "seg": [[1, 60, 1310], [2, 1320, 3470], [3, 3480, 5060], [4, 5070, 7070], [5, 7080, 8190], [6, 8200, 10000], [7, 10010, 10720], [8, 10730, 12950], [9, 12960, 14660], [10, 14670, 15990], [11, 16000, 17570], [12, 17580, 18920], [13, 18930, 20750], [14, 20760, 21910], [15, 21920, 24010], [16, 24020, 24730], [17, 24740, 26100], [18, 26110, 27030], [19, 27040, 28280], [20, 28290, 29990], [21, 30000, 30700], [22, 30710, 31440], [23, 31450, 38280], [24, 38290, 38720], [25, 38730, 39630], [26, 39640, 40730], [27, 40740, 43160], [28, 43170, 44170], [29, 44180, 45160], [30, 45170, 46090], [31, 46100, 47460], [32, 47470, 48130], [33, 48140, 48950], [34, 48960, 50830], [35, 50840, 52070], [36, 52080, 53160], [37, 53170, 53600], [38, 53610, 54120], [39, 54130, 56430], [40, 56440, 58310], [41, 58320, 59100], [42, 59110, 59930], [43, 59940, 62100], [44, 62110, 62530], [45, 62540, 65320]]}, "30:54": {"url": "https://verses.quran.com/Alafasy/mp3/030054.mp3", "seg": [[1, 210, 1150], [2, 1160, 1880], [3, 1890, 3760], [4, 3770, 4690], [5, 4700, 6450], [6, 6460, 7510], [7, 7520, 8180], [8, 8190, 9030], [9, 9040, 9610], [10, 9620, 11270], [11, 11280, 13320], [12, 13330, 14430], [13, 14440, 15100], [14, 15110, 16040], [15, 16050, 16620], [16, 16630, 18580], [17, 18590, 19170], [18, 19180, 21640], [19, 21650, 22460], [20, 22470, 22870], [21, 22880, 26430], [22, 26440, 27080], [23, 27090, 28110], [24, 28120, 30620]]}, "40:67": {"url": "https://verses.quran.com/Alafasy/mp3/040067.mp3", "seg": [[1, 100, 470], [2, 480, 1230], [3, 1240, 2910], [4, 2920, 3580], [5, 3590, 5220], [6, 5230, 6330], [7, 6340, 7260], [8, 7270, 8810], [9, 8820, 9950], [10, 9960, 10280], [11, 10290, 12020], [12, 12030, 13090], [13, 13100, 14330], [14, 14340, 15730], [15, 15740, 16890], [16, 16900, 19420], [17, 19430, 20580], [18, 20590, 21710], [19, 21720, 22870], [20, 22880, 24740], [21, 24750, 27190], [22, 27200, 28110], [23, 28120, 29300], [24, 29310, 30470], [25, 30480, 31430], [26, 31440, 34180], [27, 34190, 35690], [28, 35700, 37100], [29, 37110, 39210], [30, 39220, 42050]]}, "29:57": {"url": "https://verses.quran.com/Alafasy/mp3/029057.mp3", "seg": [[1, 30, 600], [2, 610, 2200], [3, 2210, 5160], [4, 5170, 7430], [5, 7440, 9040], [6, 9050, 10130], [7, 10140, 12800]]}, "89:27": {"url": "https://verses.quran.com/Alafasy/mp3/089027.mp3", "seg": [[1, 40, 3080], [2, 3090, 4760], [3, 4770, 7410]]}, "89:28": {"url": "https://verses.quran.com/Alafasy/mp3/089028.mp3", "seg": [[1, 30, 2380], [2, 2390, 3020], [3, 3030, 3800], [4, 3810, 5880], [5, 5890, 7000]]}, "89:29": {"url": "https://verses.quran.com/Alafasy/mp3/089029.mp3", "seg": [[1, 30, 970], [2, 980, 1440], [3, 1450, 2630]]}, "89:30": {"url": "https://verses.quran.com/Alafasy/mp3/089030.mp3", "seg": [[1, 30, 1040], [2, 1050, 3260]]}, "20:55": {"url": "https://verses.quran.com/Alafasy/mp3/020055.mp3", "seg": [[1, 100, 910], [2, 920, 2560], [3, 2570, 3630], [4, 3640, 4980], [5, 4990, 6140], [6, 6150, 10350], [7, 10360, 11660], [8, 11670, 12790]]}, "2:28": {"url": "https://verses.quran.com/Alafasy/mp3/002028.mp3", "seg": [[1, 50, 580], [2, 590, 1700], [3, 1710, 2650], [4, 2660, 4370], [5, 4380, 6080], [6, 6090, 7930], [7, 7940, 9180], [8, 9190, 10370], [9, 10380, 11500], [10, 11510, 12680], [11, 12690, 14040], [12, 14050, 14860], [13, 14870, 17530]]}, "41:53": {"url": "https://verses.quran.com/Alafasy/mp3/041053.mp3", "seg": [[1, 70, 1360], [2, 1370, 2970], [3, 2980, 3250], [4, 3260, 4610], [5, 4620, 6430], [6, 6440, 8310], [7, 8320, 9210], [8, 9220, 10590], [9, 10600, 11170], [10, 11180, 12770], [11, 12780, 14290], [12, 14300, 15100], [13, 15110, 15720], [14, 15730, 16810], [15, 16820, 18740], [16, 18750, 19370], [17, 19380, 20040], [18, 20050, 21860], [19, 21870, 24510]]}}, "qc6": {"51:21": {"url": "https://verses.quran.com///mirrors.quranicaudio.com/everyayah/Husary_64kbps/051021.mp3", "seg": [[1, 360, 2330], [2, 2340, 5300], [3, 6600, 7890], [4, 7900, 11070]]}, "76:1": {"url": "https://verses.quran.com///mirrors.quranicaudio.com/everyayah/Husary_64kbps/076001.mp3", "seg": [[1, 450, 790], [2, 800, 1670], [3, 1680, 2310], [4, 2320, 4680], [5, 4690, 6350], [6, 6360, 6740], [7, 6750, 7980], [8, 7990, 8430], [9, 8440, 9880], [10, 9890, 11680], [11, 11690, 13400]]}, "23:12": {"url": "https://verses.quran.com///mirrors.quranicaudio.com/everyayah/Husary_64kbps/023012.mp3", "seg": [[1, 850, 1850], [2, 1860, 3280], [3, 3290, 5890], [4, 5900, 6830], [5, 6840, 9700], [6, 9710, 10700], [7, 10710, 12610]]}, "23:13": {"url": "https://verses.quran.com///mirrors.quranicaudio.com/everyayah/Husary_64kbps/023013.mp3", "seg": [[1, 250, 1490], [2, 1500, 3940], [3, 3950, 6020], [4, 6030, 6810], [5, 6820, 9380], [6, 9390, 10610]]}, "23:14": {"url": "https://verses.quran.com///mirrors.quranicaudio.com/everyayah/Husary_64kbps/023014.mp3", "seg": [[1, 500, 1630], [2, 1640, 3170], [3, 3180, 5060], [4, 5070, 7200], [5, 7210, 8890], [6, 8900, 10660], [7, 10670, 12800], [8, 12810, 14520], [9, 14530, 16130], [10, 16140, 18350], [11, 18360, 20130], [12, 20140, 21980], [13, 21990, 23700], [14, 23710, 25230], [15, 25240, 28340], [16, 28350, 29890], [17, 29900, 32450], [18, 34600, 36710], [19, 36720, 38270], [20, 38280, 39720], [21, 39730, 43480]]}, "32:9": {"url": "https://verses.quran.com///mirrors.quranicaudio.com/everyayah/Husary_64kbps/032009.mp3", "seg": [[1, 550, 1950], [2, 1960, 3960], [3, 3970, 5310], [4, 5320, 6510], [5, 6520, 6740], [6, 6750, 9150], [7, 9160, 10580], [8, 10590, 11650], [9, 11660, 13270], [10, 13280, 16030], [11, 16040, 19250], [12, 20800, 22080], [13, 22090, 23630], [14, 23640, 26650]]}, "16:78": {"url": "https://verses.quran.com///mirrors.quranicaudio.com/everyayah/Husary_64kbps/016078.mp3", "seg": [[1, 1350, 2710], [2, 2720, 5170], [3, 5180, 6080], [4, 6090, 7310], [5, 7320, 10220], [6, 10230, 10800], [7, 10810, 12670], [8, 12680, 13810], [9, 13820, 15670], [10, 15680, 16550], [11, 16560, 17920], [12, 17930, 20120], [13, 20130, 22290], [14, 22300, 24070], [15, 24080, 26770]]}, "46:15": {"url": "https://verses.quran.com///mirrors.quranicaudio.com/everyayah/Husary_64kbps/046015.mp3", "seg": [[1, 500, 1600], [2, 1610, 3580], [3, 3590, 5160], [4, 5170, 7350], [5, 9450, 10790], [6, 10800, 12450], [7, 12460, 13810], [8, 13820, 15280], [9, 15290, 17150], [10, 18050, 19310], [11, 19320, 20950], [12, 20960, 22520], [13, 22530, 23900], [14, 26050, 28780], [15, 28790, 29520], [16, 29530, 30220], [17, 30230, 31600], [18, 31610, 32460], [19, 32470, 33800], [20, 33810, 35410], [21, 35420, 36110], [22, 36120, 36840], [23, 36850, 45580], [24, 45590, 46050], [25, 46060, 46980], [26, 46990, 48120], [27, 48130, 50180], [28, 50190, 51230], [29, 51240, 52270], [30, 52280, 53190], [31, 53200, 54610], [32, 54620, 55330], [33, 55340, 56200], [34, 56210, 57950], [35, 57960, 59350], [36, 59360, 60410], [37, 60420, 60910], [38, 60920, 61420], [39, 61430, 63600], [40, 66890, 68370], [41, 68380, 69120], [42, 69130, 70060], [43, 70070, 71870], [44, 71880, 72290], [45, 72300, 75310]]}, "30:54": {"url": "https://verses.quran.com///mirrors.quranicaudio.com/everyayah/Husary_64kbps/030054.mp3", "seg": [[1, 1100, 2410], [2, 2420, 3480], [3, 3490, 4940], [4, 4950, 6870], [5, 6880, 8630], [6, 8640, 9950], [7, 9960, 10910], [8, 10920, 11930], [9, 11940, 12830], [10, 12840, 14860], [11, 14870, 17000], [12, 18650, 19790], [13, 19800, 20770], [14, 20780, 21760], [15, 21770, 31350], [16, 31360, 33580], [17, 33590, 35600], [18, 35610, 37850], [19, 39500, 40640], [20, 40650, 41340], [21, 41350, 44700], [22, 45950, 46780], [23, 46790, 48450], [24, 48460, 51590]]}, "40:67": {"url": "https://verses.quran.com///mirrors.quranicaudio.com/everyayah/Husary_64kbps/040067.mp3", "seg": [[1, 1010, 1410], [2, 1420, 2660], [3, 2670, 5010], [4, 5020, 5800], [5, 5810, 8090], [6, 8100, 9610], [7, 9620, 10600], [8, 10610, 12560], [9, 12570, 14080], [10, 14090, 14590], [11, 14600, 16960], [12, 16970, 18410], [13, 18420, 20430], [14, 20440, 22550], [15, 24000, 30860], [16, 30870, 33820], [17, 33830, 35960], [18, 35970, 37620], [19, 37630, 39860], [20, 39870, 42700], [21, 44280, 46870], [22, 46880, 48250], [23, 48260, 50500], [24, 50510, 51550], [25, 51560, 52630], [26, 52640, 55930], [27, 55940, 57810], [28, 57820, 59790], [29, 59800, 63000], [30, 63010, 66200]]}, "29:57": {"url": "https://verses.quran.com///mirrors.quranicaudio.com/everyayah/Husary_64kbps/029057.mp3", "seg": [[1, 400, 1270], [2, 1280, 3170], [3, 3180, 6160], [4, 6170, 7480], [5, 7490, 8960], [6, 8970, 10770], [7, 10780, 13540]]}, "89:27": {"url": "https://verses.quran.com///mirrors.quranicaudio.com/everyayah/Husary_64kbps/089027.mp3", "seg": [[1, 550, 4200], [2, 4210, 6120], [3, 6130, 9670]]}, "89:28": {"url": "https://verses.quran.com///mirrors.quranicaudio.com/everyayah/Husary_64kbps/089028.mp3", "seg": [[1, 300, 2780], [2, 2790, 3820], [3, 3830, 5470], [4, 5480, 8580], [5, 8590, 10720]]}, "89:29": {"url": "https://verses.quran.com///mirrors.quranicaudio.com/everyayah/Husary_64kbps/089029.mp3", "seg": [[1, 30, 1710], [2, 1720, 2430], [3, 2440, 4450]]}, "89:30": {"url": "https://verses.quran.com///mirrors.quranicaudio.com/everyayah/Husary_64kbps/089030.mp3", "seg": [[1, 30, 1980], [2, 1990, 4220]]}, "20:55": {"url": "https://verses.quran.com///mirrors.quranicaudio.com/everyayah/Husary_64kbps/020055.mp3", "seg": [[1, 950, 1980], [2, 1990, 4050], [3, 4060, 5640], [4, 5650, 7300], [5, 7310, 8790], [6, 8800, 10510], [7, 10520, 12180], [8, 12190, 13530]]}, "2:28": {"url": "https://verses.quran.com///mirrors.quranicaudio.com/everyayah/Husary_64kbps/002028.mp3", "seg": [[1, 750, 1570], [2, 1580, 3570], [3, 3580, 5130], [4, 5140, 7220], [5, 7230, 9770], [6, 9780, 13150], [7, 14200, 15470], [8, 15480, 17630], [9, 17640, 18890], [10, 18900, 21090], [11, 21100, 22480], [12, 22490, 23820], [13, 23830, 26560]]}, "41:53": {"url": "https://verses.quran.com///mirrors.quranicaudio.com/everyayah/Husary_64kbps/041053.mp3", "seg": [[1, 650, 2390], [2, 2400, 4990], [3, 5000, 5360], [4, 5370, 7530], [5, 7540, 9560], [6, 9570, 11880], [7, 11890, 13290], [8, 13300, 15280], [9, 15290, 16250], [10, 16260, 18170], [11, 18180, 19950], [12, 21950, 22910], [13, 22920, 23940], [14, 23950, 25690], [15, 25700, 27650], [16, 27660, 28710], [17, 28720, 29660], [18, 29670, 31670], [19, 31680, 34020]]}}, "qc9": {"51:21": {"url": "https://verses.quran.com/Minshawi/Murattal/mp3/051021.mp3", "seg": [[1, 350, 2310], [2, 2320, 4660], [3, 4670, 5400], [4, 5410, 6750]]}, "76:1": {"url": "https://verses.quran.com/Minshawi/Murattal/mp3/076001.mp3", "seg": [[1, 800, 1210], [2, 1220, 1790], [3, 1800, 2410], [4, 2420, 4270], [5, 4280, 5870], [6, 5880, 6200], [7, 6210, 7250], [8, 7260, 7680], [9, 7690, 9530], [10, 9540, 9740], [11, 9750, 12340]]}, "23:12": {"url": "https://verses.quran.com/Minshawi/Murattal/mp3/023012.mp3", "seg": [[1, 600, 1460], [2, 1470, 2440], [3, 2450, 4330], [4, 4340, 5140], [5, 5150, 6330], [6, 6340, 8400], [7, 8410, 9280]]}, "23:13": {"url": "https://verses.quran.com/Minshawi/Murattal/mp3/023013.mp3", "seg": [[1, 600, 1610], [2, 1620, 3070], [3, 3080, 4650], [4, 4660, 5150], [5, 5160, 6200], [6, 6210, 7980]]}, "23:14": {"url": "https://verses.quran.com/Minshawi/Murattal/mp3/023014.mp3", "seg": [[1, 650, 1680], [2, 1690, 2670], [3, 2680, 4200], [4, 4210, 5900], [5, 5910, 7110], [6, 7120, 8350], [7, 8360, 10020], [8, 10030, 11230], [9, 11240, 12460], [10, 12470, 13500], [11, 13510, 15290], [12, 15300, 16600], [13, 16610, 18400], [14, 22390, 24330], [15, 24340, 26500], [16, 26510, 27620], [17, 27630, 29200], [18, 29210, 30590], [19, 30600, 31650], [20, 31660, 32800], [21, 32810, 34300]]}, "32:9": {"url": "https://verses.quran.com/Minshawi/Murattal/mp3/032009.mp3", "seg": [[1, 250, 1140], [2, 1150, 2170], [3, 2180, 3030], [4, 3040, 3710], [5, 3720, 3800], [6, 3810, 5460], [7, 5470, 6340], [8, 6350, 6830], [9, 6840, 7720], [10, 7730, 9080], [11, 9090, 10880], [12, 10890, 11890], [13, 11900, 12830], [14, 12840, 14090]]}, "16:78": {"url": "https://verses.quran.com/Minshawi/Murattal/mp3/016078.mp3", "seg": [[1, 500, 1400], [2, 1410, 2980], [3, 2990, 4140], [4, 4150, 5090], [5, 5100, 7170], [6, 7180, 7510], [7, 7520, 8770], [8, 8780, 9500], [9, 9510, 10980], [10, 10990, 11450], [11, 11460, 12360], [12, 12370, 13760], [13, 13770, 15240], [14, 15250, 16410], [15, 16420, 17780]]}, "46:15": {"url": "https://verses.quran.com/Minshawi/Murattal/mp3/046015.mp3", "seg": [[1, 800, 1820], [2, 1830, 3640], [3, 3650, 4970], [4, 4980, 6900], [5, 6910, 7920], [6, 7930, 9330], [7, 9340, 10070], [8, 10080, 11870], [9, 11880, 13450], [10, 13460, 14580], [11, 14590, 15950], [12, 15960, 17030], [13, 17040, 18650], [14, 18900, 21000], [15, 21010, 21590], [16, 21600, 22170], [17, 22180, 23310], [18, 23320, 24070], [19, 24080, 25120], [20, 25130, 26480], [21, 26490, 26990], [22, 27000, 27590], [23, 27600, 29930], [24, 29940, 30300], [25, 30310, 31050], [26, 31060, 32800], [27, 38880, 40830], [28, 40840, 41720], [29, 41730, 42620], [30, 42630, 43330], [31, 43340, 44470], [32, 44480, 45060], [33, 45070, 45790], [34, 45800, 47300], [35, 47310, 49150], [36, 53360, 54190], [37, 54200, 54630], [38, 54640, 55040], [39, 55050, 57150], [40, 57510, 58770], [41, 58780, 59480], [42, 59490, 60220], [43, 60230, 61460], [44, 61470, 61860], [45, 61870, 63220]]}, "30:54": {"url": "https://verses.quran.com/Minshawi/Murattal/mp3/030054.mp3", "seg": [[1, 650, 1640], [2, 1650, 2430], [3, 2440, 4130], [4, 4140, 4930], [5, 4940, 6820], [6, 6830, 7570], [7, 7580, 8220], [8, 8230, 9030], [9, 9040, 9610], [10, 9620, 11060], [11, 11070, 12760], [12, 12770, 13810], [13, 13820, 14470], [14, 14480, 15370], [15, 15380, 16050], [16, 16060, 18340], [17, 18350, 18490], [18, 18500, 21300], [19, 21350, 22180], [20, 22190, 22600], [21, 22610, 25510], [22, 25520, 26180], [23, 26190, 27250], [24, 27260, 28320]]}, "40:67": {"url": "https://verses.quran.com/Minshawi/Murattal/mp3/040067.mp3", "seg": [[1, 1150, 1390], [2, 1400, 2130], [3, 2140, 3690], [4, 3700, 4620], [5, 4630, 6110], [6, 6120, 7170], [7, 7180, 8080], [8, 8090, 9320], [9, 9330, 10630], [10, 10640, 10990], [11, 11000, 12670], [12, 12680, 13700], [13, 13710, 15060], [14, 15070, 17050], [15, 17600, 22290], [16, 22300, 24830], [17, 24840, 26080], [18, 26090, 27170], [19, 27180, 28400], [20, 28410, 30750], [21, 31000, 33090], [22, 33100, 34060], [23, 34070, 35240], [24, 35250, 36140], [25, 36150, 37450], [26, 37460, 40280], [27, 40290, 40960], [28, 40970, 43060], [29, 43070, 45010], [30, 45020, 46360]]}, "29:57": {"url": "https://verses.quran.com/Minshawi/Murattal/mp3/029057.mp3", "seg": [[1, 650, 1150], [2, 1160, 2360], [3, 2370, 4580], [4, 4590, 6220], [5, 6230, 7310], [6, 7320, 8340], [7, 8350, 9690]]}, "89:27": {"url": "https://verses.quran.com/Minshawi/Murattal/mp3/089027.mp3", "seg": [[1, 500, 3830], [2, 3840, 5490], [3, 5500, 8290]]}, "89:28": {"url": "https://verses.quran.com/Minshawi/Murattal/mp3/089028.mp3", "seg": [[1, 400, 3060], [2, 3070, 3810], [3, 3820, 5000], [4, 5010, 6480], [5, 6490, 9180]]}, "89:29": {"url": "https://verses.quran.com/Minshawi/Murattal/mp3/089029.mp3", "seg": [[1, 300, 1630], [2, 1640, 2250], [3, 2260, 3750]]}, "89:30": {"url": "https://verses.quran.com/Minshawi/Murattal/mp3/089030.mp3", "seg": [[1, 450, 1800], [2, 1810, 3810]]}, "20:55": {"url": "https://verses.quran.com/Minshawi/Murattal/mp3/020055.mp3", "seg": [[1, 600, 1330], [2, 1340, 2890], [3, 2900, 3980], [4, 3990, 5320], [5, 5330, 6310], [6, 6320, 7720], [7, 7730, 8810], [8, 8820, 10080]]}, "2:28": {"url": "https://verses.quran.com/Minshawi/Murattal/mp3/002028.mp3", "seg": [[1, 850, 1360], [2, 1370, 2690], [3, 2700, 3790], [4, 3800, 5790], [5, 5800, 6950], [6, 6960, 9230], [7, 9240, 10390], [8, 10400, 11760], [9, 11770, 12880], [10, 12890, 14250], [11, 14260, 15420], [12, 15430, 16300], [13, 16310, 17740]]}, "41:53": {"url": "https://verses.quran.com/Minshawi/Murattal/mp3/041053.mp3", "seg": [[1, 900, 1990], [2, 2000, 3350], [3, 3360, 3590], [4, 3600, 4770], [5, 4780, 6520], [6, 6530, 8140], [7, 8150, 8950], [8, 8960, 10220], [9, 10230, 10830], [10, 10840, 11930], [11, 11940, 13250], [12, 14250, 14880], [13, 14890, 15510], [14, 15520, 16520], [15, 16530, 17850], [16, 17860, 18440], [17, 18450, 19070], [18, 19080, 20210], [19, 20220, 21430]]}}, "qc2": {"51:21": {"url": "https://verses.quran.com/AbdulBaset/Murattal/mp3/051021.mp3", "seg": [[1, 550, 2580], [2, 2590, 5500], [3, 5750, 6560], [4, 6570, 8050]]}, "76:1": {"url": "https://verses.quran.com/AbdulBaset/Murattal/mp3/076001.mp3", "seg": [[1, 600, 970], [2, 980, 1640], [3, 1650, 2110], [4, 2120, 4190], [5, 4200, 5710], [6, 5720, 6070], [7, 6080, 7010], [8, 7020, 7410], [9, 7420, 8750], [10, 8760, 9610], [11, 9620, 11790]]}, "23:12": {"url": "https://verses.quran.com/AbdulBaset/Murattal/mp3/023012.mp3", "seg": [[1, 300, 1260], [2, 1270, 2410], [3, 2420, 4720], [4, 4730, 5640], [5, 5650, 7930], [6, 7940, 9000], [7, 9010, 9730]]}, "23:13": {"url": "https://verses.quran.com/AbdulBaset/Murattal/mp3/023013.mp3", "seg": [[1, 360, 1630], [2, 1640, 3290], [3, 3300, 5230], [4, 5240, 5860], [5, 5870, 8010], [6, 8020, 8950]]}, "23:14": {"url": "https://verses.quran.com/AbdulBaset/Murattal/mp3/023014.mp3", "seg": [[1, 600, 1730], [2, 1740, 2960], [3, 2970, 4740], [4, 4750, 6640], [5, 6650, 8000], [6, 8010, 9540], [7, 9550, 11410], [8, 11420, 12760], [9, 12770, 14180], [10, 14190, 16020], [11, 16030, 17450], [12, 17460, 18940], [13, 18950, 20950], [14, 25250, 26900], [15, 26910, 29340], [16, 29350, 30600], [17, 30610, 32200], [18, 32500, 33950], [19, 33960, 35090], [20, 35100, 36210], [21, 36220, 38070]]}, "32:9": {"url": "https://verses.quran.com/AbdulBaset/Murattal/mp3/032009.mp3", "seg": [[1, 750, 1830], [2, 1840, 2780], [3, 2790, 3510], [4, 3520, 4120], [5, 4130, 4210], [6, 4220, 6140], [7, 6150, 6960], [8, 6970, 7500], [9, 7510, 8220], [10, 8230, 9590], [11, 9600, 11650], [12, 11800, 12340], [13, 12350, 13500], [14, 13510, 14690]]}, "16:78": {"url": "https://verses.quran.com/AbdulBaset/Murattal/mp3/016078.mp3", "seg": [[1, 1000, 1890], [2, 1900, 3980], [3, 3990, 5030], [4, 5040, 5920], [5, 5930, 8410], [6, 8420, 8720], [7, 8730, 10000], [8, 10010, 10770], [9, 10780, 12390], [10, 12400, 12990], [11, 13000, 13900], [12, 13910, 15330], [13, 15340, 16920], [14, 16930, 18170], [15, 18180, 19500]]}, "46:15": {"url": "https://verses.quran.com/AbdulBaset/Murattal/mp3/046015.mp3", "seg": [[1, 750, 2170], [2, 2180, 4280], [3, 4290, 6210], [4, 6220, 8550], [5, 9000, 10250], [6, 10260, 12000], [7, 12010, 12900], [8, 12910, 15310], [9, 15320, 17250], [10, 17550, 18990], [11, 19000, 20880], [12, 20890, 22450], [13, 22460, 24550], [14, 25350, 25880], [15, 25890, 28240], [16, 28250, 29020], [17, 29030, 30660], [18, 30670, 31700], [19, 31710, 33230], [20, 33240, 34950], [21, 34960, 35690], [22, 35700, 36580], [23, 36590, 39300], [24, 39310, 39780], [25, 39790, 40790], [26, 40800, 42130], [27, 42140, 44220], [28, 44230, 45460], [29, 45470, 46710], [30, 46720, 47750], [31, 47760, 49700], [32, 65880, 66710], [33, 66720, 67690], [34, 67700, 69960], [35, 69970, 71430], [36, 71440, 72600], [37, 72610, 73260], [38, 73270, 73860], [39, 73870, 76350], [40, 77890, 79270], [41, 79280, 80150], [42, 80160, 81170], [43, 81180, 82920], [44, 82930, 83390], [45, 83400, 85080]]}, "30:54": {"url": "https://verses.quran.com/AbdulBaset/Murattal/mp3/030054.mp3", "seg": [[1, 750, 1600], [2, 1610, 2300], [3, 2310, 4370], [4, 4380, 5510], [5, 5520, 6770], [6, 6780, 7920], [7, 7930, 8620], [8, 8630, 9630], [9, 9640, 10170], [10, 10180, 11670], [11, 11680, 13210], [12, 13220, 14350], [13, 14360, 15010], [14, 15020, 15950], [15, 15960, 16590], [16, 16600, 18390], [17, 18400, 19100], [18, 19110, 21400], [19, 22100, 22820], [20, 22830, 23140], [21, 23150, 25720], [22, 25730, 26320], [23, 26330, 27230], [24, 27240, 28310]]}, "40:67": {"url": "https://verses.quran.com/AbdulBaset/Murattal/mp3/040067.mp3", "seg": [[1, 650, 1030], [2, 1040, 1930], [3, 1940, 4070], [4, 4080, 5130], [5, 5140, 7040], [6, 7050, 8430], [7, 8440, 9490], [8, 9500, 11360], [9, 11370, 12750], [10, 12760, 13120], [11, 13130, 15120], [12, 15130, 16420], [13, 16430, 17930], [14, 17940, 19300], [15, 20050, 25710], [16, 25720, 28180], [17, 28190, 29630], [18, 29640, 31100], [19, 31110, 32510], [20, 32520, 34600], [21, 35300, 37730], [22, 37740, 38560], [23, 38570, 40230], [24, 40240, 41710], [25, 41720, 42700], [26, 43650, 46180], [27, 46190, 47630], [28, 47640, 50060], [29, 50070, 51850], [30, 51860, 53290]]}, "29:57": {"url": "https://verses.quran.com/AbdulBaset/Murattal/mp3/029057.mp3", "seg": [[1, 750, 1320], [2, 1330, 3110], [3, 3120, 5660], [4, 5670, 7550], [5, 7750, 9090], [6, 9100, 10310], [7, 10320, 11720]]}, "89:27": {"url": "https://verses.quran.com/AbdulBaset/Murattal/mp3/089027.mp3", "seg": [[1, 1350, 4240], [2, 4250, 5710], [3, 5720, 8270]]}, "89:28": {"url": "https://verses.quran.com/AbdulBaset/Murattal/mp3/089028.mp3", "seg": [[1, 650, 2660], [2, 2670, 3280], [3, 3290, 4140], [4, 4150, 6120], [5, 6130, 7330]]}, "89:29": {"url": "https://verses.quran.com/AbdulBaset/Murattal/mp3/089029.mp3", "seg": [[1, 550, 1420], [2, 1430, 1860], [3, 1870, 3170]]}, "89:30": {"url": "https://verses.quran.com/AbdulBaset/Murattal/mp3/089030.mp3", "seg": [[1, 500, 1510], [2, 1520, 3540]]}, "20:55": {"url": "https://verses.quran.com/AbdulBaset/Murattal/mp3/020055.mp3", "seg": [[1, 850, 1660], [2, 1670, 3520], [3, 3530, 4880], [4, 4890, 6480], [5, 6490, 7830], [6, 7840, 9410], [7, 9420, 10860], [8, 10870, 11850]]}, "2:28": {"url": "https://verses.quran.com/AbdulBaset/Murattal/mp3/002028.mp3", "seg": [[1, 2150, 2540], [2, 2550, 3780], [3, 3790, 4680], [4, 4690, 6760], [5, 6770, 8560], [6, 8570, 9990], [7, 10000, 11300], [8, 11310, 12420], [9, 12430, 13690], [10, 13700, 14890], [11, 14900, 16460], [12, 16470, 17210], [13, 17220, 18650]]}, "41:53": {"url": "https://verses.quran.com/AbdulBaset/Murattal/mp3/041053.mp3", "seg": [[1, 900, 2290], [2, 2300, 4080], [3, 4090, 4360], [4, 4370, 5950], [5, 5960, 7600], [6, 7610, 9600], [7, 9610, 10700], [8, 10710, 12360], [9, 12370, 13130], [10, 13140, 14830], [11, 14840, 16400], [12, 17800, 18680], [13, 18690, 19520], [14, 19530, 20830], [15, 20840, 22470], [16, 22480, 23350], [17, 23360, 24120], [18, 24130, 25820], [19, 25830, 27000]]}}};const PLATES=["alaqah", "bones", "child", "clay", "dua40", "elder", "family_dusk", "fetus", "flesh", "galaxy", "garden", "heavens", "infant_hand", "lamp_dark", "lamp_lit", "mudghah", "newborn", "pregnant", "seed", "sprout", "stargazer", "void", "womb", "youth"];
+"use strict";
+// ───────────────────────── utilities
+const TAU=Math.PI*2, D2R=Math.PI/180;
+const clamp=(x,a=0,b=1)=>x<a?a:x>b?b:x;
+const lerp=(a,b,t)=>a+(b-a)*t;
+const seg=(x,a,b)=>b<=a?(x>=b?1:0):clamp((x-a)/(b-a));
+const eo=t=>1-Math.pow(1-t,3);
+const eio=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const esine=t=>.5-.5*Math.cos(Math.PI*t);
+const mix=(a,b,t)=>[lerp(a[0],b[0],t),lerp(a[1],b[1],t),lerp(a[2],b[2],t)];
+const rgb=c=>`rgb(${c[0]|0},${c[1]|0},${c[2]|0})`;
+const rgba=(c,a)=>`rgba(${c[0]|0},${c[1]|0},${c[2]|0},${a})`;
+const bez=(a,b,c,d,t)=>{const u=1-t;return u*u*u*a+3*u*u*t*b+3*u*t*t*c+t*t*t*d};
+const dv=(a,l)=>[Math.sin(a*D2R)*l,Math.cos(a*D2R)*l];
+const hash=i=>{const x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x)};
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const AR_DIG='٠١٢٣٤٥٦٧٨٩';
+const arNum=n=>String(n).replace(/\d/g,d=>AR_DIG[d]);
+const MARKS=/[ؐ-ًؚ-ٰٟۖ-ۭـ]/g;
+const norm=s=>s.replace(MARKS,'').replace(/[آأإٱ]/g,'ا').replace(/[ىی]/g,'ي');
+const $=s=>document.querySelector(s);
+
+// ───────────────────────── canvas
+const cv=$('#c'), ctx=cv.getContext('2d');
+let W=0,H=0,DPR=1,U=100,cx=0,cy=0;
+function resize(){DPR=Math.min(1.5,window.devicePixelRatio||1);W=innerWidth;H=innerHeight;cv.width=W*DPR|0;cv.height=H*DPR|0;ctx.setTransform(DPR,0,0,DPR,0,0);
+  U=Math.min(W*.43,H*.27);cx=W/2;cy=H*(W<820?.31:.345);}
+addEventListener('resize',resize);resize();
+let A=1; // alpha of the scene being drawn
+const al=a=>{ctx.globalAlpha=clamp(A*a)};
+const add=()=>{ctx.globalCompositeOperation='lighter'};
+const norml=()=>{ctx.globalCompositeOperation='source-over'};
+const SPR={};
+function sprite(c){const k=c.map(v=>(v>>3)<<3).join(',');if(SPR[k])return SPR[k];const s=document.createElement('canvas');s.width=s.height=96;const g=s.getContext('2d');const gr=g.createRadialGradient(48,48,0,48,48,48);gr.addColorStop(0,`rgba(${k},1)`);gr.addColorStop(.22,`rgba(${k},.55)`);gr.addColorStop(.55,`rgba(${k},.14)`);gr.addColorStop(1,`rgba(${k},0)`);g.fillStyle=gr;g.fillRect(0,0,96,96);return SPR[k]=s}
+function glowAt(x,y,r,c,a){if(r<=0||a<=0)return;al(a);ctx.drawImage(sprite(c),x-r,y-r,2*r,2*r)}
+function line(x1,y1,x2,y2){ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke()}
+function poly(pts,close){ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));if(close)ctx.closePath()}
+function dashStroke(pts,prog){if(prog<=0)return;let L=0;for(let i=1;i<pts.length;i++)L+=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);ctx.setLineDash([L*prog+.01,L+1]);poly(pts);ctx.stroke();ctx.setLineDash([])}
+function txt(s,x,y,size,font,col,a,align){const m=font.match(/^(?:(?:italic|\d00)\s+)*/)[0];ctx.font=`${m}${size}px ${font.slice(m.length)}`;ctx.textAlign=align||'center';ctx.textBaseline='middle';ctx.fillStyle=rgb(col);al(a);if(!align||align==='center'){const w=ctx.measureText(s).width*.56+12;x=Math.min(Math.max(x,w),W-w)}ctx.fillText(s,x,y)}
+const F_AR='"Amiri Quran","Amiri",serif', F_SER='"Alegreya",serif', F_SER_I='italic "Alegreya",serif', F_KUFI='500 "Reem Kufi","Amiri",serif';
+const GOLD=[232,196,120], WHITE=[255,255,255], EARTH=[[120,78,48],[146,96,58],[98,64,42],[170,118,72],[82,54,36],[134,90,60]];
+
+
+// ───────────────────────── painted plates (Codex imagegen) and the light drawn over them
+const IMG={},CUT={},CUTS=['womb','alaqah','mudghah','bones','flesh','fetus'];let loaded=0;
+function maskCut(im){const c=document.createElement('canvas');c.width=im.naturalWidth;c.height=im.naturalHeight;const g=c.getContext('2d');g.drawImage(im,0,0);g.globalCompositeOperation='destination-in';
+  const r=g.createRadialGradient(c.width/2,c.height/2,c.height*.3,c.width/2,c.height/2,c.height*.62);r.addColorStop(0,'#000');r.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=r;g.fillRect(0,0,c.width,c.height);return c}
+function loadPlates(done){PLATES.forEach(k=>{const im=new Image();im.decoding='async';im.onload=()=>{if(CUTS.includes(k))CUT[k]=maskCut(im);loaded++;done(loaded/PLATES.length)};im.onerror=()=>{loaded++;done(loaded/PLATES.length)};im.src=`img/${k}.jpg`;IMG[k]=im})}
+let BLUR=0;
+const PT={};
+function plate(k,o={}){const im=IMG[k];if(!im||!im.naturalWidth)return null;const a=o.a==null?1:o.a;
+  const z=(o.z||1)*1.16,s=Math.max(W/im.naturalWidth,H/im.naturalHeight)*z,w=im.naturalWidth*s,h=im.naturalHeight*s;
+  let x=W/2-(o.fx??.5)*w,y=H/2-(o.fy??.5)*h;x=Math.min(0,Math.max(W-w,x));y=Math.min(0,Math.max(H-h,y));const T={x,y,w,h};PT[k]=T;
+  if(a<=.003)return T;ctx.save();if(o.blend)ctx.globalCompositeOperation=o.blend;const fl=[],b=(o.blur||0)+BLUR;if(b>.4)fl.push(`blur(${b.toFixed(1)}px)`);if(o.bright!=null)fl.push(`brightness(${o.bright})`);if(o.sat!=null)fl.push(`saturate(${o.sat})`);if(fl.length)ctx.filter=fl.join(' ');
+  al(a);ctx.drawImage(im,x,y,w,h);ctx.restore();return T}
+const at=(T,u,v)=>T?[T.x+u*T.w,T.y+v*T.h]:[cx,cy];
+function cut(k,x,y,wid,o={}){const im=CUT[k];if(!im)return;const a=o.a==null?1:o.a;if(a<=.003)return;const h=wid*im.height/im.width;ctx.save();ctx.globalCompositeOperation=o.blend||'screen';
+  const fl=[],b=(o.blur||0)+BLUR*.6;if(b>.4)fl.push(`blur(${b.toFixed(1)}px)`);if(o.bright!=null)fl.push(`brightness(${o.bright})`);if(fl.length)ctx.filter=fl.join(' ');ctx.translate(x,y);if(o.rot)ctx.rotate(o.rot);if(o.flip)ctx.scale(-1,1);al(a);ctx.drawImage(im,-wid/2,-h/2,wid,h);ctx.restore()}
+function wash(c,a,op){if(a<=0)return;ctx.save();ctx.globalCompositeOperation=op||'source-over';al(a);ctx.fillStyle=rgb(c);ctx.fillRect(-W,-H,W*3,H*3);ctx.restore()}
+// dust in a beam: deterministic drifting motes
+const wrap1=u=>(u%1+1)%1;
+function motes(n,seed,box,c,a,t,size){if(a<=0)return;add();for(let i=0;i<n;i++){const h1=hash(seed+i),h2=hash(seed+i*1.7+3),h3=hash(seed+i*2.3+7);
+  const x=box[0]+(box[2]-box[0])*wrap1(h1+t*.006*(h3-.5)+.02*Math.sin(t*.4+i)),y=box[1]+(box[3]-box[1])*wrap1(h2-t*.01*(.3+h3)),tw=.5+.5*Math.sin(t*(.6+h3)+i);
+  glowAt(x,y,(size||3)*(.6+1.6*h3),c,a*tw*(.35+.65*h1))}norml()}
+// soft volumetric light: a stack of wedges from a source
+function beam(x,y,ang,spread,len,c,a,t){if(a<=0)return;ctx.save();ctx.globalCompositeOperation='screen';for(let i=0;i<5;i++){const s=spread*(.35+i*.18),br=.55+.45*Math.sin(t*.5+i*1.3);
+  const g=ctx.createLinearGradient(x,y,x+Math.cos(ang)*len,y+Math.sin(ang)*len);g.addColorStop(0,rgba(c,.22*br));g.addColorStop(1,rgba(c,0));ctx.fillStyle=g;al(a*.6);ctx.beginPath();ctx.moveTo(x,y);
+  ctx.lineTo(x+Math.cos(ang-s)*len,y+Math.sin(ang-s)*len);ctx.lineTo(x+Math.cos(ang+s)*len,y+Math.sin(ang+s)*len);ctx.closePath();ctx.fill()}ctx.restore()}
+// a point of light with a soft halo and a faint anamorphic streak
+function star(x,y,r,c,a){if(a<=0)return;add();glowAt(x,y,r*4,c,.35*a);glowAt(x,y,r*1.6,c,.8*a);glowAt(x,y,r*.5,WHITE,a);
+  const g=ctx.createLinearGradient(x-r*9,y,x+r*9,y);g.addColorStop(0,rgba(c,0));g.addColorStop(.5,rgba(c,.5*a));g.addColorStop(1,rgba(c,0));ctx.fillStyle=g;al(1);ctx.fillRect(x-r*9,y-.6,r*18,1.2);norml()}
+// a ring of light that draws itself, with one ripple spreading out from it
+function halo(x,y,r,prog,rot,c,a){if(prog<=0||a<=0)return;const a0=-Math.PI/2+rot,a1=a0+TAU*eio(clamp(prog*1.15));ctx.save();ctx.globalCompositeOperation='screen';ctx.strokeStyle=rgb(c);
+  ctx.filter='blur(4px)';ctx.lineWidth=3;al(a*.7);ctx.beginPath();ctx.arc(x,y,r,a0,a1);ctx.stroke();ctx.filter='none';ctx.strokeStyle=rgb(mix(c,WHITE,.4));ctx.lineWidth=1;al(a);ctx.beginPath();ctx.arc(x,y,r,a0,a1);ctx.stroke();
+  const e=eo(clamp(prog*1.4));ctx.strokeStyle=rgb(c);al(a*.35*(1-e));ctx.beginPath();ctx.arc(x,y,r*(.6+.7*e),0,TAU);ctx.stroke();ctx.restore();
+  // lights that gather onto the ring and circle it slowly
+  const n=Math.round(10+r/U*14),g=eo(clamp(prog*1.3-.15));if(g<=0)return;add();for(let i=0;i<n;i++){const h=hash(i*7.3+r),an=a0+i/n*TAU+gT*(.05+.03*h)*(rot<0?-1:1),rr=r*(1+(1-g)*(.5+h)),
+    px=x+Math.cos(an)*rr,py=y+Math.sin(an)*rr,tw=.6+.4*Math.sin(gT*(1.2+h)+i);glowAt(px,py,U*.05,c,.35*a*g*tw);glowAt(px,py,U*.012,WHITE,.8*a*g*tw)}
+  glowAt(x,y,r*1.4,c,.12*a*g);norml()}
+function crescent(x,y,r,c,a){if(a<=0||r<=0)return;add();glowAt(x,y,r*2.6,c,.3*a);norml();ctx.fillStyle=rgb(mix(c,WHITE,.25));al(a);ctx.beginPath();ctx.arc(x,y,r,-Math.PI/2,Math.PI/2,false);ctx.ellipse(x,y,r*.42,r,0,Math.PI/2,-Math.PI/2,true);ctx.fill()}
+const beat=t=>{const u=(t*1.2)%1;return Math.exp(-Math.pow((u-.1)/.035,2))+.6*Math.exp(-Math.pow((u-.26)/.04,2))};
+function wombBG(t,a,bright){wash([14,3,7],a);const g=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.max(W,H)*.7);g.addColorStop(0,`rgba(120,24,40,${.55*a})`);g.addColorStop(.5,`rgba(52,8,18,${.5*a})`);g.addColorStop(1,'rgba(8,2,4,0)');ctx.fillStyle=g;al(1);ctx.fillRect(0,0,W,H);
+  cut('womb',cx,cy,Math.max(U*4.4,W*.95)*(1+.015*Math.sin(t*.5)),{a:a*(bright??.85),rot:t*.006})}
+// embryo stages as one continuous subject: cross-dissolve with scale, breath and focus pull
+// the flesh plate was painted mirrored; flip it so every stage faces the same way
+const MIRROR={flesh:1};
+function subject(k,a,t,size,o={}){cut(k,cx+(o.dx||0),cy+(o.dy||0)+Math.sin(t*.7)*U*.012,size*(1+.012*Math.sin(t*.9)),{a,blur:o.blur,bright:o.bright,flip:!!MIRROR[k],rot:Math.sin(t*.35)*.015+(o.rot||0)})}
+let RG={at:-9};function ring(){if(gT-RG.at<.5)return RG.v;RG.at=gT;const l=$('#label').getBoundingClientRect().bottom,v=$('#verse').getBoundingClientRect().top,top=Math.max(l,H*.12),bot=v>top+U?v:H*.72;return RG.v=[(top+bot)/2,(bot-top)/2-U*.38]}
+addEventListener('resize',()=>{RG.at=-9});
+const SUB=()=>W<820?Math.min(U,W*.29):U*1.22;
+function caption(s,a){if(a<=0)return;const x=Math.max(18,cx-U*1.3),y=cy-U*.95;txt(s,x,y,Math.max(15,U*.072),F_SER_I,[255,226,214],.9*a,'left');ctx.strokeStyle='rgba(255,220,210,.6)';ctx.lineWidth=1;al(.6*a);line(x,y+U*.06,x+U*.42*a,y+U*.06)}
+
+const NIGHT={top:[5,7,20],bot:[14,12,34],stars:0,vig:.5};
+const SCENES=[
+{id:'sign',keys:['51:21'],nav:'آية',navEn:'The sign',min:14,pal:NIGHT,
+ phases:[{w:'انفسكم',n:1,ar:'وَفِي أَنفُسِكُمْ',tr:'wa fī anfusikum',en:'and in yourselves'},
+   {w:'افلا',n:2,ar:'أَفَلَا تُبْصِرُونَ',tr:'a-fa-lā tubṣirūn',en:'will you not see?',sign:{tag:'Before the lens',text:'Every stage of the womb in this film was recited in seventh-century Arabia, nearly a thousand years before the first microscope.'}}],
+ draw(f){const{t,p}=f,open=eo(clamp(f.since(1)/3.4)),T=plate('stargazer',{fx:.5,fy:.55,z:1+.07*esine(p)});
+   halo(cx,cy,U*.95,eio(clamp(p*1.3)),t*.02,GOLD,.55);halo(cx,cy,U*.5,eio(clamp(p*1.3-.15)),-t*.035,GOLD,.45);
+   star(cx,cy,U*(.035+.03*open)*(1+.05*Math.sin(t*2)),[255,224,170],.6+.4*open);add();glowAt(cx,cy,U*(.3+.7*open),GOLD,.12+.25*open);norml()}},
+{id:'void',keys:['76:1'],nav:'الدهر',navEn:'Not yet a thing',min:14,pal:{top:[2,3,9],bot:[8,8,18],stars:0,vig:.6},
+ phases:[{w:'حين',n:3,ar:'حِينٌ مِّنَ الدَّهْرِ',tr:'ḥīnun mina d-dahr',en:'a stretch of time'},{w:'لم',n:4,ar:'لَمْ يَكُن شَيْئًا مَّذْكُورًا',tr:'lam yakun shayʾan madhkūrā',en:'not yet a thing worth mention'}],
+ draw(f){const{t,p}=f,ig=eio(clamp(f.since(1)/3));plate('void',{fx:.5,fy:.5,z:1.08-.06*p,bright:.8+.4*ig});
+   motes(70,11,[0,0,W,H],[180,190,255],.35,t,1.6);
+   if(ig>0){star(cx,cy,U*.05*ig,[210,222,255],ig);add();glowAt(cx,cy,U*1.4*ig,[120,130,220],.18*ig);norml();
+     ctx.strokeStyle='rgba(210,222,255,1)';ctx.lineWidth=1;al(.35*(1-ig));ctx.beginPath();ctx.arc(cx,cy,U*.06+U*1.2*ig,0,TAU);ctx.stroke()}}},
+{id:'clay',keys:['23:12'],nav:'طين',navEn:'Clay',min:14,pal:{top:[14,10,8],bot:[40,26,16],stars:0,vig:.5},
+ phases:[{w:'سللة',n:3,ar:'سُلَالَةٍ مِّن طِينٍ',tr:'sulālatin min ṭīn',en:'an extract of clay',sign:{tag:'Composition',text:'The elements the body is built from, among them oxygen, carbon, hydrogen, nitrogen, calcium, phosphorus and iron, are all found in the earth.'}}],
+ init(s,r){s.g=[...Array(900)].map(()=>({x:r(),y:.6+r()*.4,d:.02+.5*r(),w:r()*TAU,z:r()}))},
+ draw(f){const{t,q,s,p}=f,T=plate('clay',{fx:.5,fy:.62,z:1.04+.05*p}),tx=cx,ty=cy-U*.1;let arrived=0;add();
+   for(const g of s.g){const k=eio(seg(q,g.d,g.d+.42));if(k>=1){arrived++;continue}const sx=g.x*W,sy=g.y*H;if(k<=0){if(g.z<.25)glowAt(sx,sy,1.6,[255,190,120],.25*(.5+.5*Math.sin(t*2+g.w)));continue}
+     const x=bez(sx,lerp(sx,tx,.1),tx+Math.sin(g.w+t)*U*.12,tx,k),y=bez(sy,sy-U*.5,ty+U*.45,ty,k),c=mix([214,140,80],[255,226,170],k);glowAt(x,y,2.2+5*k*(1-k)*4,c,.5*(.4+.6*g.z))}
+   const fr=arrived/s.g.length;star(tx,ty,U*(.012+.03*fr),[255,214,150],.25+.75*fr);glowAt(tx,ty,U*(.2+.6*fr),[240,170,90],.15*fr);norml()}},
+{id:'drop',keys:['23:13'],nav:'نطفة',navEn:'The drop',min:14,pal:{top:[14,3,7],bot:[40,8,18],stars:0,vig:.5},
+ phases:[{w:'نطفة',n:1,ar:'نُطْفَة',tr:'nuṭfah',en:'a drop'},{w:'قرار',n:2,ar:'قَرَارٍ مَّكِينٍ',tr:'qarārin makīn',en:'a firm lodging',sign:{tag:'Day 6–7 · 39:6',text:'About six to seven days after fertilisation the embryo begins to implant in the wall of the womb. Ibn ʿAbbās explained the “three darknesses” of 39:6 as the belly, the womb and the placenta.'}}],
+ draw(f){const{t,p}=f,lodge=eio(clamp(f.since(1)/3));ctx.save();ctx.translate(cx,cy);const z=.75+.35*eio(p);ctx.scale(z,z);ctx.translate(-cx,-cy);wombBG(t,eo(clamp(p*1.8)),.6+.4*lodge);ctx.restore();
+   const k=eio(seg(p,0,.5)),y=lerp(-U*.3,cy,k);add();for(let i=1;i<16;i++){const yy=lerp(-U*.3,cy,eio(clamp(seg(p,0,.5)-i*.01)));glowAt(cx,yy,U*.05*(1-i/16),[255,200,190],.3*(1-i/16)*(1-k*.8))}norml();
+   star(cx,y,U*.03*(1+.06*Math.sin(t*3)),[255,210,200],1);
+   if(p>.5){ctx.save();ctx.globalCompositeOperation='screen';for(let j=0;j<3;j++){const r=seg(p,.5+j*.07,.85+j*.07);if(r<=0||r>=1)continue;ctx.strokeStyle='rgb(255,190,180)';al((1-r)*.4);ctx.lineWidth=1.2;ctx.beginPath();ctx.ellipse(cx,cy,U*.05+U*.7*r,(U*.05+U*.7*r)*.82,0,0,TAU);ctx.stroke()}ctx.restore()}
+   add();glowAt(cx,cy,U*.5,[255,120,110],.22*lodge*(.7+.3*Math.sin(t*1.4)));norml()}},
+{id:'embryo',keys:['23:14'],nav:'أطوار',navEn:'In stages',min:20,pal:{top:[14,3,7],bot:[40,8,18],stars:0,vig:.5},
+ phases:[{w:'النطفة',n:1,ar:'نُطْفَة',tr:'nuṭfah',en:'the drop'},
+   {w:'علقة',n:1,ar:'عَلَقَة',tr:'ʿalaqah',en:'a clinging thing',meta:'Weeks 3–4 after fertilisation',sign:{tag:'ʿAlaqah · weeks 3–4',text:'The word means something that clings: a leech, a suspended thing. At this stage the embryo is held by a stalk to the tissue that becomes the placenta, draws its nourishment from the mother, and its curved body is often compared to a leech.'}},
+   {w:'مضغة',n:1,ar:'مُضْغَة',tr:'muḍghah',en:'a chewed lump',meta:'Weeks 4–5, about 3 to 7 mm',sign:{tag:'Muḍghah · weeks 4–5',text:'A lump that looks chewed. Paired segments called somites appear along its back, like the marks of teeth.'}},
+   {w:'عظما',n:1,ar:'عِظَام',tr:'ʿiẓām',en:'bones',meta:'Weeks 6–7',sign:{tag:'ʿIẓām · weeks 6–7',text:'Many bones first take shape as cartilage models, and the skeleton gives the body its frame.'}},
+   {w:'لحما',n:1,ar:'لَحْم',tr:'laḥm',en:'flesh',meta:'Weeks 7–8',sign:{tag:'Laḥm · weeks 7–8',text:'Muscle forms around the bones, and by the end of week 8 after fertilisation the embryo has a recognisably human form.'}},
+   {w:'خلقا',n:2,ar:'خَلْقًا آخَرَ',tr:'khalqan ākhar',en:'another creation',meta:'Week 9 onward',sign:{tag:'Week 9 onward',text:'Embryologists begin the fetal period in week 9 after fertilisation, a time of growth and maturing. Ibn Kathīr explains “another creation” as the breathing in of the soul.'}},
+   {w:'فتبارك',n:4,ar:'فَتَبَارَكَ اللَّهُ أَحْسَنُ الْخَالِقِينَ',tr:'fa-tabāraka llāhu aḥsanu l-khāliqīn',en:'blessed is Allah, the best of creators'}],
+ draw(f){const{t}=f,st=f.phase;wombBG(t,1,.55);
+   const ST=[null,'alaqah','mudghah','bones','flesh','fetus','fetus'],SZ=[0,2.5,2.75,3,3.1,3.3,3.3],D=1.9;
+   const kin=eio(clamp(f.since(st)/D)),cur=ST[st],prev=st>0?ST[st-1]:null,base=SUB();
+   if(st===0||(st===1&&kin<1)){const a=st===0?1:1-kin;star(cx,cy,U*.03,[255,210,200],a);add();glowAt(cx,cy,U*.4,[255,140,130],.25*a);norml()}
+   if(prev&&prev!==cur&&kin<1&&!(st===4))subject(prev,1-kin,t,base*SZ[st-1]*(1+.06*kin),{blur:kin*7});
+   if(st===4){subject('bones',1-.55*kin,t,base*SZ[3]*(1+.03*kin))}
+   const kS=st===6?1:kin;if(cur)subject(cur,st===4?kS*.95:kS,t,base*SZ[st]*(.94+.06*kS),{blur:(1-kS)*6,bright:st>=5?1+.12*beat(t):1});
+   if(st>=5){add();glowAt(cx-U*.05,cy+U*.05,U*.25*(1+.3*beat(t)),[255,120,110],.25*beat(t));norml()}
+   if(st===6){const k=eo(clamp(f.since(6)/3.6));halo(cx,cy,U*1.15,k,t*.02,GOLD,.5*k);add();glowAt(cx,cy,U*1.6,GOLD,.18*k);norml()}
+   }},
+{id:'soul',keys:['32:9'],nav:'روح',navEn:'The spirit',min:15,pal:{top:[16,4,12],bot:[44,12,32],stars:0,vig:.5},
+ phases:[{w:'سويه',n:1,ar:'سَوَّاهُ',tr:'sawwāh',en:'He proportioned him'},{w:'ونفخ',n:4,ar:'وَنَفَخَ فِيهِ مِن رُّوحِهِ',tr:'wa nafakha fīhi min rūḥih',en:'and breathed into him of His spirit'},
+   {w:'السمع',n:1,ar:'السَّمْعَ',tr:'as-samʿ',en:'hearing',sign:{tag:'Hearing, then sight',text:'The verse names hearing before sight. A fetus begins to respond to sound in the second trimester, and its eyelids reopen at about 26 to 28 weeks of gestation.'}},
+   {w:'والابصر',n:1,ar:'وَالْأَبْصَارَ',tr:'wal-abṣār',en:'and sight'},{w:'والافدة',n:1,ar:'وَالْأَفْئِدَةَ',tr:'wal-afʾidah',en:'and hearts'}],
+ draw(f){const{t}=f,br=f.since(1),soul=eio(clamp(br/3.4));wombBG(t,1,.45+.2*soul);
+   const hx=cx+U*.18,hy=cy-U*.42;
+   if(br>0){add();const fl=br<5?1:Math.max(.2,1-(br-5)/4);for(let i=0;i<120;i++){const u=((i/120)+t*.16)%1,ang=i*2.39996+t*.3,rad=U*1.1*(1-eio(u)),x=cx+Math.cos(ang)*rad,y=cy-U*1.5*(1-eio(u))+Math.sin(ang)*rad*.3;glowAt(x,y,2+5*(1-u),[255,234,196],.6*fl*Math.min(1,br*.7)*Math.sin(Math.PI*u))}norml()}
+   add();glowAt(cx,cy,U*1.3,[255,210,170],.22*soul);norml();
+   subject('fetus',1,t,SUB()*3.3,{bright:1+.25*soul});
+   add();glowAt(cx-U*.05,cy+U*.05,U*.3*(1+.35*beat(t)),[255,130,110],(.12+.3*soul)*beat(t));
+   const h1=eo(clamp(f.since(2)/1.6));if(h1>0){ctx.strokeStyle='rgb(200,226,255)';ctx.lineWidth=1.2;for(let j=0;j<4;j++){const u=(t*.55+j/4)%1;al(h1*.55*(1-u)*Math.sin(Math.PI*Math.min(1,u*3)));ctx.beginPath();ctx.arc(hx,hy,U*(.25+u*.9),-1.1,.4);ctx.stroke()}}
+   const s1=eo(clamp(f.since(3)/1.6));if(s1>0)beam(hx-U*.1,hy-U*1.6,Math.PI/2+.25,.12,U*1.7,[255,236,200],s1*.8,t);
+   const c1=eo(clamp(f.since(4)/1.6));if(c1>0)glowAt(cx-U*.05,cy+U*.05,U*.7*(1+.25*beat(t)),[255,110,100],c1*.35*(.4+.6*beat(t)));norml()}},
+{id:'birth',keys:['16:78'],nav:'ولادة',navEn:'Birth',min:15,pal:{top:[40,30,30],bot:[90,60,50],stars:0,vig:.35},
+ phases:[{w:'اخرجكم',n:1,ar:'أَخْرَجَكُم مِّن بُطُونِ أُمَّهَاتِكُمْ',tr:'akhrajakum min buṭūni ummahātikum',en:'brought you out of your mothers’ wombs'},
+   {w:'لا',n:3,ar:'لَا تَعْلَمُونَ شَيْئًا',tr:'lā taʿlamūna shayʾā',en:'knowing nothing',sign:{tag:'After birth',text:'A newborn has its senses but no knowledge yet. What it comes to know, it learns through hearing, sight and the heart.'}},
+   {w:'السمع',n:3,ar:'السَّمْعَ وَالْأَبْصَارَ وَالْأَفْئِدَةَ',tr:'as-samʿa wal-abṣāra wal-afʾidah',en:'hearing, sight and hearts'},{w:'لعلكم',n:2,ar:'لَعَلَّكُمْ تَشْكُرُونَ',tr:'laʿallakum tashkurūn',en:'so that you may be grateful'}],
+ draw(f){const{t,p}=f,out=eio(clamp(p*3));
+   const T=plate('newborn',{fx:FOC.newborn[0],fy:FOC.newborn[1],z:1.12-.08*eio(p),bright:.85+.2*eo(clamp(f.since(2)/3))});
+   if(out<1){ctx.save();ctx.translate(cx,cy);const z=1+2.5*out;ctx.scale(z,z);ctx.translate(-cx,-cy);wombBG(t,1-out,.6);ctx.restore()}
+   wash([255,244,226],.85*Math.sin(Math.PI*clamp(p*3)),'screen');
+   const [wx,wy]=at(T,FOC.newbornWin[0],FOC.newbornWin[1]),[bx,by]=at(T,FOC.newborn[0],FOC.newborn[1]);
+   beam(wx,wy,Math.atan2(by-wy,bx-wx),.2,Math.hypot(bx-wx,by-wy)*1.5,[255,226,180],.4+.25*eo(clamp(f.since(2)/2)),t);
+   motes(90,21,[Math.min(wx,bx)-U*.3,Math.min(wy,by),Math.max(wx,bx)+U*.3,by+U*.2],[255,232,200],.5,t,2.2);
+   const gr=eo(clamp(f.since(3)/2.5));if(gr>0){add();glowAt(bx,by,U*.9,GOLD,.22*gr);norml()}}},
+{id:'mother',keys:['46:15'],nav:'أربعون',navEn:'Thirty months, forty years',min:22,pal:{top:[8,12,26],bot:[24,30,52],stars:0,vig:.4},
+ phases:[{w:'بولديه',n:2,ar:'بِوَالِدَيْهِ إِحْسَانًا',tr:'bi-wālidayhi iḥsānā',en:'goodness to his parents'},{w:'حملته',n:3,ar:'حَمَلَتْهُ أُمُّهُ كُرْهًا',tr:'ḥamalat-hu ummuhu kurhā',en:'his mother carried him with hardship'},
+   {w:'ثلثون',n:2,ar:'ثَلَاثُونَ شَهْرًا',tr:'thalāthūna shahrā',en:'thirty months',sign:{tag:'Thirty months',text:'Carrying and weaning together take thirty months, and complete nursing takes two years (2:233). From the two verses ʿAlī drew a shortest pregnancy of six months.'}},
+   {w:'اشده',n:1,ar:'بَلَغَ أَشُدَّهُ',tr:'balagha ashuddah',en:'he reaches full strength'},{w:'اربعين',n:2,ar:'أَرْبَعِينَ سَنَةً',tr:'arbaʿīna sanah',en:'forty years'},
+   {w:'رب',n:3,ar:'رَبِّ أَوْزِعْنِي أَنْ أَشْكُرَ نِعْمَتَكَ',tr:'rabbi awziʿnī an ashkura niʿmatak',en:'my Lord, enable me to be grateful for Your favour'}],
+ draw(f){const{t}=f,sc=i=>f.since(i),grow=sc(3)>0,forty=sc(4)>0,pray=sc(5)>0,kd=eio(clamp(sc(3)/1.6)),kp=eio(clamp(sc(5)/2.4));
+   const span3=Math.max(2,(f.ph[4]-f.ph[3])*f.T.speech);
+   const mk0=sc(1)<0?0:clamp(sc(1)/2);const Tm=plate('pregnant',{fx:FOC.preg[0],fy:FOC.preg[1],z:1.12+.05*f.p,a:1-kd,bright:1-.3*mk0*(1-kd)});
+   if(grow)plate('child',{fx:FOC.child[0],fy:lerp(.62,.48,eio(clamp(sc(3)/span3))),z:lerp(1.08,1.2,eio(clamp(sc(3)/span3))),a:kd*(1-kp)});
+   if(pray)plate('dua40',{fx:FOC.dua[0],fy:FOC.dua[1],z:1.12-.06*eio(clamp(sc(5)/8)),a:kp,bright:.9+.25*eo(clamp(sc(5)/3))});
+   if(pray&&PT.dua40){const T=PT.dua40,[mx,my]=at(T,FOC.duaWin[0],FOC.duaWin[1]),[rx,ry]=at(T,FOC.dua[0],FOC.dua[1]);beam(mx,my,Math.atan2(ry-my,rx-mx),.16,Math.hypot(rx-mx,ry-my)*1.4,[255,224,170],kp*(.35+.35*eo(clamp(sc(5)/3))),t);motes(70,41,[Math.min(mx,rx)-U*.2,Math.min(my,ry),Math.max(mx,rx)+U*.2,ry],[255,230,190],.5*kp,t,2)}
+   const mk=sc(1)<0?0:clamp(sc(1)/Math.max(2.5,((f.ph[3]-f.ph[1])*f.T.speech)*.85)),MR=Math.min(W*.42,U*1.6),mcx=cx,mcy=cy+U*.85,ma=1-kd;
+   for(let i=0;i<30;i++){const vis=clamp(mk*30-i);if(vis<=0)break;const a=Math.PI+.42+(Math.PI-.84)*i/29,x=mcx+Math.cos(a)*MR,y=mcy+Math.sin(a)*MR*.72;crescent(x,y,U*.03*eo(vis)*(1+.15*(1-vis)),i<6?[255,170,160]:[255,214,150],ma*.95)}
+   if(mk>=1&&ma>0){const k=eo(clamp(sc(2)/1.6))*ma;const lab=(i,s)=>{const a=Math.PI+.42+(Math.PI-.84)*i/29;txt(s,mcx+Math.cos(a)*(MR-U*.2),mcy+Math.sin(a)*(MR*.72-U*.14),Math.max(15,U*.08),F_SER,[255,226,200],.85*k)};lab(2.5,'six months');lab(18,'two years of nursing')}
+   if(grow){const n=forty?40:Math.floor(40*clamp(sc(3)/span3)),a=forty?(W>820?1:1-kp):kd,x=W>820?cx+U*1.25:cx,y=W>820?cy-U*.2:cy-U*.42,sz=Math.max(42,U*(W>820?(forty?.42:.3):.26));ctx.save();ctx.shadowColor='rgba(0,0,0,.5)';ctx.shadowBlur=24;txt(arNum(n),x,y,sz,F_KUFI,[255,230,186],a*(1-.0*kp));ctx.restore();txt(forty?'forty years':'years',x,y+sz*.62,Math.max(16,U*.085),F_SER_I,[255,236,210],.85*a)}}},
+{id:'ages',keys:['30:54'],nav:'قوة وضعف',navEn:'Strength, then weakness',min:17,pal:{top:[30,24,30],bot:[60,44,40],stars:0,vig:.4},
+ phases:[{w:'ضعف',n:1,ar:'ضَعْف',tr:'ḍaʿf',en:'weakness'},{w:'قوة',n:1,ar:'قُوَّة',tr:'quwwah',en:'strength'},
+   {w:'ضعفا',n:2,ar:'ضَعْفًا وَشَيْبَةً',tr:'ḍaʿfan wa shaybah',en:'weakness and white hair',sign:{tag:'The arc of strength',text:'Strength rises from infancy, peaks in early adulthood, then declines: muscle mass falls with age and hair loses its pigment.'}},
+   {w:'يخلق',n:3,ar:'يَخْلُقُ مَا يَشَاءُ',tr:'yakhluqu mā yashāʾ',en:'He creates what He wills'}],
+ draw(f){const{t,q}=f,k1=eio(clamp(f.since(1)/2.2)),k2=eio(clamp(f.since(2)/2.6)),k3=eo(clamp(f.since(3)/4));
+   plate('infant_hand',{fx:FOC.hand[0],fy:FOC.hand[1],z:1.08+.06*eio(clamp(f.t/8)),a:1-k1});
+   if(k1>0)plate('youth',{fx:FOC.youth[0],fy:FOC.youth[1],z:1.1+.06*k1,a:k1*(1-k2),bright:1.05});
+   if(k2>0)plate('elder',{fx:FOC.elder[0],fy:FOC.elder[1],z:1.14-.06*eio(clamp(f.since(2)/9)),a:k2,bright:1-.25*k3,sat:1-.4*k3});
+   const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'rgba(70,40,110,1)');g.addColorStop(1,'rgba(230,120,70,1)');ctx.save();ctx.globalCompositeOperation='soft-light';ctx.fillStyle=g;al(.35*q);ctx.fillRect(0,0,W,H);ctx.restore();
+   if(k2>0&&PT.elder){const[wx,wy]=at(PT.elder,FOC.elderWin[0],FOC.elderWin[1]),[ox,oy]=at(PT.elder,FOC.elder[0],FOC.elder[1]);beam(wx,wy,Math.atan2(oy-wy,ox-wx),.18,Math.hypot(ox-wx,oy-wy)*1.4,[255,196,150],.6*k2*(1-.6*k3),t);motes(60,51,[Math.min(wx,ox)-U*.2,Math.min(wy,oy),Math.max(wx,ox)+U*.2,oy],[255,214,180],.45*k2,t,2)}}},
+{id:'span',keys:['40:67'],nav:'أجل',navEn:'A named term',min:18,pal:NIGHT,
+ phases:[{w:'تراب',n:1,ar:'تُرَاب',tr:'turāb',en:'dust'},{w:'نطفة',n:1,ar:'نُطْفَة',tr:'nuṭfah',en:'a drop'},{w:'علقة',n:1,ar:'عَلَقَة',tr:'ʿalaqah',en:'a clinging thing'},{w:'طفلا',n:1,ar:'طِفْلًا',tr:'ṭiflā',en:'a child'},
+   {w:'اشدكم',n:1,ar:'أَشُدَّكُمْ',tr:'ashuddakum',en:'full strength'},{w:'شيوخا',n:1,ar:'شُيُوخًا',tr:'shuyūkhā',en:'elders'},{w:'يتوفي',n:3,ar:'مَن يُتَوَفَّىٰ مِن قَبْلُ',tr:'man yutawaffā min qabl',en:'some are taken before'},{w:'اجلا',n:2,ar:'أَجَلًا مُّسَمًّى',tr:'ajalan musammā',en:'a term already named'}],
+ init(s,r){s.o=[...Array(40)].map(()=>{const e=r()<.3;return{lag:r()*1.3,e,at:.4+r()*4.4,w:r()*TAU}})},
+ draw(f){const[cy,RB]=ring();const{t,s,p}=f,st=f.phase;plate('family_dusk',{fx:.5,fy:.45,z:1.12+.05*p,bright:.9});
+   const R0=Math.min(U*.82,W*.3,RB),NODE=[0,1,2,3,4,5,5.45,6],ang=x=>Math.PI/2+x/6*TAU*.86;
+   const tr=st>=7?lerp(5.45,6,eio(clamp(f.since(7)/2))):lerp(NODE[st],NODE[Math.min(st+1,7)],eio(clamp(f.since(st)/2.2)));
+   ctx.save();ctx.globalCompositeOperation='screen';ctx.strokeStyle=rgb(GOLD);ctx.lineWidth=1;al(.2);ctx.beginPath();ctx.arc(cx,cy,R0,ang(0),ang(6));ctx.stroke();ctx.filter='blur(2px)';ctx.lineWidth=3;al(.6);ctx.beginPath();ctx.arc(cx,cy,R0,ang(0),ang(tr));ctx.stroke();ctx.filter='none';ctx.lineWidth=1.2;al(.95);ctx.beginPath();ctx.arc(cx,cy,R0,ang(0),ang(tr));ctx.stroke();ctx.restore();
+   [0,1,2,3,4,5,7].forEach((pi,ni)=>{const a=ang(ni),x=cx+Math.cos(a)*R0,y=cy+Math.sin(a)*R0,on=tr>=ni-.02,P0=SCENES[9].phases[pi];star(x,y,U*(on?.02:.01),on?[255,220,160]:[160,170,220],on?1:.5);
+     const lx=cx+Math.cos(a)*(R0+U*.22),ly=cy+Math.sin(a)*(R0+U*.17);txt(P0.ar.replace(MARKS,''),lx,ly-6,Math.max(16,U*.085),F_KUFI,on?[255,230,186]:[170,170,200],on?1:.45);txt(P0.en,lx,ly+U*.075,Math.max(14,U*.064),F_SER_I,[230,224,240],on?.8:.35)});
+   add();const dep=f.since(6);for(const o of s.o){let pos=clamp(tr-o.lag,0,6);if(o.e)pos=Math.min(pos,o.at);const a=ang(pos);let x=cx+Math.cos(a)*R0,y=cy+Math.sin(a)*R0,a2=.85;
+     if(o.e&&dep>0&&pos>=o.at-.01){const k=eio(clamp(dep/3.4));y-=k*U*1.1;x+=Math.sin(o.w+k*4)*U*.05;a2=.85*(1-k);for(let j=1;j<10;j++)glowAt(x,y+j*U*.03*k,U*.02*(1-j/10),[255,226,180],a2*.4*(1-j/10))}glowAt(x,y,U*.05,[255,220,160],a2*.6);glowAt(x,y,U*.012,WHITE,a2)}
+   const fin=eo(clamp(f.since(7)/2.5));if(fin>0){const a=ang(6);glowAt(cx+Math.cos(a)*R0,cy+Math.sin(a)*R0,U*.4*fin,GOLD,.45*fin)}norml()}},
+{id:'death',keys:['29:57'],nav:'موت',navEn:'Every soul',min:15,pal:{top:[4,5,10],bot:[12,12,20],stars:0,vig:.6},
+ phases:[{w:'كل',n:2,ar:'كُلُّ نَفْسٍ',tr:'kullu nafs',en:'every soul'},{w:'ذائقة',n:2,ar:'ذَائِقَةُ الْمَوْتِ',tr:'dhāʾiqatu l-mawt',en:'will taste death'},{w:'الينا',n:2,ar:'ثُمَّ إِلَيْنَا تُرْجَعُونَ',tr:'thumma ilaynā turjaʿūn',en:'then to Us you return'}],
+ draw(f){const{t,p}=f,out=clamp(f.since(1)/2.6),fk=1-.12*Math.max(0,Math.sin(t*17))*Math.sin(t*5.3)-.25*out*Math.abs(Math.sin(t*29)),lit=(1-eio(out))*fk,o={fx:FOC.lamp[0],fy:FOC.lamp[1]+.05,z:1.06+.06*p};
+   plate('lamp_dark',o);const T=plate('lamp_lit',{...o,a:clamp(lit)});const[lx,ly]=at(T,FOC.lamp[0],FOC.lamp[1]);
+   add();glowAt(lx,ly,U*.5,[255,190,110],.35*lit);norml();
+   if(out>0){const fade=Math.max(0,1-Math.max(0,f.since(2))/3);for(let i=0;i<30;i++){const u=((i/30)+t*.08)%1,y=ly-U*.08-u*U*1.2,x=lx+Math.sin(u*5+t*.7+i*.5)*U*.06*u;ctx.fillStyle='rgb(200,204,216)';al(.12*(1-u)*Math.min(1,out*2)*fade);ctx.beginPath();ctx.arc(x,y,U*.012*(1+u*3),0,TAU);ctx.fill()}}
+   const rk=eio(clamp(f.since(2)/4.5));if(rk>0){const y=lerp(ly,-U*.3,rk);add();for(let i=1;i<16;i++)glowAt(lx,lerp(ly,-U*.3,eio(clamp(f.since(2)/4.5-i*.012))),U*.035,[220,228,255],.16*(1-i/16));norml();star(lx,y,U*.03,[220,228,255],1-rk*.3)}}},
+{id:'ascent',keys:['89:27','89:28','89:29','89:30'],nav:'رجوع',navEn:'The soul at peace',min:18,pal:{top:[10,14,36],bot:[40,34,70],stars:0,vig:.45},
+ phases:[{w:'يايتها',n:3,ar:'يَا أَيَّتُهَا النَّفْسُ الْمُطْمَئِنَّةُ',tr:'yā ayyatuha n-nafsu l-muṭmaʾinnah',en:'O soul at peace'},{w:'ارجعي',n:3,ar:'ارْجِعِي إِلَىٰ رَبِّكِ',tr:'irjiʿī ilā rabbik',en:'return to your Lord'},
+   {w:'فادخلي',n:3,ar:'فَادْخُلِي فِي عِبَادِي',tr:'fadkhulī fī ʿibādī',en:'enter among My servants'},{w:'وادخلي',n:2,ar:'وَادْخُلِي جَنَّتِي',tr:'wadkhulī jannatī',en:'enter My Garden'}],
+ init(s,r){s.c=[...Array(36)].map((_,i)=>({a:i/36*TAU+r()*.2,r:.25+r()*.35,z:r()}))},
+ draw(f){const{t,s}=f,climb=eio(clamp(f.since(0)/Math.max(5,f.ph[3]*f.T.speech))),jk=eio(clamp(f.since(3)/3.6));
+   plate('heavens',{fx:.5,fy:lerp(.95,.08,climb),z:1.5,a:1-jk*.85});
+   if(jk>0)plate('garden',{fx:.5,fy:.5,z:1.15-.08*jk,a:jk});
+   wash([255,236,200],.5*Math.sin(Math.PI*jk),'screen');
+   const sy=cy+Math.sin(t*.8)*U*.03;star(cx,sy,U*.04,[255,232,190],1-jk*.5);add();glowAt(cx,sy,U*.5,[255,220,160],.25);
+   const gk=f.since(2);if(gk>0)s.c.forEach((c,i)=>{const k=eo(clamp((gk-i*.07)/1.4));if(k<=0)return;const a=c.a+t*.04,x=cx+Math.cos(a)*U*c.r*2*k,y=sy+Math.sin(a)*U*c.r*.8*k;glowAt(x,y,U*.05,[255,236,190],.5*k*(.6+.4*Math.sin(t*2+c.z*9)));glowAt(x,y,U*.01,WHITE,k*(1-jk*.6))});norml()}},
+{id:'earth',keys:['20:55'],nav:'تراب',navEn:'Into the earth, and out again',min:18,pal:{top:[10,12,20],bot:[30,26,24],stars:0,vig:.45},
+ phases:[{w:'منها',n:2,ar:'مِنْهَا خَلَقْنَاكُمْ',tr:'minhā khalaqnākum',en:'from it We created you'},{w:'وفيها',n:2,ar:'وَفِيهَا نُعِيدُكُمْ',tr:'wa fīhā nuʿīdukum',en:'and into it We return you'},
+   {w:'ومنها',n:4,ar:'وَمِنْهَا نُخْرِجُكُمْ تَارَةً أُخْرَىٰ',tr:'wa minhā nukhrijukum tāratan ukhrā',en:'and from it We bring you out once more',sign:{tag:'30:19',text:'“He gives life to the earth after its death, and thus you will be brought out.” The Qur’an gives the sprouting seed as the likeness of resurrection.'}}],
+ init(s,r){s.p=[...Array(420)].map(()=>({x:r(),y:r(),d:r()*.5,w:r()*TAU}));s.rain=[...Array(140)].map(()=>({x:r(),s:.7+r()*.8,o:r(),l:.5+r()}))},
+ draw(f){const{t,s,p}=f,k0=eio(clamp(f.since(0)/3)),k1=eio(clamp(f.since(1)/3.2)),k2=eio(clamp(f.since(2)/4.5)),o={fx:FOC.seed[0],fy:FOC.seed[1]-.12,z:1.08+.05*p};
+   const T=plate('seed',o);plate('sprout',{...o,a:k2});const[sx,sy]=at(T,FOC.seed[0],FOC.seed[1]),surf=at(T,.5,FOC.surface)[1];
+   add();for(const q of s.p){const a0=eio(clamp(k0*1.5-q.d)),a1=eio(clamp(k1*1.5-q.d));if(a0<=0)continue;const bx=q.x*W,by=surf+(H-surf)*q.y*.8,tx=cx+Math.cos(q.w)*U*.5*q.y,ty=surf-U*(.3+.7*q.x);
+     let x=lerp(bx,tx,a0),y=lerp(by,ty,a0);if(a1>0){x=lerp(x,sx+Math.cos(q.w)*U*.05,a1);y=lerp(y,sy+Math.sin(q.w)*U*.03,a1)}glowAt(x+Math.sin(t+q.w)*3*(1-a1),y,2.4,[255,214,160],.55*(1-k2))}
+   if(k1>0)star(sx,sy,U*.025*(1+.15*Math.sin(t*2)),[255,214,150],k1*(1-k2*.6));
+   const rn=(1-k2)*clamp(1-Math.max(0,f.since(2))/3);if(rn>0){ctx.strokeStyle='rgb(200,214,240)';ctx.lineWidth=1;for(const r of s.rain){const y=((t*r.s*.9+r.o)%1)*surf,x=r.x*W;al(.28*rn);line(x,y,x-2,y+U*.08*r.l)}}
+   if(k2>0){add();glowAt(cx,surf-U*.3,U*1.5,[255,224,160],.3*k2);norml()}}},
+{id:'cycle',keys:['2:28'],nav:'حياة',navEn:'Life, death, life',min:16,pal:NIGHT,
+ phases:[{w:'كيف',n:3,ar:'كَيْفَ تَكْفُرُونَ بِاللَّهِ',tr:'kayfa takfurūna billāh',en:'how can you deny Allah'},{w:'اموتا',n:1,ar:'أَمْوَاتًا',tr:'amwātā',en:'you were lifeless'},{w:'فاحيكم',n:1,ar:'فَأَحْيَاكُمْ',tr:'fa-aḥyākum',en:'He gave you life'},
+   {w:'يميتكم',n:1,ar:'يُمِيتُكُمْ',tr:'yumītukum',en:'He causes you to die'},{w:'يحييكم',n:1,ar:'يُحْيِيكُمْ',tr:'yuḥyīkum',en:'He gives you life again'},{w:'اليه',n:2,ar:'إِلَيْهِ تُرْجَعُونَ',tr:'ilayhi turjaʿūn',en:'to Him you return'}],
+ draw(f){const[cy,RB]=ring();const{t,p}=f,R0=Math.min(U*.8,W*.29,RB),st=f.phase;plate('void',{fx:.5,fy:.5,z:1.1+.05*p,bright:1.1});let tr=0;if(st>=2)tr=Math.min(3,(st-2)+eio(clamp(f.since(st)/1.8)));if(st>=5)tr=3;
+   const toC=eio(clamp(f.since(5)/2.6)),a=Math.PI/2+tr*Math.PI/2,ap=f.since(1)>0?eo(clamp(f.since(1)/1.2)):0;
+   ctx.save();ctx.globalCompositeOperation='screen';ctx.strokeStyle=rgb(GOLD);ctx.lineWidth=1;al(.2);ctx.beginPath();ctx.arc(cx,cy,R0,0,TAU);ctx.stroke();if(tr>0){ctx.filter='blur(2px)';ctx.lineWidth=3;al(.6);ctx.beginPath();ctx.arc(cx,cy,R0,Math.PI/2,a);ctx.stroke();ctx.filter='none';ctx.lineWidth=1.2;al(1);ctx.beginPath();ctx.arc(cx,cy,R0,Math.PI/2,a);ctx.stroke()}ctx.restore();
+   [[Math.PI/2,1],[Math.PI,2],[Math.PI*1.5,3],[0,4]].forEach(([an,pi])=>{const x=cx+Math.cos(an)*R0,y=cy+Math.sin(an)*R0,on=st>=pi,P0=SCENES[13].phases[pi];star(x,y,U*(on?.022:.01),on?[255,220,160]:[160,170,220],on?1:.5);
+     const lx=cx+Math.cos(an)*(R0+U*.26),ly=cy+Math.sin(an)*(R0+U*.16);txt(P0.ar.replace(MARKS,''),lx,ly-6,Math.max(17,U*.09),F_KUFI,on?[255,230,186]:[170,170,200],on?1:.45);txt(P0.en,lx,ly+U*.08,Math.max(14,U*.064),F_SER_I,[230,224,240],on?.8:.35)});
+   const px=lerp(cx+Math.cos(a)*R0,cx,toC),py=lerp(cy+Math.sin(a)*R0,cy,toC);if(ap>0)star(px,py,U*.035,[255,226,170],ap);
+   if(toC>0){halo(cx,cy,U*.6,toC,t*.03,GOLD,.6*toC);add();glowAt(cx,cy,U*.9*toC,GOLD,.25*toC);norml()}}},
+{id:'truth',keys:['41:53'],nav:'الحق',navEn:'It is the truth',min:22,pal:NIGHT,
+ phases:[{w:'سنريهم',n:2,ar:'سَنُرِيهِمْ آيَاتِنَا',tr:'sanurīhim āyātinā',en:'We will show them Our signs'},{w:'افاق',n:1,ar:'فِي الْآفَاقِ',tr:'fi l-āfāq',en:'in the horizons'},{w:'انفسهم',n:1,ar:'وَفِي أَنفُسِهِمْ',tr:'wa fī anfusihim',en:'and within themselves'},
+   {w:'انه',n:2,ar:'أَنَّهُ الْحَقُّ',tr:'annahu l-ḥaqq',en:'that it is the truth',sign:{tag:'Fourteen centuries',text:'Clay, drop, clinging form, chewed lump, bones, flesh, a new creation: these stages were recited in seventh-century Mecca, centuries before modern embryology.'}},
+   {w:'شهيد',n:1,ar:'عَلَىٰ كُلِّ شَيْءٍ شَهِيدٌ',tr:'ʿalā kulli shayʾin shahīd',en:'over all things, a Witness'}],
+ draw(f){const{t,p}=f,hz=eo(clamp(f.since(1)/3)),inn=eo(clamp(f.since(2)/3)),tru=eo(clamp(f.since(3)/3.6));
+   ctx.save();ctx.translate(cx,cy);ctx.rotate(t*.012);ctx.translate(-cx,-cy);plate('galaxy',{fx:.5,fy:.5,z:lerp(1.6,1.15,eio(clamp(p*1.3))),bright:.55+.5*hz});ctx.restore();
+   if(inn>0){add();glowAt(cx,cy,U*.9,[255,200,170],.3*inn);norml();subject('fetus',inn,t,U*1.7*(.9+.1*inn))}
+   if(tru>0){halo(cx,cy,U*1.1,tru,t*.015,GOLD,.6);halo(cx,cy,U*.62,tru,-t*.025,GOLD,.45);add();glowAt(cx,cy,U*2,GOLD,.14*tru);norml()}}},
+];
+const FOC={newborn:[.6,.45],newbornWin:[.15,.18],preg:[.5,.4],child:[.5,.55],dua:[.47,.5],duaWin:[.8,.15],hand:[.42,.52],youth:[.53,.5],elder:[.45,.52],elderWin:[.7,.22],lamp:[.47,.36],seed:[.5,.6],surface:.27};
+
+// ───────────────────────── preparation: tokens, phase words, verse markup
+for(const sc of SCENES){
+  sc.ay=sc.keys.map(k=>{const toks=AYAT[k].ar.split(/\s+/).filter(Boolean),tot=toks.join(' ').length;let acc=0,wn=0;const fr=[],wno=[];toks.forEach(tk=>{fr.push(acc/tot);acc+=tk.length+1;wno.push(norm(tk)?++wn:0)});return{key:k,toks,fr,wno}});
+  let gid=0;sc.ay.forEach(a=>{a.g0=gid;gid+=a.toks.length});
+  let ai=0,ti=0;sc.ph=sc.phases.map(p=>{for(;ai<sc.ay.length;ai++,ti=0){for(;ti<sc.ay[ai].toks.length;ti++){const nt=norm(sc.ay[ai].toks[ti]);if(nt===p.w||(p.w.length>=4&&nt.includes(p.w))){const r={ay:ai,ti,fr:sc.ay[ai].fr[ti],g:sc.ay[ai].g0+ti,n:p.n||1};ti++;return r}}}
+    console.warn('phase word not found',sc.id,p.w);return{ay:sc.ay.length-1,ti:0,fr:1,g:-1,n:0}});
+  sc.ph[0].fr=0;sc.ph[0].ay=0;
+  sc.est=sc.keys.map(k=>Math.max(norm(AYAT[k].ar).replace(/\s/g,'').length*.1,AYAT[k].en.length*.052)+1);
+  const s0=sc.keys[0].split(':'),s1=sc.keys[sc.keys.length-1].split(':');sc.ref=`${AYAT[sc.keys[0]].sname} ${s0[0]}:${s0[1]}${sc.keys.length>1?'–'+s1[1]:''}`;
+  sc.long=AYAT[sc.keys[0]].ar.length>220;
+  let g=0;sc.html=sc.ay.map((a,i)=>{const[,n]=a.key.split(':');return`<span class="ay" data-i="${i}">`+a.toks.map(tk=>{const id=g++;return`<span class="w" id="w-${sc.id}-${id}" style="animation-delay:${(.12+id*.055).toFixed(2)}s">${tk}</span>`}).join(' ')+` <span class="num">${arNum(n)}</span></span>`}).join(' ');
+}
+
+// ───────────────────────── audio: quran.com reciters carry word timestamps
+const QARIS=[['qc7','Mishary Alafasy'],['qc6','Mahmoud Khalil Al-Husary'],['qc9','Muhammad Siddiq Al-Minshawi'],['qc2','Abdul Basit Abdul Samad'],['MaherAlMuaiqly128kbps','Maher Al-Muaiqly']];
+let qari=localStorage.getItem('signs.qari2')||'qc7',recite=true;
+const pad3=n=>String(n).padStart(3,'0'),AUD={};
+const segs=k=>(TIMING[qari]&&TIMING[qari][k])?TIMING[qari][k].seg:null;
+function aud(key){const id=qari+'|'+key;if(!AUD[id]){const[s,a]=key.split(':'),el=new Audio();el.preload='auto';el._bad=false;el.addEventListener('error',()=>{el._bad=true});
+  el.src=TIMING[qari]&&TIMING[qari][key]?TIMING[qari][key].url:`https://everyayah.com/data/${qari}/${pad3(s)}${pad3(a)}.mp3`;AUD[id]=el}return AUD[id]}
+for(const id of['#sQari','#sQari0']){const s=$(id);QARIS.forEach(([v,n])=>{const o=document.createElement('option');o.value=v;o.textContent=n;s.appendChild(o)});s.value=qari}
+
+// ───────────────────────── timeline engine
+// With recitation the next ayah follows after a breath (TAIL_R+LEAD), the outgoing scene finishing under the crossfade;
+// in silence the scene keeps its own length so the visuals have time.
+const LEAD=.45,GAP=.55,TAIL=2.6,TAIL_R=.7,FADE=2.1;
+let R=null,fade=null,paused=true,started=false,ended=false,gT=0;
+function timeline(r){const sc=r.sc,sp=sc.keys.map((k,j)=>{if(recite&&!r.failed){const el=aud(k);return isFinite(el.duration)&&el.duration>0?el.duration:sc.est[j]*1.45}return sc.est[j]});
+  const off=[];let acc=0;sp.forEach((d,j)=>{off.push(acc);acc+=d+(j<sp.length-1?GAP:0)});const rec=recite&&!r.failed;return{sp,off,speech:acc,dur:rec?LEAD+acc+TAIL_R:Math.max(sc.min||0,LEAD+acc+TAIL)}}
+function wordTime(r,T,ay,ti){const sg=recite&&!r.failed?segs(r.sc.keys[ay]):null,wn=r.sc.ay[ay].wno[ti];if(sg&&wn){const s=sg.find(x=>x[0]===wn);if(s)return Math.min(T.sp[ay],s[1]/1000)}return r.sc.ay[ay].fr[ti]*T.sp[ay]}
+function phaseQ(r,T){return r.sc.ph.map((p,i)=>i===0?0:(T.off[p.ay]+wordTime(r,T,p.ay,p.ti))/T.speech)}
+function makeR(i){const sc=SCENES[i],r={i,sc,t:0,q:0,p:0,s:{},mode:'lead',k:0,gap:0,failed:!recite,el:null,stall:0,lastCT:-1,phase:-1,ayk:-1,say:-1};if(sc.init)sc.init(r.s,rng(9001+i*77));r.T=timeline(r);r.phq=phaseQ(r,r.T);return r}
+function frameOf(r){const T=r.T,ph=r.phq;return{t:r.t,q:r.q,p:r.p,s:r.s,ph,T,phase:Math.max(0,r.phase),since(i){if(i>=ph.length)return -1;return r.t-(LEAD+ph[i]*T.speech)}}}
+function stopAudio(){if(R&&R.el){R.el.onended=null;R.el.pause()}}
+let sTm=0,lTm=0;
+function enter(i){ended=false;document.body.classList.remove('ended');$('#end').classList.add('hide');hideSign();clearTimeout(lTm);if(R){stopAudio();fade={r:R,k:0}}R=makeR(i);R.phase=0;onPhase();$('#end').inert=true;
+  if(recite){R.sc.keys.forEach(aud);if(SCENES[i+1])SCENES[i+1].keys.forEach(aud)}
+  showVerse();$('#sign').classList.remove('on');updateNav()}
+function startAyah(k){const el=aud(R.sc.keys[k]);R.k=k;R.el=el;R.mode='play';R.stall=0;R.lastCT=-1;try{el.currentTime=0}catch(e){}
+  const me=R;el.onended=()=>{if(R!==me||me.failed)return;if(k<me.sc.keys.length-1){me.mode='gap';me.gap=GAP;me.t=LEAD+me.T.off[k]+me.T.sp[k]}else{me.mode='tail';me.t=LEAD+me.T.speech}};
+  const pr=el.play();if(pr&&pr.catch)pr.catch(err=>{if(R===me&&!paused&&err&&err.name!=='AbortError')fail()})}
+function fail(){const r=R;if(r.failed)return;const q=r.q;if(r.el){r.el.onended=null;r.el.pause()}r.el=null;r.failed=true;r.mode='silent';r.T=timeline(r);r.t=LEAD+q*r.T.speech;toast('The recitation could not load, so the film continues in silence.')}
+function update(dt){gT+=dt;if(!R||paused||ended)return;const r=R;r.T=timeline(r);
+  if(!r.failed){
+    if(r.mode==='lead'){r.t+=dt;if(r.t>=LEAD){r.t=LEAD;startAyah(0)}}
+    else if(r.mode==='play'){const el=r.el;if(el._bad)fail();else{const ct=el.currentTime;if(ct===r.lastCT){r.stall+=dt;if(r.stall>12)fail()}else{r.stall=0;r.lastCT=ct}if(!r.failed)r.t=LEAD+r.T.off[r.k]+Math.min(ct,r.T.sp[r.k])}}
+    else if(r.mode==='gap'){r.t+=dt;r.gap-=dt;if(r.gap<=0)startAyah(r.k+1)}
+    else{r.t+=dt;if(r.t>=r.T.dur)return next()}
+  }else{r.t+=dt;if(r.t>=r.T.dur)return next()}
+  r.T=timeline(r);r.phq=phaseQ(r,r.T);r.q=clamp((r.t-LEAD)/r.T.speech);r.p=clamp(r.t/r.T.dur);
+  let ph=0;r.phq.forEach((v,i)=>{if(i===0||r.t>=LEAD+v*r.T.speech)ph=i});if(ph!==r.phase){r.phase=ph;onPhase()}signTick(dt);
+  let k=0;r.T.off.forEach((o,j)=>{if(r.t-LEAD>=o)k=j});if(r.sc.keys.length>1&&k!==r.ayk){r.ayk=k;document.querySelectorAll('#verse .ay').forEach((e,j)=>e.classList.toggle('dim',j!==k))}
+  const sg=!r.failed&&r.mode==='play'?segs(r.sc.keys[r.k]):null;let say=-1;if(sg){const ms=r.el.currentTime*1000,s=sg.find(x=>ms>=x[1]&&ms<x[2]);if(s){const a=r.sc.ay[r.k],ti=a.wno.indexOf(s[0]);if(ti>=0)say=a.g0+ti}}
+  if(say!==r.say){const o=document.getElementById(`w-${r.sc.id}-${r.say}`);if(o)o.classList.remove('say');const n=document.getElementById(`w-${r.sc.id}-${say}`);if(n)n.classList.add('say');r.say=say}}
+function next(){if(R.i<SCENES.length-1)enter(R.i+1);else{ended=true;stopAudio();hideSign();document.body.classList.add('ended');setTimeout(()=>{if(ended){$('#end').classList.remove('hide');$('#end').inert=false}},1400)}}
+
+// ───────────────────────── DOM: verse, label, sign, nav
+let vTok=0;
+function showVerse(){const v=$('#verse'),sc=R.sc,my=++vTok;v.classList.remove('on');
+  setTimeout(()=>{if(my!==vTok)return;v.classList.toggle('long',sc.long);v.querySelector('.ar').innerHTML=sc.html;v.querySelector('.ref').textContent=sc.ref;
+    void v.offsetWidth;v.classList.add('on');R.ayk=-1;R.say=-1;applyHL()},420)}
+function applyHL(){document.querySelectorAll('#verse .w.hl').forEach(e=>e.classList.remove('hl'));const p=R.sc.ph[Math.max(0,R.phase)];if(!p||p.g<0)return;for(let j=0;j<p.n;j++){const e=document.getElementById(`w-${R.sc.id}-${p.g+j}`);if(e)e.classList.add('hl')}}
+function onPhase(){const sc=R.sc,P=sc.phases[R.phase],L=$('#label');L.classList.add('out');clearTimeout(lTm);lTm=setTimeout(()=>{if(R.sc!==sc)return;L.querySelector('.ar').textContent=P.ar.replace(MARKS,'');L.querySelector('.tr').textContent=P.tr||'';L.querySelector('.en').textContent=P.en||'';L.classList.remove('out')},380);
+  applyHL();if(P.sign){const S=$('#sign');hideSign();sTm=setTimeout(()=>{if(R.sc!==sc)return;S.querySelector('.tag span').textContent=P.sign.tag;S.querySelector('.tx').textContent=P.sign.text;S.classList.add('on');document.body.classList.add('signon');
+    // film time, so a paused film keeps the card: it leaves at the first phase change after a skim read, or after a full read
+    const words=P.sign.text.split(/\s+/).length;SG={age:0,min:Math.max(4.5,words*.17),max:Math.max(7,words*.3),ph:R.phase}},520)}
+  else if(SG&&SG.ph!==R.phase)SG.moved=true}
+let SG=null;
+function signTick(dt){if(!SG)return;SG.age+=dt;if(SG.age>=SG.max||(SG.moved&&SG.age>=SG.min))hideSign()}
+function hideSign(){clearTimeout(sTm);SG=null;$('#sign').classList.remove('on');document.body.classList.remove('signon')}
+function buildNav(){const nav=$('#path');SCENES.forEach((sc,i)=>{const b=document.createElement('button');b.title=`${sc.navEn}, ${sc.keys[0]}`;b.innerHTML=`<svg viewBox="-6 -6 12 12"><path d="M0-5 5 0 0 5-5 0Z" fill="none" stroke="currentColor" stroke-width="1" style="color:var(--gold)"/></svg><span class="l">${sc.nav}</span>`;b.onclick=()=>{if(!started)begin(recite);enter(i);setPaused(false)};nav.appendChild(b)})}
+function updateNav(){document.querySelectorAll('#path button').forEach((b,i)=>{b.classList.toggle('cur',i===R.i);b.classList.toggle('done',i<R.i)});const c=document.querySelectorAll('#path button')[R.i];if(c)c.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'})}
+let tTm=0;function toast(m){const e=$('#toast');e.textContent=m;e.classList.add('on');clearTimeout(tTm);tTm=setTimeout(()=>e.classList.remove('on'),3800)}
+
+// ───────────────────────── render: camera, zoom-through transitions, grade, grain
+const GRAIN=(()=>{const c=document.createElement('canvas');c.width=c.height=192;const g=c.getContext('2d'),d=g.createImageData(192,192),r=rng(3);for(let i=0;i<d.data.length;i+=4){const v=r()*255|0;d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}g.putImageData(d,0,0);return c})();
+function mixPal(a,b,k){return{top:mix(a.top,b.top,k),bot:mix(a.bot,b.bot,k),vig:lerp(a.vig,b.vig,k)}}
+function drawBG(P){const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,rgb(P.top));g.addColorStop(1,rgb(P.bot));ctx.globalAlpha=1;ctx.fillStyle=g;ctx.fillRect(0,0,W,H)}
+function post(P){const v=ctx.createRadialGradient(W/2,H*.42,Math.min(W,H)*.25,W/2,H*.5,Math.max(W,H)*.8);v.addColorStop(0,'rgba(0,0,0,0)');v.addColorStop(1,`rgba(0,0,0,${P.vig})`);ctx.globalAlpha=1;ctx.fillStyle=v;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.globalCompositeOperation='overlay';ctx.globalAlpha=.07;const pt=ctx.createPattern(GRAIN,'repeat'),ox=(Math.random()*192)|0,oy=(Math.random()*192)|0;ctx.translate(-ox,-oy);ctx.fillStyle=pt;ctx.fillRect(0,0,W+192,H+192);ctx.restore()}
+const errs=new Set();
+function drawScene(r,alpha,zoom,blur){A=alpha;if(A<=0)return;BLUR=blur||0;ctx.save();const f=frameOf(r);
+  const z=zoom*(1+.035*esine(r.p)),dx=Math.sin(r.t*.11+r.i)*U*.012,dy=Math.cos(r.t*.09+r.i)*U*.008;ctx.translate(cx+dx,cy+dy);ctx.scale(z,z);ctx.translate(-cx,-cy);
+  try{r.sc.draw(f)}catch(e){if(!errs.has(r.sc.id)){errs.add(r.sc.id);console.error(r.sc.id,e)}}
+  ctx.restore();ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.shadowBlur=0;ctx.setLineDash([]);ctx.filter='none';A=1;BLUR=0}
+let last=performance.now();
+function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;update(dt);
+  if(!R)R=makeR(0);
+  if(!started){R.t+=dt;R.p=.8+.2*Math.sin(gT*.15);R.q=0;R.phase=0}
+  let P=R.sc.pal;if(fade&&!paused){fade.k+=dt/FADE;fade.r.t+=dt;if(fade.k>=1)fade=null}
+  if(fade){const k=eio(fade.k);P=mixPal(fade.r.sc.pal,R.sc.pal,k);drawBG(P);drawScene(fade.r,1-eio(clamp((fade.k-.3)/.7)),1+.22*k,k*9);drawScene(R,k,.92+.08*eo(fade.k),(1-k)*7)}
+  else{drawBG(P);drawScene(R,1,1,0)}
+  post(P);requestAnimationFrame(frame)}
+
+// ───────────────────────── controls
+const ICON_PLAY='<svg viewBox="0 0 20 20"><path d="M6 4l10 6-10 6Z" fill="currentColor"/></svg>',ICON_PAUSE='<svg viewBox="0 0 20 20"><path d="M7 4v12M13 4v12" stroke="currentColor" stroke-width="1.8"/></svg>';
+function setPaused(v){paused=v;$('#bPlay').innerHTML=v?ICON_PLAY:ICON_PAUSE;if(R&&R.el&&!R.failed&&R.mode==='play'){if(v)R.el.pause();else R.el.play().catch(()=>{})}}
+function begin(withRec){if(started)return;stopAudio();$('#intro').inert=true;recite=withRec;started=true;document.body.classList.remove('pre');$('#intro').classList.add('hide');$('#bRec').textContent='Recitation '+(recite?'on':'off');R=null;fade=null;enter(0);setPaused(false);$('#bPlay').focus({preventScroll:true})}
+$('#go').onclick=()=>begin(true);$('#goS').onclick=()=>begin(false);$('#again').onclick=()=>{enter(0);setPaused(false)};
+$('#bPlay').onclick=()=>setPaused(!paused);$('#bPrev').onclick=()=>{if(R.i>0)enter(R.i-1)};$('#bNext').onclick=()=>{if(R.i<SCENES.length-1)enter(R.i+1)};
+$('#bRec').onclick=()=>{recite=!recite;$('#bRec').textContent='Recitation '+(recite?'on':'off');enter(R.i)};
+const setQ=v=>{qari=v;localStorage.setItem('signs.qari2',v);$('#sQari').value=v;$('#sQari0').value=v};
+$('#sQari').onchange=e=>{setQ(e.target.value);if(started&&recite)enter(R.i)};$('#sQari0').onchange=e=>setQ(e.target.value);
+$('#bFs').onclick=()=>{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(()=>{})};
+addEventListener('keydown',e=>{const tg=e.target;if(tg&&(tg.tagName==='SELECT'||tg.tagName==='INPUT'||tg.tagName==='TEXTAREA'||tg.isContentEditable))return;if(!started){if(e.key==='Enter')begin(true);return}if(e.key===' '){e.preventDefault();setPaused(!paused)}else if(e.key==='ArrowRight'){if(R.i<SCENES.length-1)enter(R.i+1)}else if(e.key==='ArrowLeft'){if(R.i>0)enter(R.i-1)}else if(e.key==='f'||e.key==='F')$('#bFs').click();else if(e.key==='m'||e.key==='M')$('#bRec').click()});
+let idleT=0;const wake=()=>{document.body.classList.remove('idle');clearTimeout(idleT);idleT=setTimeout(()=>{if(started&&!paused)document.body.classList.add('idle')},2600)};addEventListener('mousemove',wake);addEventListener('touchstart',wake);
+$('#introAr').textContent=AYAT['51:21'].ar;$('#endAr').textContent=AYAT['41:53'].ar.split(' ').slice(0,6).join(' ');
+$('#endList').innerHTML=SCENES.map(s=>`${s.navEn}, ${s.keys.length>1?s.keys[0]+'–'+s.keys[s.keys.length-1].split(':')[1]:s.keys[0]}`).join('<br>');
+['500 20px "Reem Kufi"','italic 20px Alegreya','20px Alegreya','20px "Alegreya Sans"'].forEach(f=>document.fonts.load(f));
+buildNav();loadPlates(fr=>{$('#go').style.opacity=.35+.65*fr});requestAnimationFrame(frame);
+window.__signs={SCENES,get R(){return R},enter,setPaused,seek(i,q){if(!started)begin(false);enter(i);fade=null;R.t=LEAD+q*R.T.speech;paused=false;update(0);setPaused(true)},play(ms){setPaused(false);setTimeout(()=>setPaused(true),ms)}};
+</script>
+</body>
+</html>
