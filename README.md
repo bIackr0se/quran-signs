@@ -6,7 +6,7 @@ The human life cycle in the Qur'an, from dust to resurrection, in fifteen passag
 
 Each passage plays with the recitation of Mishary Alafasy. Painted scenes and live light follow each recited word, and each stage in the womb sits beside what embryology found centuries later. It also plays in silence.
 
-The film opens in Arabic, and one tap switches the explanations and controls to English. The ayat are always in Arabic, with a transliteration and an English gloss of each phrase as it is recited.
+The film opens in Arabic, and one tap switches the explanations and controls to French or English. The ayat are always in Arabic, with a transliteration and a French or English gloss of each phrase as it is recited.
 
 It is one HTML file with a canvas engine and no framework. Headphones help.
 

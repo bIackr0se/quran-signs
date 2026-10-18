@@ -66,8 +66,9 @@ body.lang-ar .ov .sub{line-height:1.8}
 body.lang-ar #end .list{text-align:right;line-height:1.9}
 body.lang-ar #verse .ref{font-family:"Amiri",serif;font-size:17px}
 body.lang-ar #toast{direction:rtl;font-family:"Amiri",serif}
-#ctl #bLang{font-family:"Amiri","Alegreya Sans",sans-serif}
-.ov .lang{all:unset;cursor:pointer;font-size:16px;color:#ecd29a;border-bottom:1px solid rgba(233,200,124,.45);font-family:"Amiri","Alegreya",serif;margin-bottom:14px;display:inline-block}
+#ctl #sLang{font-family:"Amiri","Alegreya Sans",sans-serif}
+.ov .langs{display:flex;justify-content:center;gap:18px;margin-bottom:14px}
+.ov .langs button{all:unset;cursor:pointer;font-size:16px;color:#ecd29a;border-bottom:1px solid rgba(233,200,124,.45);font-family:"Amiri","Alegreya",serif}
 body.idle #ctl{opacity:0}
 body.idle #path{opacity:.35}
 body.idle{cursor:none}
@@ -79,7 +80,7 @@ body.pre #ctl,body.pre #path,body.pre #label{opacity:0;pointer-events:none}
 .ov .in{max-width:760px;padding:24px}
 .ov .big{font-size:clamp(38px,5.6vw,76px);color:#ecd29a;line-height:1.7;text-shadow:0 0 40px rgba(233,200,124,.35)}
 .ov .q1{font-size:clamp(17px,1.6vw,21px);color:rgba(244,236,220,.78);margin-top:8px}
-.ov h1{font-weight:500;font-size:clamp(34px,4vw,56px);margin-top:22px;color:#f4ecdc;letter-spacing:.005em}
+.ov h1{text-wrap:balance;font-weight:500;font-size:clamp(34px,4vw,56px);margin-top:22px;color:#f4ecdc;letter-spacing:.005em}
 .ov .sub{font-size:clamp(17px,1.5vw,21px);line-height:1.5;color:rgba(244,236,220,.74);margin:10px auto 0;max-width:600px}
 #go{all:unset;cursor:pointer;display:block;margin:30px auto 0;width:118px;height:118px;position:relative}
 #go svg{width:100%;height:100%;overflow:visible;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
@@ -106,7 +107,8 @@ body.ended #label,body.ended #sign,body.ended #verse,body.ended #path{opacity:0!
   body.signon #verse.on{opacity:.08}
   #path button .l{display:none}
   #path button.cur .l{display:block}
-  #ctl{gap:13px;right:12px;top:10px}
+  #ctl{gap:12px;right:12px;left:12px;top:10px;justify-content:flex-end;font-size:14px}
+  #ctl button,#ctl select{white-space:nowrap}
   #label{top:46px}
   #sign{top:calc(46px + 128px)}
   #end .list{columns:1}
@@ -125,16 +127,16 @@ body.ended #label,body.ended #sign,body.ended #verse,body.ended #path{opacity:0!
   <button id="bPlay" title="Pause (Space)" aria-label="Pause"><svg viewBox="0 0 20 20"><path d="M7 4v12M13 4v12" stroke="currentColor" stroke-width="1.8"/></svg></button>
   <button id="bNext" title="Next (→)" aria-label="Next"><svg viewBox="0 0 20 20"><path d="m7 4 7 6-7 6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
   <button id="bRec" title="Recitation on or off (M)">Recitation on</button>
-  <button id="bLang" title="Language"></button>
+  <select id="sLang" title="Language"><option value="ar">العربية</option><option value="fr">Français</option><option value="en">English</option></select>
   <select id="sQari" title="Reciter"></select>
   <button id="bFs" title="Fullscreen (F)" aria-label="Fullscreen"><svg viewBox="0 0 20 20"><path d="M3 8V3h5M12 3h5v5M17 12v5h-5M8 17H3v-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
 </div>
 <div id="toast"></div>
 <div id="intro" class="ov">
   <div class="in">
-    <button class="lang" id="langI"></button>
+    <div class="langs" id="langI"></div>
     <div class="big ar" id="introAr"></div>
-    <div class="q1">“And in yourselves. Then will you not see?” (51:21)</div>
+    <div class="q1" data-t="q1i"></div>
     <h1 data-t="title"></h1>
     <p class="sub" data-t="sub"></p>
     <button id="go" aria-label="Begin with recitation"><svg viewBox="-60 -60 120 120"><g fill="none" stroke="#e9c87c" stroke-width="1"><circle r="56" opacity=".55"/><circle r="44" opacity=".3"/></g><g class="orbit" fill="#f3dca6"><circle cx="0" cy="-56" r="1.8"/><circle cx="48.5" cy="-28" r="1.4" opacity=".7"/><circle cx="48.5" cy="28" r="1.8"/><circle cx="0" cy="56" r="1.4" opacity=".7"/><circle cx="-48.5" cy="28" r="1.8"/><circle cx="-48.5" cy="-28" r="1.4" opacity=".7"/></g><circle r="30" fill="#e9c87c" opacity=".14"/><path class="tri" d="M-8-12 13 0-8 12Z" fill="#ecd29a"/></svg></button>
@@ -145,7 +147,7 @@ body.ended #label,body.ended #sign,body.ended #verse,body.ended #path{opacity:0!
 <div id="end" class="ov hide">
   <div class="in">
     <div class="big ar" style="font-size:clamp(30px,4.4vw,60px)" id="endAr"></div>
-    <div class="q1" style="margin-top:6px">“We will show them Our signs in the horizons and within themselves until it becomes clear to them that it is the truth.” (41:53)</div>
+    <div class="q1" style="margin-top:6px" data-t="q1e"></div>
     <div class="list" id="endList"></div>
     <button class="again" id="again" data-t="again"></button>
   </div>
@@ -246,40 +248,40 @@ function caption(s,a){if(a<=0)return;const x=Math.max(18,cx-U*1.3),y=cy-U*.95;tx
 
 const NIGHT={top:[5,7,20],bot:[14,12,34],stars:0,vig:.5};
 const SCENES=[
-{id:'sign',keys:['51:21'],nav:'آية',navEn:'The sign',navAr:'وفي أنفسكم',min:14,pal:NIGHT,
- phases:[{w:'انفسكم',n:1,ar:'وَفِي أَنفُسِكُمْ',tr:'wa fī anfusikum',en:'and in yourselves'},
-   {w:'افلا',n:2,ar:'أَفَلَا تُبْصِرُونَ',tr:'a-fa-lā tubṣirūn',en:'will you not see?',sign:{tag:'Before the lens',text:'Every stage of the womb in this film was recited in seventh-century Arabia, nearly a thousand years before the first microscope.',ar:{tag:'قبل المجهر',text:'الآيات التي تصف أطوار الجنين في هذا الفيلم تُليت في جزيرة العرب في القرن السابع الميلادي، قبل ظهور المجهر بنحو ألف عام.'}}}],
+{id:'sign',keys:['51:21'],nav:'آية',navEn:'The sign',navFr:'Le signe',navAr:'وفي أنفسكم',min:14,pal:NIGHT,
+ phases:[{w:'انفسكم',n:1,ar:'وَفِي أَنفُسِكُمْ',tr:'wa fī anfusikum',en:'and in yourselves',fr:'et en vous-mêmes'},
+   {w:'افلا',n:2,ar:'أَفَلَا تُبْصِرُونَ',tr:'a-fa-lā tubṣirūn',en:'will you not see?',fr:'ne voyez-vous donc pas ?',sign:{tag:'Before the lens',text:'The verses describing each stage of the womb in this film were recited in seventh-century Arabia, about a thousand years before the microscope.',fr:{tag:'Avant le microscope',text:'Les versets qui décrivent chaque stade de l’embryon dans ce film ont été récités en Arabie au VIIe siècle, environ mille ans avant l’apparition du microscope.'},ar:{tag:'قبل المجهر',text:'الآيات التي تصف أطوار الجنين في هذا الفيلم تُليت في جزيرة العرب في القرن السابع الميلادي، قبل ظهور المجهر بنحو ألف عام.'}}}],
  draw(f){const{t,p}=f,open=eo(clamp(f.since(1)/3.4)),T=plate('stargazer',{fx:.5,fy:.55,z:1+.07*esine(p)});
    halo(cx,cy,U*.95,eio(clamp(p*1.3)),t*.02,GOLD,.55);halo(cx,cy,U*.5,eio(clamp(p*1.3-.15)),-t*.035,GOLD,.45);
    star(cx,cy,U*(.035+.03*open)*(1+.05*Math.sin(t*2)),[255,224,170],.6+.4*open);add();glowAt(cx,cy,U*(.3+.7*open),GOLD,.12+.25*open);norml()}},
-{id:'void',keys:['76:1'],nav:'الدهر',navEn:'Not yet a thing',navAr:'لم يكن شيئًا مذكورًا',min:14,pal:{top:[2,3,9],bot:[8,8,18],stars:0,vig:.6},
- phases:[{w:'حين',n:3,ar:'حِينٌ مِّنَ الدَّهْرِ',tr:'ḥīnun mina d-dahr',en:'a stretch of time'},{w:'لم',n:4,ar:'لَمْ يَكُن شَيْئًا مَّذْكُورًا',tr:'lam yakun shayʾan madhkūrā',en:'not yet a thing worth mention'}],
+{id:'void',keys:['76:1'],nav:'الدهر',navEn:'Not yet a thing',navFr:'Pas encore une chose',navAr:'لم يكن شيئًا مذكورًا',min:14,pal:{top:[2,3,9],bot:[8,8,18],stars:0,vig:.6},
+ phases:[{w:'حين',n:3,ar:'حِينٌ مِّنَ الدَّهْرِ',tr:'ḥīnun mina d-dahr',en:'a stretch of time',fr:'un laps de temps'},{w:'لم',n:4,ar:'لَمْ يَكُن شَيْئًا مَّذْكُورًا',tr:'lam yakun shayʾan madhkūrā',en:'not yet a thing worth mention',fr:'pas encore une chose digne de mention'}],
  draw(f){const{t,p}=f,ig=eio(clamp(f.since(1)/3));plate('void',{fx:.5,fy:.5,z:1.08-.06*p,bright:.8+.4*ig});
    motes(70,11,[0,0,W,H],[180,190,255],.35,t,1.6);
    if(ig>0){star(cx,cy,U*.05*ig,[210,222,255],ig);add();glowAt(cx,cy,U*1.4*ig,[120,130,220],.18*ig);norml();
      ctx.strokeStyle='rgba(210,222,255,1)';ctx.lineWidth=1;al(.35*(1-ig));ctx.beginPath();ctx.arc(cx,cy,U*.06+U*1.2*ig,0,TAU);ctx.stroke()}}},
-{id:'clay',keys:['23:12'],nav:'طين',navEn:'Clay',navAr:'من طين',min:14,pal:{top:[14,10,8],bot:[40,26,16],stars:0,vig:.5},
- phases:[{w:'سللة',n:3,ar:'سُلَالَةٍ مِّن طِينٍ',tr:'sulālatin min ṭīn',en:'an extract of clay',sign:{tag:'Composition',text:'The elements the body is built from, among them oxygen, carbon, hydrogen, nitrogen, calcium, phosphorus and iron, are all found in the earth.',ar:{tag:'من عناصر الأرض',text:'العناصر التي يُبنى منها الجسم، ومنها الأكسجين والكربون والهيدروجين والنيتروجين والكالسيوم والفوسفور والحديد، كلها موجودة في الأرض.'}}}],
+{id:'clay',keys:['23:12'],nav:'طين',navEn:'Clay',navFr:'L’argile',navAr:'من طين',min:14,pal:{top:[14,10,8],bot:[40,26,16],stars:0,vig:.5},
+ phases:[{w:'سللة',n:3,ar:'سُلَالَةٍ مِّن طِينٍ',tr:'sulālatin min ṭīn',en:'an extract of clay',fr:'un extrait d’argile',sign:{tag:'Composition',text:'The elements the body is built from, among them oxygen, carbon, hydrogen, nitrogen, calcium, phosphorus and iron, are all found in the earth.',fr:{tag:'Composition',text:'Les éléments qui composent le corps, notamment l’oxygène, le carbone, l’hydrogène, l’azote, le calcium, le phosphore et le fer, se trouvent tous dans la terre.'},ar:{tag:'من عناصر الأرض',text:'العناصر التي يُبنى منها الجسم، ومنها الأكسجين والكربون والهيدروجين والنيتروجين والكالسيوم والفوسفور والحديد، كلها موجودة في الأرض.'}}}],
  init(s,r){s.g=[...Array(900)].map(()=>({x:r(),y:.6+r()*.4,d:.02+.5*r(),w:r()*TAU,z:r()}))},
  draw(f){const{t,q,s,p}=f,T=plate('clay',{fx:.5,fy:.62,z:1.04+.05*p}),tx=cx,ty=cy-U*.1;let arrived=0;add();
    for(const g of s.g){const k=eio(seg(q,g.d,g.d+.42));if(k>=1){arrived++;continue}const sx=g.x*W,sy=g.y*H;if(k<=0){if(g.z<.25)glowAt(sx,sy,1.6,[255,190,120],.25*(.5+.5*Math.sin(t*2+g.w)));continue}
      const x=bez(sx,lerp(sx,tx,.1),tx+Math.sin(g.w+t)*U*.12,tx,k),y=bez(sy,sy-U*.5,ty+U*.45,ty,k),c=mix([214,140,80],[255,226,170],k);glowAt(x,y,2.2+5*k*(1-k)*4,c,.5*(.4+.6*g.z))}
    const fr=arrived/s.g.length;star(tx,ty,U*(.012+.03*fr),[255,214,150],.25+.75*fr);glowAt(tx,ty,U*(.2+.6*fr),[240,170,90],.15*fr);norml()}},
-{id:'drop',keys:['23:13'],nav:'نطفة',navEn:'The drop',navAr:'النطفة',min:14,pal:{top:[14,3,7],bot:[40,8,18],stars:0,vig:.5},
- phases:[{w:'نطفة',n:1,ar:'نُطْفَة',tr:'nuṭfah',en:'a drop'},{w:'قرار',n:2,ar:'قَرَارٍ مَّكِينٍ',tr:'qarārin makīn',en:'a firm lodging',sign:{tag:'Day 6–7 · 39:6',text:'About six to seven days after fertilisation the embryo begins to implant in the wall of the womb. Ibn ʿAbbās explained the “three darknesses” of 39:6 as the belly, the womb and the placenta.',ar:{tag:'اليوم ٦–٧ · الزمر ٦',text:'يبدأ الجنين بالانغراس في بطانة الرحم بعد نحو ستة إلى سبعة أيام من الإخصاب. ونقل ابن كثير عن ابن عباس رضي الله عنهما تفسير «الظلمات الثلاث» بظلمة البطن وظلمة الرحم وظلمة المشيمة.'}}}],
+{id:'drop',keys:['23:13'],nav:'نطفة',navEn:'The drop',navFr:'La goutte',navAr:'النطفة',min:14,pal:{top:[14,3,7],bot:[40,8,18],stars:0,vig:.5},
+ phases:[{w:'نطفة',n:1,ar:'نُطْفَة',tr:'nuṭfah',en:'a drop',fr:'une goutte'},{w:'قرار',n:2,ar:'قَرَارٍ مَّكِينٍ',tr:'qarārin makīn',en:'a firm lodging',fr:'un réceptacle sûr',sign:{tag:'Day 6–7 · 39:6',text:'About six to seven days after fertilisation the embryo begins to implant in the wall of the womb. Ibn ʿAbbās explained the “three darknesses” of 39:6 as the belly, the womb and the placenta.',fr:{tag:'Jours 6–7 · 39:6',text:'L’embryon commence à s’implanter dans la muqueuse de l’utérus environ six à sept jours après la fécondation. Ibn Kathīr rapporte qu’Ibn ʿAbbās expliquait les « trois ténèbres » de 39:6 comme le ventre, l’utérus et le placenta.'},ar:{tag:'اليوم ٦–٧ · الزمر ٦',text:'يبدأ الجنين بالانغراس في بطانة الرحم بعد نحو ستة إلى سبعة أيام من الإخصاب. ونقل ابن كثير عن ابن عباس رضي الله عنهما تفسير «الظلمات الثلاث» بظلمة البطن وظلمة الرحم وظلمة المشيمة.'}}}],
  draw(f){const{t,p}=f,lodge=eio(clamp(f.since(1)/3));ctx.save();ctx.translate(cx,cy);const z=.75+.35*eio(p);ctx.scale(z,z);ctx.translate(-cx,-cy);wombBG(t,eo(clamp(p*1.8)),.6+.4*lodge);ctx.restore();
    const k=eio(seg(p,0,.5)),y=lerp(-U*.3,cy,k);add();for(let i=1;i<16;i++){const yy=lerp(-U*.3,cy,eio(clamp(seg(p,0,.5)-i*.01)));glowAt(cx,yy,U*.05*(1-i/16),[255,200,190],.3*(1-i/16)*(1-k*.8))}norml();
    star(cx,y,U*.03*(1+.06*Math.sin(t*3)),[255,210,200],1);
    if(p>.5){ctx.save();ctx.globalCompositeOperation='screen';for(let j=0;j<3;j++){const r=seg(p,.5+j*.07,.85+j*.07);if(r<=0||r>=1)continue;ctx.strokeStyle='rgb(255,190,180)';al((1-r)*.4);ctx.lineWidth=1.2;ctx.beginPath();ctx.ellipse(cx,cy,U*.05+U*.7*r,(U*.05+U*.7*r)*.82,0,0,TAU);ctx.stroke()}ctx.restore()}
    add();glowAt(cx,cy,U*.5,[255,120,110],.22*lodge*(.7+.3*Math.sin(t*1.4)));norml()}},
-{id:'embryo',keys:['23:14'],nav:'أطوار',navEn:'In stages',navAr:'أطوار الخلق',min:20,pal:{top:[14,3,7],bot:[40,8,18],stars:0,vig:.5},
- phases:[{w:'النطفة',n:1,ar:'نُطْفَة',tr:'nuṭfah',en:'the drop'},
-   {w:'علقة',n:1,ar:'عَلَقَة',tr:'ʿalaqah',en:'a clinging thing',meta:'Weeks 3–4 after fertilisation',sign:{tag:'ʿAlaqah · weeks 3–4',text:'The word means something that clings: a leech, a suspended thing. At this stage the embryo is held by a stalk to the tissue that becomes the placenta, draws its nourishment from the mother, and its curved body is often compared to a leech.',ar:{tag:'العلقة · الأسبوع ٣–٤',text:'يرتبط لفظ العلقة بالتعلّق، ومن معانيه في اللغة دودة العلق. وفي هذا الطور يتصل الجنين بسويقة من النسيج بالغشاء الذي يسهم في تكوين المشيمة، ويتغذى من أمه، ويُشبَّه جسمه المنحني بدودة العلق.'}}},
-   {w:'مضغة',n:1,ar:'مُضْغَة',tr:'muḍghah',en:'a chewed lump',meta:'Weeks 4–5, about 3 to 7 mm',sign:{tag:'Muḍghah · weeks 4–5',text:'A lump that looks chewed. Paired segments called somites appear along its back, like the marks of teeth.',ar:{tag:'المضغة · الأسبوع ٤–٥',text:'قطعة كأنها ممضوغة. تظهر على جانبي ظهر الجنين كتل متتابعة في أزواج تُسمّى الجسيدات، وتشبه في مظهرها آثار الأسنان.'}}},
-   {w:'عظما',n:1,ar:'عِظَام',tr:'ʿiẓām',en:'bones',meta:'Weeks 6–7',sign:{tag:'ʿIẓām · weeks 6–7',text:'Many bones first take shape as cartilage models, and the skeleton gives the body its frame.',ar:{tag:'العظام · الأسبوع ٦–٧',text:'تتكوّن كثير من العظام أولًا في صورة غضاريف، والهيكل العظمي يعطي الجسم قوامه.'}}},
-   {w:'لحما',n:1,ar:'لَحْم',tr:'laḥm',en:'flesh',meta:'Weeks 7–8',sign:{tag:'Laḥm · weeks 7–8',text:'Muscles take their places around the forming skeleton, and by the end of week 8 after fertilisation the embryo has a recognisably human form.',ar:{tag:'اللحم · الأسبوع ٧–٨',text:'تأخذ العضلات مواضعها حول الهيكل العظمي وهو يتكوّن، ومع نهاية الأسبوع الثامن بعد الإخصاب يأخذ الجنين هيئة بشرية واضحة.'}}},
-   {w:'خلقا',n:2,ar:'خَلْقًا آخَرَ',tr:'khalqan ākhar',en:'another creation',meta:'Week 9 onward',sign:{tag:'Week 9 onward',text:'Embryologists begin the fetal period in week 9 after fertilisation, a time of growth and maturing. Ibn Kathīr explains “another creation” as the breathing in of the soul.',ar:{tag:'من الأسبوع التاسع',text:'تبدأ مرحلة الحَميل، أي مرحلة نمو الجنين ونضجه، في الأسبوع التاسع بعد الإخصاب وفق تقسيم علماء الأجنة. وفي تفسير قوله تعالى «خلقًا آخر»، يذكر ابن كثير نفخ الروح.'}}},
-   {w:'فتبارك',n:4,ar:'فَتَبَارَكَ اللَّهُ أَحْسَنُ الْخَالِقِينَ',tr:'fa-tabāraka llāhu aḥsanu l-khāliqīn',en:'blessed is Allah, the best of creators'}],
+{id:'embryo',keys:['23:14'],nav:'أطوار',navEn:'In stages',navFr:'Par étapes',navAr:'أطوار الخلق',min:20,pal:{top:[14,3,7],bot:[40,8,18],stars:0,vig:.5},
+ phases:[{w:'النطفة',n:1,ar:'نُطْفَة',tr:'nuṭfah',en:'the drop',fr:'la goutte'},
+   {w:'علقة',n:1,ar:'عَلَقَة',tr:'ʿalaqah',en:'a clinging thing',fr:'une chose qui s’accroche',meta:'Weeks 3–4 after fertilisation',sign:{tag:'ʿAlaqah · weeks 3–4',text:'The word comes from clinging, and among its meanings is the leech. At this stage the embryo is held by a stalk to the tissue that becomes the placenta, draws its nourishment from the mother, and its curved body is often compared to a leech.',fr:{tag:'ʿAlaqah · semaines 3–4',text:'Le mot évoque l’idée de s’accrocher et désigne notamment la sangsue. À ce stade, l’embryon est relié par un pédicule au tissu qui participe à la formation du placenta et reçoit ses nutriments de sa mère. Son corps courbé est souvent comparé à une sangsue.'},ar:{tag:'العلقة · الأسبوع ٣–٤',text:'يرتبط لفظ العلقة بالتعلّق، ومن معانيه في اللغة دودة العلق. وفي هذا الطور يتصل الجنين بسويقة من النسيج بالغشاء الذي يسهم في تكوين المشيمة، ويتغذى من أمه، ويُشبَّه جسمه المنحني بدودة العلق.'}}},
+   {w:'مضغة',n:1,ar:'مُضْغَة',tr:'muḍghah',en:'a chewed lump',fr:'une masse mâchée',meta:'Weeks 4–5, about 3 to 7 mm',sign:{tag:'Muḍghah · weeks 4–5',text:'A lump that looks chewed. Paired segments called somites appear along its back, like the marks of teeth.',fr:{tag:'Muḍghah · semaines 4–5',text:'Une masse qui semble mâchée. Des segments appariés, les somites, apparaissent le long de son dos, comme des marques de dents.'},ar:{tag:'المضغة · الأسبوع ٤–٥',text:'قطعة كأنها ممضوغة. تظهر على جانبي ظهر الجنين كتل متتابعة في أزواج تُسمّى الجسيدات، وتشبه في مظهرها آثار الأسنان.'}}},
+   {w:'عظما',n:1,ar:'عِظَام',tr:'ʿiẓām',en:'bones',fr:'des os',meta:'Weeks 6–7',sign:{tag:'ʿIẓām · weeks 6–7',text:'Many bones first take shape as cartilage models, and the skeleton gives the body its frame.',fr:{tag:'ʿIẓām · semaines 6–7',text:'De nombreux os se développent à partir d’ébauches cartilagineuses, et le squelette constitue la charpente du corps.'},ar:{tag:'العظام · الأسبوع ٦–٧',text:'تتكوّن كثير من العظام أولًا في صورة غضاريف، والهيكل العظمي يعطي الجسم قوامه.'}}},
+   {w:'لحما',n:1,ar:'لَحْم',tr:'laḥm',en:'flesh',fr:'de la chair',meta:'Weeks 7–8',sign:{tag:'Laḥm · weeks 7–8',text:'Muscles take their places around the forming skeleton, and by the end of week 8 after fertilisation the embryo has a recognisably human form.',fr:{tag:'Laḥm · semaines 7–8',text:'Les muscles prennent place autour du squelette en formation, et à la fin de la 8e semaine après la fécondation, l’embryon a une forme nettement humaine.'},ar:{tag:'اللحم · الأسبوع ٧–٨',text:'تأخذ العضلات مواضعها حول الهيكل العظمي وهو يتكوّن، ومع نهاية الأسبوع الثامن بعد الإخصاب يأخذ الجنين هيئة بشرية واضحة.'}}},
+   {w:'خلقا',n:2,ar:'خَلْقًا آخَرَ',tr:'khalqan ākhar',en:'another creation',fr:'une tout autre création',meta:'Week 9 onward',sign:{tag:'Week 9 onward',text:'Embryologists begin the fetal period in week 9 after fertilisation, a time of growth and maturing. Ibn Kathīr explains “another creation” as the breathing in of the soul.',fr:{tag:'Dès la 9e semaine',text:'Les embryologistes font commencer la période fœtale à la 9e semaine après la fécondation, un temps de croissance et de maturation. Ibn Kathīr explique « une tout autre création » par l’insufflation de l’âme.'},ar:{tag:'من الأسبوع التاسع',text:'تبدأ مرحلة الحَميل، أي مرحلة نمو الجنين ونضجه، في الأسبوع التاسع بعد الإخصاب وفق تقسيم علماء الأجنة. وفي تفسير قوله تعالى «خلقًا آخر»، يذكر ابن كثير نفخ الروح.'}}},
+   {w:'فتبارك',n:4,ar:'فَتَبَارَكَ اللَّهُ أَحْسَنُ الْخَالِقِينَ',tr:'fa-tabāraka llāhu aḥsanu l-khāliqīn',en:'blessed is Allah, the best of creators',fr:'béni soit Allah, le meilleur des créateurs'}],
  draw(f){const{t}=f,st=f.phase;wombBG(t,1,.55);
    const ST=[null,'alaqah','mudghah','bones','flesh','fetus','fetus'],SZ=[0,2.5,2.75,3,3.1,3.3,3.3],D=1.9;
    const kin=eio(clamp(f.since(st)/D)),cur=ST[st],prev=st>0?ST[st-1]:null,base=SUB();
@@ -290,10 +292,10 @@ const SCENES=[
    if(st>=5){add();glowAt(cx-U*.05,cy+U*.05,U*.25*(1+.3*beat(t)),[255,120,110],.25*beat(t));norml()}
    if(st===6){const k=eo(clamp(f.since(6)/3.6));halo(cx,cy,U*1.15,k,t*.02,GOLD,.5*k);add();glowAt(cx,cy,U*1.6,GOLD,.18*k);norml()}
    }},
-{id:'soul',keys:['32:9'],nav:'روح',navEn:'The spirit',navAr:'نفخ الروح',min:15,pal:{top:[16,4,12],bot:[44,12,32],stars:0,vig:.5},
- phases:[{w:'سويه',n:1,ar:'سَوَّاهُ',tr:'sawwāh',en:'He proportioned him'},{w:'ونفخ',n:4,ar:'وَنَفَخَ فِيهِ مِن رُّوحِهِ',tr:'wa nafakha fīhi min rūḥih',en:'and breathed into him of His spirit'},
-   {w:'السمع',n:1,ar:'السَّمْعَ',tr:'as-samʿ',en:'hearing',sign:{tag:'Hearing, then sight',text:'The verse names hearing before sight. A fetus begins to respond to sound in the second trimester, and its eyelids reopen at about 26 to 28 weeks of gestation.',ar:{tag:'السمع، ثم البصر',text:'تذكر الآية السمع قبل البصر. يبدأ الجنين بالاستجابة للأصوات في الثلث الثاني من الحمل، وتنفتح جفونه من جديد بين الأسبوعين السادس والعشرين والثامن والعشرين من الحمل تقريبًا.'}}},
-   {w:'والابصر',n:1,ar:'وَالْأَبْصَارَ',tr:'wal-abṣār',en:'and sight'},{w:'والافدة',n:1,ar:'وَالْأَفْئِدَةَ',tr:'wal-afʾidah',en:'and hearts'}],
+{id:'soul',keys:['32:9'],nav:'روح',navEn:'The spirit',navFr:'L’esprit',navAr:'نفخ الروح',min:15,pal:{top:[16,4,12],bot:[44,12,32],stars:0,vig:.5},
+ phases:[{w:'سويه',n:1,ar:'سَوَّاهُ',tr:'sawwāh',en:'He proportioned him',fr:'Il lui donna sa forme harmonieuse'},{w:'ونفخ',n:4,ar:'وَنَفَخَ فِيهِ مِن رُّوحِهِ',tr:'wa nafakha fīhi min rūḥih',en:'and breathed into him of His spirit',fr:'et lui insuffla de Son esprit'},
+   {w:'السمع',n:1,ar:'السَّمْعَ',tr:'as-samʿ',en:'hearing',fr:'l’ouïe',sign:{tag:'Hearing, then sight',text:'The verse names hearing before sight. A fetus begins to respond to sound in the second trimester, and its eyelids reopen at about 26 to 28 weeks of gestation.',fr:{tag:'L’ouïe, puis la vue',text:'Le verset mentionne l’ouïe avant la vue. Le fœtus commence à réagir aux sons au deuxième trimestre, et ses paupières se rouvrent vers 26 à 28 semaines d’aménorrhée.'},ar:{tag:'السمع، ثم البصر',text:'تذكر الآية السمع قبل البصر. يبدأ الجنين بالاستجابة للأصوات في الثلث الثاني من الحمل، وتنفتح جفونه من جديد بين الأسبوعين السادس والعشرين والثامن والعشرين من الحمل تقريبًا.'}}},
+   {w:'والابصر',n:1,ar:'وَالْأَبْصَارَ',tr:'wal-abṣār',en:'and sight',fr:'et la vue'},{w:'والافدة',n:1,ar:'وَالْأَفْئِدَةَ',tr:'wal-afʾidah',en:'and hearts',fr:'et les cœurs'}],
  draw(f){const{t}=f,br=f.since(1),soul=eio(clamp(br/3.4));wombBG(t,1,.45+.2*soul);
    const hx=cx+U*.18,hy=cy-U*.42;
    if(br>0){add();const fl=br<5?1:Math.max(.2,1-(br-5)/4);for(let i=0;i<120;i++){const u=((i/120)+t*.16)%1,ang=i*2.39996+t*.3,rad=U*1.1*(1-eio(u)),x=cx+Math.cos(ang)*rad,y=cy-U*1.5*(1-eio(u))+Math.sin(ang)*rad*.3;glowAt(x,y,2+5*(1-u),[255,234,196],.6*fl*Math.min(1,br*.7)*Math.sin(Math.PI*u))}norml()}
@@ -303,10 +305,10 @@ const SCENES=[
    const h1=eo(clamp(f.since(2)/1.6));if(h1>0){ctx.strokeStyle='rgb(200,226,255)';ctx.lineWidth=1.2;for(let j=0;j<4;j++){const u=(t*.55+j/4)%1;al(h1*.55*(1-u)*Math.sin(Math.PI*Math.min(1,u*3)));ctx.beginPath();ctx.arc(hx,hy,U*(.25+u*.9),-1.1,.4);ctx.stroke()}}
    const s1=eo(clamp(f.since(3)/1.6));if(s1>0)beam(hx-U*.1,hy-U*1.6,Math.PI/2+.25,.12,U*1.7,[255,236,200],s1*.8,t);
    const c1=eo(clamp(f.since(4)/1.6));if(c1>0)glowAt(cx-U*.05,cy+U*.05,U*.7*(1+.25*beat(t)),[255,110,100],c1*.35*(.4+.6*beat(t)));norml()}},
-{id:'birth',keys:['16:78'],nav:'ولادة',navEn:'Birth',navAr:'الولادة',min:15,pal:{top:[40,30,30],bot:[90,60,50],stars:0,vig:.35},
- phases:[{w:'اخرجكم',n:1,ar:'أَخْرَجَكُم مِّن بُطُونِ أُمَّهَاتِكُمْ',tr:'akhrajakum min buṭūni ummahātikum',en:'brought you out of your mothers’ wombs'},
-   {w:'لا',n:3,ar:'لَا تَعْلَمُونَ شَيْئًا',tr:'lā taʿlamūna shayʾā',en:'knowing nothing',sign:{tag:'After birth',text:'Each of us left the womb knowing nothing, and was given hearing, sight and hearts: the means by which a person comes to know the world.',ar:{tag:'بعد الولادة',text:'تذكّر الآية الإنسان بأنه خرج من بطن أمه لا يعلم شيئًا، وبأن الله وهبه السمع والبصر والفؤاد، وهي وسائل يتعلم بها ويدرك العالم من حوله.'}}},
-   {w:'السمع',n:3,ar:'السَّمْعَ وَالْأَبْصَارَ وَالْأَفْئِدَةَ',tr:'as-samʿa wal-abṣāra wal-afʾidah',en:'hearing, sight and hearts'},{w:'لعلكم',n:2,ar:'لَعَلَّكُمْ تَشْكُرُونَ',tr:'laʿallakum tashkurūn',en:'so that you may be grateful'}],
+{id:'birth',keys:['16:78'],nav:'ولادة',navEn:'Birth',navFr:'La naissance',navAr:'الولادة',min:15,pal:{top:[40,30,30],bot:[90,60,50],stars:0,vig:.35},
+ phases:[{w:'اخرجكم',n:1,ar:'أَخْرَجَكُم مِّن بُطُونِ أُمَّهَاتِكُمْ',tr:'akhrajakum min buṭūni ummahātikum',en:'brought you out of your mothers’ wombs',fr:'vous a fait sortir du ventre de vos mères'},
+   {w:'لا',n:3,ar:'لَا تَعْلَمُونَ شَيْئًا',tr:'lā taʿlamūna shayʾā',en:'knowing nothing',fr:'ne sachant rien',sign:{tag:'After birth',text:'Each of us left the womb knowing nothing, and was given hearing, sight and hearts: the means by which a person comes to know the world.',fr:{tag:'Après la naissance',text:'Le verset rappelle que nous sommes sortis du ventre de nos mères sans rien savoir et qu’Allah nous a donné l’ouïe, la vue et les cœurs : les moyens par lesquels l’être humain apprend à connaître le monde.'},ar:{tag:'بعد الولادة',text:'تذكّر الآية الإنسان بأنه خرج من بطن أمه لا يعلم شيئًا، وبأن الله وهبه السمع والبصر والفؤاد، وهي وسائل يتعلم بها ويدرك العالم من حوله.'}}},
+   {w:'السمع',n:3,ar:'السَّمْعَ وَالْأَبْصَارَ وَالْأَفْئِدَةَ',tr:'as-samʿa wal-abṣāra wal-afʾidah',en:'hearing, sight and hearts',fr:'l’ouïe, la vue et les cœurs'},{w:'لعلكم',n:2,ar:'لَعَلَّكُمْ تَشْكُرُونَ',tr:'laʿallakum tashkurūn',en:'so that you may be grateful',fr:'afin que vous soyez reconnaissants'}],
  draw(f){const{t,p}=f,out=eio(clamp(p*3));
    const T=plate('newborn',{fx:FOC.newborn[0],fy:FOC.newborn[1],z:1.12-.08*eio(p),bright:.85+.2*eo(clamp(f.since(2)/3))});
    if(out<1){ctx.save();ctx.translate(cx,cy);const z=1+2.5*out;ctx.scale(z,z);ctx.translate(-cx,-cy);wombBG(t,1-out,.6);ctx.restore()}
@@ -315,11 +317,11 @@ const SCENES=[
    beam(wx,wy,Math.atan2(by-wy,bx-wx),.2,Math.hypot(bx-wx,by-wy)*1.5,[255,226,180],.4+.25*eo(clamp(f.since(2)/2)),t);
    motes(90,21,[Math.min(wx,bx)-U*.3,Math.min(wy,by),Math.max(wx,bx)+U*.3,by+U*.2],[255,232,200],.5,t,2.2);
    const gr=eo(clamp(f.since(3)/2.5));if(gr>0){add();glowAt(bx,by,U*.9,GOLD,.22*gr);norml()}}},
-{id:'mother',keys:['46:15'],nav:'أربعون',navEn:'Thirty months, forty years',navAr:'ثلاثون شهرًا، وأربعون سنة',min:22,pal:{top:[8,12,26],bot:[24,30,52],stars:0,vig:.4},
- phases:[{w:'بولديه',n:2,ar:'بِوَالِدَيْهِ إِحْسَانًا',tr:'bi-wālidayhi iḥsānā',en:'goodness to his parents'},{w:'حملته',n:3,ar:'حَمَلَتْهُ أُمُّهُ كُرْهًا',tr:'ḥamalat-hu ummuhu kurhā',en:'his mother carried him with hardship'},
-   {w:'ثلثون',n:2,ar:'ثَلَاثُونَ شَهْرًا',tr:'thalāthūna shahrā',en:'thirty months',sign:{tag:'Thirty months',text:'Carrying and weaning together take thirty months, and complete nursing takes two years (2:233). From the two verses ʿAlī drew a shortest pregnancy of six months.',ar:{tag:'ثلاثون شهرًا',text:'حمله وفصاله ثلاثون شهرًا، وتمام الرضاعة حولان كاملان (البقرة ٢٣٣). ومن الآيتين استنبط علي بن أبي طالب رضي الله عنه أن أقل مدة الحمل ستة أشهر.'}}},
-   {w:'اشده',n:1,ar:'بَلَغَ أَشُدَّهُ',tr:'balagha ashuddah',en:'he reaches full strength'},{w:'اربعين',n:2,ar:'أَرْبَعِينَ سَنَةً',tr:'arbaʿīna sanah',en:'forty years'},
-   {w:'رب',n:3,ar:'رَبِّ أَوْزِعْنِي أَنْ أَشْكُرَ نِعْمَتَكَ',tr:'rabbi awziʿnī an ashkura niʿmatak',en:'my Lord, enable me to be grateful for Your favour'}],
+{id:'mother',keys:['46:15'],nav:'أربعون',navEn:'Thirty months, forty years',navFr:'Trente mois, quarante ans',navAr:'ثلاثون شهرًا، وأربعون سنة',min:22,pal:{top:[8,12,26],bot:[24,30,52],stars:0,vig:.4},
+ phases:[{w:'بولديه',n:2,ar:'بِوَالِدَيْهِ إِحْسَانًا',tr:'bi-wālidayhi iḥsānā',en:'goodness to his parents',fr:'la bonté envers ses parents'},{w:'حملته',n:3,ar:'حَمَلَتْهُ أُمُّهُ كُرْهًا',tr:'ḥamalat-hu ummuhu kurhā',en:'his mother carried him with hardship',fr:'sa mère l’a porté avec peine'},
+   {w:'ثلثون',n:2,ar:'ثَلَاثُونَ شَهْرًا',tr:'thalāthūna shahrā',en:'thirty months',fr:'trente mois',sign:{tag:'Thirty months',text:'His carrying and his weaning take thirty months, and complete nursing takes two years (2:233). From the two verses ʿAlī drew a shortest pregnancy of six months.',fr:{tag:'Trente mois',text:'Sa gestation et son sevrage durent trente mois, et l’allaitement complet deux années (2:233). Ibn Kathīr rapporte que ʿAlī en a déduit une durée minimale de grossesse de six mois.'},ar:{tag:'ثلاثون شهرًا',text:'حمله وفصاله ثلاثون شهرًا، وتمام الرضاعة حولان كاملان (البقرة ٢٣٣). ومن الآيتين استنبط علي بن أبي طالب رضي الله عنه أن أقل مدة الحمل ستة أشهر.'}}},
+   {w:'اشده',n:1,ar:'بَلَغَ أَشُدَّهُ',tr:'balagha ashuddah',en:'he reaches full strength',fr:'il atteint sa pleine force'},{w:'اربعين',n:2,ar:'أَرْبَعِينَ سَنَةً',tr:'arbaʿīna sanah',en:'forty years',fr:'quarante ans'},
+   {w:'رب',n:3,ar:'رَبِّ أَوْزِعْنِي أَنْ أَشْكُرَ نِعْمَتَكَ',tr:'rabbi awziʿnī an ashkura niʿmatak',en:'my Lord, enable me to be grateful for Your favour',fr:'Seigneur, permets-moi de rendre grâce pour Ton bienfait'}],
  draw(f){const{t}=f,sc=i=>f.since(i),grow=sc(3)>0,forty=sc(4)>0,pray=sc(5)>0,kd=eio(clamp(sc(3)/1.6)),kp=eio(clamp(sc(5)/2.4));
    const span3=Math.max(2,(f.ph[4]-f.ph[3])*f.T.speech);
    const mk0=sc(1)<0?0:clamp(sc(1)/2);const Tm=plate('pregnant',{fx:FOC.preg[0],fy:FOC.preg[1],z:1.12+.05*f.p,a:1-kd,bright:1-.3*mk0*(1-kd)});
@@ -328,41 +330,41 @@ const SCENES=[
    if(pray&&PT.dua40){const T=PT.dua40,[mx,my]=at(T,FOC.duaWin[0],FOC.duaWin[1]),[rx,ry]=at(T,FOC.dua[0],FOC.dua[1]);beam(mx,my,Math.atan2(ry-my,rx-mx),.16,Math.hypot(rx-mx,ry-my)*1.4,[255,224,170],kp*(.35+.35*eo(clamp(sc(5)/3))),t);motes(70,41,[Math.min(mx,rx)-U*.2,Math.min(my,ry),Math.max(mx,rx)+U*.2,ry],[255,230,190],.5*kp,t,2)}
    const mk=sc(1)<0?0:clamp(sc(1)/Math.max(2.5,((f.ph[3]-f.ph[1])*f.T.speech)*.85)),MR=Math.min(W*.42,U*1.6),mcx=cx,mcy=cy+U*.85,ma=1-kd;
    for(let i=0;i<30;i++){const vis=clamp(mk*30-i);if(vis<=0)break;const a=Math.PI+.42+(Math.PI-.84)*i/29,x=mcx+Math.cos(a)*MR,y=mcy+Math.sin(a)*MR*.72;crescent(x,y,U*.03*eo(vis)*(1+.15*(1-vis)),i<6?[255,170,160]:[255,214,150],ma*.95)}
-   if(mk>=1&&ma>0){const k=eo(clamp(sc(2)/1.6))*ma;const lab=(i,s)=>{const a=Math.PI+.42+(Math.PI-.84)*i/29;txt(s,mcx+Math.cos(a)*(MR-U*.2),mcy+Math.sin(a)*(MR*.72-U*.14),Math.max(15,U*.08),LF(F_SER),[255,226,200],.85*k)};lab(2.5,L('six months','ستة أشهر'));lab(18,L('two years of nursing','حولان من الرضاعة'))}
-   if(grow){const n=forty?40:Math.floor(40*clamp(sc(3)/span3)),a=forty?(W>820?1:1-kp):kd,x=W>820?cx+U*1.25:cx,y=W>820?cy-U*.2:cy-U*.42,sz=Math.max(42,U*(W>820?(forty?.42:.3):.26));ctx.save();ctx.shadowColor='rgba(0,0,0,.5)';ctx.shadowBlur=24;txt(arNum(n),x,y,sz,F_KUFI,[255,230,186],a*(1-.0*kp));ctx.restore();txt(forty?L('forty years','أربعون سنة'):L('years','سنوات العمر'),x,y+sz*.62,Math.max(16,U*.085),LF(F_SER_I),[255,236,210],.85*a)}}},
-{id:'ages',keys:['30:54'],nav:'قوة وضعف',navEn:'Strength, then weakness',navAr:'قوة ثم ضعف',min:17,pal:{top:[30,24,30],bot:[60,44,40],stars:0,vig:.4},
- phases:[{w:'ضعف',n:1,ar:'ضَعْف',tr:'ḍaʿf',en:'weakness'},{w:'قوة',n:1,ar:'قُوَّة',tr:'quwwah',en:'strength'},
-   {w:'ضعفا',n:2,ar:'ضَعْفًا وَشَيْبَةً',tr:'ḍaʿfan wa shaybah',en:'weakness and white hair',sign:{tag:'The arc of strength',text:'Strength rises from infancy, peaks in early adulthood, then declines: muscle mass falls with age and hair loses its pigment.',ar:{tag:'منحنى القوة',text:'تزداد القوة من الطفولة حتى تبلغ ذروتها في أول الشباب، ثم تتناقص: تقلّ كتلة العضلات مع العمر، ويفقد الشعر لونه.'}}},
-   {w:'يخلق',n:3,ar:'يَخْلُقُ مَا يَشَاءُ',tr:'yakhluqu mā yashāʾ',en:'He creates what He wills'}],
+   if(mk>=1&&ma>0){const k=eo(clamp(sc(2)/1.6))*ma;const lab=(i,s)=>{const a=Math.PI+.42+(Math.PI-.84)*i/29;txt(s,mcx+Math.cos(a)*(MR-U*.2),mcy+Math.sin(a)*(MR*.72-U*.14),Math.max(15,U*.08),LF(F_SER),[255,226,200],.85*k)};lab(2.5,L('six months','ستة أشهر','six mois'));lab(18,L('two years of nursing','حولان من الرضاعة','deux ans d’allaitement'))}
+   if(grow){const n=forty?40:Math.floor(40*clamp(sc(3)/span3)),a=forty?(W>820?1:1-kp):kd,x=W>820?cx+U*1.25:cx,y=W>820?cy-U*.2:cy-U*.42,sz=Math.max(42,U*(W>820?(forty?.42:.3):.26));ctx.save();ctx.shadowColor='rgba(0,0,0,.5)';ctx.shadowBlur=24;txt(arNum(n),x,y,sz,F_KUFI,[255,230,186],a*(1-.0*kp));ctx.restore();txt(forty?L('forty years','أربعون سنة','quarante ans'):L('years','سنوات العمر','ans'),x,y+sz*.62,Math.max(16,U*.085),LF(F_SER_I),[255,236,210],.85*a)}}},
+{id:'ages',keys:['30:54'],nav:'قوة وضعف',navEn:'Strength, then weakness',navFr:'La force, puis la faiblesse',navAr:'قوة ثم ضعف',min:17,pal:{top:[30,24,30],bot:[60,44,40],stars:0,vig:.4},
+ phases:[{w:'ضعف',n:1,ar:'ضَعْف',tr:'ḍaʿf',en:'weakness',fr:'la faiblesse'},{w:'قوة',n:1,ar:'قُوَّة',tr:'quwwah',en:'strength',fr:'la force'},
+   {w:'ضعفا',n:2,ar:'ضَعْفًا وَشَيْبَةً',tr:'ḍaʿfan wa shaybah',en:'weakness and white hair',fr:'la faiblesse et les cheveux blancs',sign:{tag:'The arc of strength',text:'Strength rises from infancy, peaks in early adulthood, then declines: muscle mass falls with age and hair loses its pigment.',fr:{tag:'La courbe de la force',text:'La force croît depuis l’enfance, culmine au début de l’âge adulte, puis décline : la masse musculaire diminue avec l’âge et les cheveux perdent leur pigment.'},ar:{tag:'منحنى القوة',text:'تزداد القوة من الطفولة حتى تبلغ ذروتها في أول الشباب، ثم تتناقص: تقلّ كتلة العضلات مع العمر، ويفقد الشعر لونه.'}}},
+   {w:'يخلق',n:3,ar:'يَخْلُقُ مَا يَشَاءُ',tr:'yakhluqu mā yashāʾ',en:'He creates what He wills',fr:'Il crée ce qu’Il veut'}],
  draw(f){const{t,q}=f,k1=eio(clamp(f.since(1)/2.2)),k2=eio(clamp(f.since(2)/2.6)),k3=eo(clamp(f.since(3)/4));
    plate('infant_hand',{fx:FOC.hand[0],fy:FOC.hand[1],z:1.08+.06*eio(clamp(f.t/8)),a:1-k1});
    if(k1>0)plate('youth',{fx:FOC.youth[0],fy:FOC.youth[1],z:1.1+.06*k1,a:k1*(1-k2),bright:1.05});
    if(k2>0)plate('elder',{fx:FOC.elder[0],fy:FOC.elder[1],z:1.14-.06*eio(clamp(f.since(2)/9)),a:k2,bright:1-.25*k3,sat:1-.4*k3});
    const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'rgba(70,40,110,1)');g.addColorStop(1,'rgba(230,120,70,1)');ctx.save();ctx.globalCompositeOperation='soft-light';ctx.fillStyle=g;al(.35*q);ctx.fillRect(0,0,W,H);ctx.restore();
    if(k2>0&&PT.elder){const[wx,wy]=at(PT.elder,FOC.elderWin[0],FOC.elderWin[1]),[ox,oy]=at(PT.elder,FOC.elder[0],FOC.elder[1]);beam(wx,wy,Math.atan2(oy-wy,ox-wx),.18,Math.hypot(ox-wx,oy-wy)*1.4,[255,196,150],.6*k2*(1-.6*k3),t);motes(60,51,[Math.min(wx,ox)-U*.2,Math.min(wy,oy),Math.max(wx,ox)+U*.2,oy],[255,214,180],.45*k2,t,2)}}},
-{id:'span',keys:['40:67'],nav:'أجل',navEn:'A named term',navAr:'أجل مسمى',min:18,pal:NIGHT,
- phases:[{w:'تراب',n:1,ar:'تُرَاب',tr:'turāb',en:'dust'},{w:'نطفة',n:1,ar:'نُطْفَة',tr:'nuṭfah',en:'a drop'},{w:'علقة',n:1,ar:'عَلَقَة',tr:'ʿalaqah',en:'a clinging thing'},{w:'طفلا',n:1,ar:'طِفْلًا',tr:'ṭiflā',en:'a child'},
-   {w:'اشدكم',n:1,ar:'أَشُدَّكُمْ',tr:'ashuddakum',en:'full strength'},{w:'شيوخا',n:1,ar:'شُيُوخًا',tr:'shuyūkhā',en:'elders'},{w:'يتوفي',n:3,ar:'مَن يُتَوَفَّىٰ مِن قَبْلُ',tr:'man yutawaffā min qabl',en:'some are taken before'},{w:'اجلا',n:2,ar:'أَجَلًا مُّسَمًّى',tr:'ajalan musammā',en:'a term already named'}],
+{id:'span',keys:['40:67'],nav:'أجل',navEn:'A named term',navFr:'Un terme fixé',navAr:'أجل مسمى',min:18,pal:NIGHT,
+ phases:[{w:'تراب',n:1,ar:'تُرَاب',tr:'turāb',en:'dust',fr:'la poussière'},{w:'نطفة',n:1,ar:'نُطْفَة',tr:'nuṭfah',en:'a drop',fr:'une goutte'},{w:'علقة',n:1,ar:'عَلَقَة',tr:'ʿalaqah',en:'a clinging thing',fr:'une chose qui s’accroche'},{w:'طفلا',n:1,ar:'طِفْلًا',tr:'ṭiflā',en:'a child',fr:'un enfant'},
+   {w:'اشدكم',n:1,ar:'أَشُدَّكُمْ',tr:'ashuddakum',en:'full strength',fr:'la pleine force'},{w:'شيوخا',n:1,ar:'شُيُوخًا',tr:'shuyūkhā',en:'elders',fr:'des vieillards'},{w:'يتوفي',n:3,ar:'مَن يُتَوَفَّىٰ مِن قَبْلُ',tr:'man yutawaffā min qabl',en:'some are taken before',fr:'certains meurent plus tôt'},{w:'اجلا',n:2,ar:'أَجَلًا مُّسَمًّى',tr:'ajalan musammā',en:'a term already named',fr:'un terme fixé'}],
  init(s,r){s.o=[...Array(40)].map(()=>{const e=r()<.3;return{lag:r()*1.3,e,at:.4+r()*4.4,w:r()*TAU}})},
  draw(f){const[cy,RB]=ring();const{t,s,p}=f,st=f.phase;plate('family_dusk',{fx:.5,fy:.45,z:1.12+.05*p,bright:.9});
    const R0=Math.min(U*.82,W*.3,RB),NODE=[0,1,2,3,4,5,5.45,6],ang=x=>Math.PI/2+x/6*TAU*.86;
    const tr=st>=7?lerp(5.45,6,eio(clamp(f.since(7)/2))):lerp(NODE[st],NODE[Math.min(st+1,7)],eio(clamp(f.since(st)/2.2)));
    ctx.save();ctx.globalCompositeOperation='screen';ctx.strokeStyle=rgb(GOLD);ctx.lineWidth=1;al(.2);ctx.beginPath();ctx.arc(cx,cy,R0,ang(0),ang(6));ctx.stroke();ctx.filter='blur(2px)';ctx.lineWidth=3;al(.6);ctx.beginPath();ctx.arc(cx,cy,R0,ang(0),ang(tr));ctx.stroke();ctx.filter='none';ctx.lineWidth=1.2;al(.95);ctx.beginPath();ctx.arc(cx,cy,R0,ang(0),ang(tr));ctx.stroke();ctx.restore();
    [0,1,2,3,4,5,7].forEach((pi,ni)=>{const a=ang(ni),x=cx+Math.cos(a)*R0,y=cy+Math.sin(a)*R0,on=tr>=ni-.02,P0=SCENES[9].phases[pi];star(x,y,U*(on?.02:.01),on?[255,220,160]:[160,170,220],on?1:.5);
-     const lx=cx+Math.cos(a)*(R0+U*.22),ly=cy+Math.sin(a)*(R0+U*.17);txt(P0.ar.replace(MARKS,''),lx,ly-6,Math.max(16,U*.085),F_KUFI,on?[255,230,186]:[170,170,200],on?1:.45);if(!isAr())txt(P0.en,lx,ly+U*.075,Math.max(14,U*.064),F_SER_I,[230,224,240],on?.8:.35)});
+     const lx=cx+Math.cos(a)*(R0+U*.22),ly=cy+Math.sin(a)*(R0+U*.17);txt(P0.ar.replace(MARKS,''),lx,ly-6,Math.max(16,U*.085),F_KUFI,on?[255,230,186]:[170,170,200],on?1:.45);if(!isAr())txt(gloss(P0),lx,ly+U*.075,Math.max(14,U*.064),F_SER_I,[230,224,240],on?.8:.35)});
    add();const dep=f.since(6);for(const o of s.o){let pos=clamp(tr-o.lag,0,6);if(o.e)pos=Math.min(pos,o.at);const a=ang(pos);let x=cx+Math.cos(a)*R0,y=cy+Math.sin(a)*R0,a2=.85;
      if(o.e&&dep>0&&pos>=o.at-.01){const k=eio(clamp(dep/3.4));y-=k*U*1.1;x+=Math.sin(o.w+k*4)*U*.05;a2=.85*(1-k);for(let j=1;j<10;j++)glowAt(x,y+j*U*.03*k,U*.02*(1-j/10),[255,226,180],a2*.4*(1-j/10))}glowAt(x,y,U*.05,[255,220,160],a2*.6);glowAt(x,y,U*.012,WHITE,a2)}
    const fin=eo(clamp(f.since(7)/2.5));if(fin>0){const a=ang(6);glowAt(cx+Math.cos(a)*R0,cy+Math.sin(a)*R0,U*.4*fin,GOLD,.45*fin)}norml()}},
-{id:'death',keys:['29:57'],nav:'موت',navEn:'Every soul',navAr:'كل نفس ذائقة الموت',min:15,pal:{top:[4,5,10],bot:[12,12,20],stars:0,vig:.6},
- phases:[{w:'كل',n:2,ar:'كُلُّ نَفْسٍ',tr:'kullu nafs',en:'every soul'},{w:'ذائقة',n:2,ar:'ذَائِقَةُ الْمَوْتِ',tr:'dhāʾiqatu l-mawt',en:'will taste death'},{w:'الينا',n:2,ar:'ثُمَّ إِلَيْنَا تُرْجَعُونَ',tr:'thumma ilaynā turjaʿūn',en:'then to Us you return'}],
+{id:'death',keys:['29:57'],nav:'موت',navEn:'Every soul',navFr:'Toute âme',navAr:'كل نفس ذائقة الموت',min:15,pal:{top:[4,5,10],bot:[12,12,20],stars:0,vig:.6},
+ phases:[{w:'كل',n:2,ar:'كُلُّ نَفْسٍ',tr:'kullu nafs',en:'every soul',fr:'toute âme'},{w:'ذائقة',n:2,ar:'ذَائِقَةُ الْمَوْتِ',tr:'dhāʾiqatu l-mawt',en:'will taste death',fr:'goûtera la mort'},{w:'الينا',n:2,ar:'ثُمَّ إِلَيْنَا تُرْجَعُونَ',tr:'thumma ilaynā turjaʿūn',en:'then to Us you return',fr:'puis vers Nous vous serez ramenés'}],
  draw(f){const{t,p}=f,out=clamp(f.since(1)/2.6),fk=1-.12*Math.max(0,Math.sin(t*17))*Math.sin(t*5.3)-.25*out*Math.abs(Math.sin(t*29)),lit=(1-eio(out))*fk,o={fx:FOC.lamp[0],fy:FOC.lamp[1]+.05,z:1.06+.06*p};
    plate('lamp_dark',o);const T=plate('lamp_lit',{...o,a:clamp(lit)});const[lx,ly]=at(T,FOC.lamp[0],FOC.lamp[1]);
    add();glowAt(lx,ly,U*.5,[255,190,110],.35*lit);norml();
    if(out>0){const fade=Math.max(0,1-Math.max(0,f.since(2))/3);for(let i=0;i<30;i++){const u=((i/30)+t*.08)%1,y=ly-U*.08-u*U*1.2,x=lx+Math.sin(u*5+t*.7+i*.5)*U*.06*u;ctx.fillStyle='rgb(200,204,216)';al(.12*(1-u)*Math.min(1,out*2)*fade);ctx.beginPath();ctx.arc(x,y,U*.012*(1+u*3),0,TAU);ctx.fill()}}
    const rk=eio(clamp(f.since(2)/4.5));if(rk>0){const y=lerp(ly,-U*.3,rk);add();for(let i=1;i<16;i++)glowAt(lx,lerp(ly,-U*.3,eio(clamp(f.since(2)/4.5-i*.012))),U*.035,[220,228,255],.16*(1-i/16));norml();star(lx,y,U*.03,[220,228,255],1-rk*.3)}}},
-{id:'ascent',keys:['89:27','89:28','89:29','89:30'],nav:'رجوع',navEn:'The soul at peace',navAr:'النفس المطمئنة',min:18,pal:{top:[10,14,36],bot:[40,34,70],stars:0,vig:.45},
- phases:[{w:'يايتها',n:3,ar:'يَا أَيَّتُهَا النَّفْسُ الْمُطْمَئِنَّةُ',tr:'yā ayyatuha n-nafsu l-muṭmaʾinnah',en:'O soul at peace'},{w:'ارجعي',n:3,ar:'ارْجِعِي إِلَىٰ رَبِّكِ',tr:'irjiʿī ilā rabbik',en:'return to your Lord'},
-   {w:'فادخلي',n:3,ar:'فَادْخُلِي فِي عِبَادِي',tr:'fadkhulī fī ʿibādī',en:'enter among My servants'},{w:'وادخلي',n:2,ar:'وَادْخُلِي جَنَّتِي',tr:'wadkhulī jannatī',en:'enter My Garden'}],
+{id:'ascent',keys:['89:27','89:28','89:29','89:30'],nav:'رجوع',navEn:'The soul at peace',navFr:'L’âme apaisée',navAr:'النفس المطمئنة',min:18,pal:{top:[10,14,36],bot:[40,34,70],stars:0,vig:.45},
+ phases:[{w:'يايتها',n:3,ar:'يَا أَيَّتُهَا النَّفْسُ الْمُطْمَئِنَّةُ',tr:'yā ayyatuha n-nafsu l-muṭmaʾinnah',en:'O soul at peace',fr:'Ô âme apaisée'},{w:'ارجعي',n:3,ar:'ارْجِعِي إِلَىٰ رَبِّكِ',tr:'irjiʿī ilā rabbik',en:'return to your Lord',fr:'retourne vers ton Seigneur'},
+   {w:'فادخلي',n:3,ar:'فَادْخُلِي فِي عِبَادِي',tr:'fadkhulī fī ʿibādī',en:'enter among My servants',fr:'entre parmi Mes serviteurs'},{w:'وادخلي',n:2,ar:'وَادْخُلِي جَنَّتِي',tr:'wadkhulī jannatī',en:'enter My Garden',fr:'entre dans Mon Paradis'}],
  init(s,r){s.c=[...Array(36)].map((_,i)=>({a:i/36*TAU+r()*.2,r:.25+r()*.35,z:r()}))},
  draw(f){const{t,s}=f,climb=eio(clamp(f.since(0)/Math.max(5,f.ph[3]*f.T.speech))),jk=eio(clamp(f.since(3)/3.6));
    plate('heavens',{fx:.5,fy:lerp(.95,.08,climb),z:1.5,a:1-jk*.85});
@@ -370,9 +372,9 @@ const SCENES=[
    wash([255,236,200],.5*Math.sin(Math.PI*jk),'screen');
    const sy=cy+Math.sin(t*.8)*U*.03;star(cx,sy,U*.04,[255,232,190],1-jk*.5);add();glowAt(cx,sy,U*.5,[255,220,160],.25);
    const gk=f.since(2);if(gk>0)s.c.forEach((c,i)=>{const k=eo(clamp((gk-i*.07)/1.4));if(k<=0)return;const a=c.a+t*.04,x=cx+Math.cos(a)*U*c.r*2*k,y=sy+Math.sin(a)*U*c.r*.8*k;glowAt(x,y,U*.05,[255,236,190],.5*k*(.6+.4*Math.sin(t*2+c.z*9)));glowAt(x,y,U*.01,WHITE,k*(1-jk*.6))});norml()}},
-{id:'earth',keys:['20:55'],nav:'تراب',navEn:'Into the earth, and out again',navAr:'منها خُلقنا وإليها نعود',min:18,pal:{top:[10,12,20],bot:[30,26,24],stars:0,vig:.45},
- phases:[{w:'منها',n:2,ar:'مِنْهَا خَلَقْنَاكُمْ',tr:'minhā khalaqnākum',en:'from it We created you'},{w:'وفيها',n:2,ar:'وَفِيهَا نُعِيدُكُمْ',tr:'wa fīhā nuʿīdukum',en:'and into it We return you'},
-   {w:'ومنها',n:4,ar:'وَمِنْهَا نُخْرِجُكُمْ تَارَةً أُخْرَىٰ',tr:'wa minhā nukhrijukum tāratan ukhrā',en:'and from it We bring you out once more',sign:{tag:'30:19',text:'“He gives life to the earth after its death, and thus you will be brought out.” The Qur’an gives the sprouting seed as the likeness of resurrection.',ar:{tag:'الروم ١٩',text:'«وَيُحْىِ ٱلْأَرْضَ بَعْدَ مَوْتِهَا ۚ وَكَذَٰلِكَ تُخْرَجُونَ». يجعل القرآن إحياء الأرض بالنبات مثلًا للبعث.'}}}],
+{id:'earth',keys:['20:55'],nav:'تراب',navEn:'Into the earth, and out again',navFr:'Retour à la terre, puis résurrection',navAr:'منها خُلقنا وإليها نعود',min:18,pal:{top:[10,12,20],bot:[30,26,24],stars:0,vig:.45},
+ phases:[{w:'منها',n:2,ar:'مِنْهَا خَلَقْنَاكُمْ',tr:'minhā khalaqnākum',en:'from it We created you',fr:'d’elle Nous vous avons créés'},{w:'وفيها',n:2,ar:'وَفِيهَا نُعِيدُكُمْ',tr:'wa fīhā nuʿīdukum',en:'and into it We return you',fr:'et Nous vous y ferons retourner'},
+   {w:'ومنها',n:4,ar:'وَمِنْهَا نُخْرِجُكُمْ تَارَةً أُخْرَىٰ',tr:'wa minhā nukhrijukum tāratan ukhrā',en:'and from it We bring you out once more',fr:'et Nous vous en ferons sortir une autre fois',sign:{tag:'30:19',text:'“He gives life to the earth after its death, and thus you will be brought out.” The Qur’an gives the sprouting seed as the likeness of resurrection.',fr:{tag:'30:19',text:'« Il fait revivre la terre après sa mort. Et c’est ainsi que l’on vous fera sortir. » Le Coran fait de la graine qui germe l’image de la résurrection.'},ar:{tag:'الروم ١٩',text:'«وَيُحْىِ ٱلْأَرْضَ بَعْدَ مَوْتِهَا ۚ وَكَذَٰلِكَ تُخْرَجُونَ». يجعل القرآن إحياء الأرض بالنبات مثلًا للبعث.'}}}],
  init(s,r){s.p=[...Array(420)].map(()=>({x:r(),y:r(),d:r()*.5,w:r()*TAU}));s.rain=[...Array(140)].map(()=>({x:r(),s:.7+r()*.8,o:r(),l:.5+r()}))},
  draw(f){const{t,s,p}=f,k0=eio(clamp(f.since(0)/3)),k1=eio(clamp(f.since(1)/3.2)),k2=eio(clamp(f.since(2)/4.5)),o={fx:FOC.seed[0],fy:FOC.seed[1]-.12,z:1.08+.05*p};
    const T=plate('seed',o);plate('sprout',{...o,a:k2});const[sx,sy]=at(T,FOC.seed[0],FOC.seed[1]),surf=at(T,.5,FOC.surface)[1];
@@ -381,20 +383,20 @@ const SCENES=[
    if(k1>0)star(sx,sy,U*.025*(1+.15*Math.sin(t*2)),[255,214,150],k1*(1-k2*.6));
    const rn=(1-k2)*clamp(1-Math.max(0,f.since(2))/3);if(rn>0){ctx.strokeStyle='rgb(200,214,240)';ctx.lineWidth=1;for(const r of s.rain){const y=((t*r.s*.9+r.o)%1)*surf,x=r.x*W;al(.28*rn);line(x,y,x-2,y+U*.08*r.l)}}
    if(k2>0){add();glowAt(cx,surf-U*.3,U*1.5,[255,224,160],.3*k2);norml()}}},
-{id:'cycle',keys:['2:28'],nav:'حياة',navEn:'Life, death, life',navAr:'موت وحياة',min:16,pal:NIGHT,
- phases:[{w:'كيف',n:3,ar:'كَيْفَ تَكْفُرُونَ بِاللَّهِ',tr:'kayfa takfurūna billāh',en:'how can you deny Allah'},{w:'اموتا',n:1,ar:'أَمْوَاتًا',tr:'amwātā',en:'you were lifeless'},{w:'فاحيكم',n:1,ar:'فَأَحْيَاكُمْ',tr:'fa-aḥyākum',en:'He gave you life'},
-   {w:'يميتكم',n:1,ar:'يُمِيتُكُمْ',tr:'yumītukum',en:'He causes you to die'},{w:'يحييكم',n:1,ar:'يُحْيِيكُمْ',tr:'yuḥyīkum',en:'He gives you life again'},{w:'اليه',n:2,ar:'إِلَيْهِ تُرْجَعُونَ',tr:'ilayhi turjaʿūn',en:'to Him you return'}],
+{id:'cycle',keys:['2:28'],nav:'حياة',navEn:'Life, death, life',navFr:'La vie, la mort, la vie',navAr:'موت وحياة',min:16,pal:NIGHT,
+ phases:[{w:'كيف',n:3,ar:'كَيْفَ تَكْفُرُونَ بِاللَّهِ',tr:'kayfa takfurūna billāh',en:'how can you deny Allah',fr:'comment pouvez-vous renier Allah'},{w:'اموتا',n:1,ar:'أَمْوَاتًا',tr:'amwātā',en:'you were lifeless',fr:'vous étiez sans vie'},{w:'فاحيكم',n:1,ar:'فَأَحْيَاكُمْ',tr:'fa-aḥyākum',en:'He gave you life',fr:'Il vous a donné la vie'},
+   {w:'يميتكم',n:1,ar:'يُمِيتُكُمْ',tr:'yumītukum',en:'He causes you to die',fr:'Il vous fait mourir'},{w:'يحييكم',n:1,ar:'يُحْيِيكُمْ',tr:'yuḥyīkum',en:'He gives you life again',fr:'Il vous redonne la vie'},{w:'اليه',n:2,ar:'إِلَيْهِ تُرْجَعُونَ',tr:'ilayhi turjaʿūn',en:'to Him you return',fr:'vers Lui vous serez ramenés'}],
  draw(f){const[cy,RB]=ring();const{t,p}=f,R0=Math.min(U*.8,W*.29,RB),st=f.phase;plate('void',{fx:.5,fy:.5,z:1.1+.05*p,bright:1.1});let tr=0;if(st>=2)tr=Math.min(3,(st-2)+eio(clamp(f.since(st)/1.8)));if(st>=5)tr=3;
    const toC=eio(clamp(f.since(5)/2.6)),a=Math.PI/2+tr*Math.PI/2,ap=f.since(1)>0?eo(clamp(f.since(1)/1.2)):0;
    ctx.save();ctx.globalCompositeOperation='screen';ctx.strokeStyle=rgb(GOLD);ctx.lineWidth=1;al(.2);ctx.beginPath();ctx.arc(cx,cy,R0,0,TAU);ctx.stroke();if(tr>0){ctx.filter='blur(2px)';ctx.lineWidth=3;al(.6);ctx.beginPath();ctx.arc(cx,cy,R0,Math.PI/2,a);ctx.stroke();ctx.filter='none';ctx.lineWidth=1.2;al(1);ctx.beginPath();ctx.arc(cx,cy,R0,Math.PI/2,a);ctx.stroke()}ctx.restore();
    [[Math.PI/2,1],[Math.PI,2],[Math.PI*1.5,3],[0,4]].forEach(([an,pi])=>{const x=cx+Math.cos(an)*R0,y=cy+Math.sin(an)*R0,on=st>=pi,P0=SCENES[13].phases[pi];star(x,y,U*(on?.022:.01),on?[255,220,160]:[160,170,220],on?1:.5);
-     const lx=cx+Math.cos(an)*(R0+U*.26),ly=cy+Math.sin(an)*(R0+U*.16);txt(P0.ar.replace(MARKS,''),lx,ly-6,Math.max(17,U*.09),F_KUFI,on?[255,230,186]:[170,170,200],on?1:.45);if(!isAr())txt(P0.en,lx,ly+U*.08,Math.max(14,U*.064),F_SER_I,[230,224,240],on?.8:.35)});
+     const lx=cx+Math.cos(an)*(R0+U*.26),ly=cy+Math.sin(an)*(R0+U*.16);txt(P0.ar.replace(MARKS,''),lx,ly-6,Math.max(17,U*.09),F_KUFI,on?[255,230,186]:[170,170,200],on?1:.45);if(!isAr())txt(gloss(P0),lx,ly+U*.08,Math.max(14,U*.064),F_SER_I,[230,224,240],on?.8:.35)});
    const px=lerp(cx+Math.cos(a)*R0,cx,toC),py=lerp(cy+Math.sin(a)*R0,cy,toC);if(ap>0)star(px,py,U*.035,[255,226,170],ap);
    if(toC>0){halo(cx,cy,U*.6,toC,t*.03,GOLD,.6*toC);add();glowAt(cx,cy,U*.9*toC,GOLD,.25*toC);norml()}}},
-{id:'truth',keys:['41:53'],nav:'الحق',navEn:'It is the truth',navAr:'إنه الحق',min:22,pal:NIGHT,
- phases:[{w:'سنريهم',n:2,ar:'سَنُرِيهِمْ آيَاتِنَا',tr:'sanurīhim āyātinā',en:'We will show them Our signs'},{w:'افاق',n:1,ar:'فِي الْآفَاقِ',tr:'fi l-āfāq',en:'in the horizons'},{w:'انفسهم',n:1,ar:'وَفِي أَنفُسِهِمْ',tr:'wa fī anfusihim',en:'and within themselves'},
-   {w:'انه',n:2,ar:'أَنَّهُ الْحَقُّ',tr:'annahu l-ḥaqq',en:'that it is the truth',sign:{tag:'Fourteen centuries',text:'Clay, drop, clinging form, chewed lump, bones, flesh, a new creation: these stages were recited in seventh-century Mecca, centuries before modern embryology.',ar:{tag:'أربعة عشر قرنًا',text:'طين، فنطفة، فعلقة، فمضغة، فعظام، فلحم، فخلق آخر: أطوار وصفتها آيات تُليت في مكة في القرن السابع الميلادي، قبل ظهور علم الأجنة الحديث بقرون.'}}},
-   {w:'شهيد',n:1,ar:'عَلَىٰ كُلِّ شَيْءٍ شَهِيدٌ',tr:'ʿalā kulli shayʾin shahīd',en:'over all things, a Witness'}],
+{id:'truth',keys:['41:53'],nav:'الحق',navEn:'It is the truth',navFr:'C’est la vérité',navAr:'إنه الحق',min:22,pal:NIGHT,
+ phases:[{w:'سنريهم',n:2,ar:'سَنُرِيهِمْ آيَاتِنَا',tr:'sanurīhim āyātinā',en:'We will show them Our signs',fr:'Nous leur montrerons Nos signes'},{w:'افاق',n:1,ar:'فِي الْآفَاقِ',tr:'fi l-āfāq',en:'in the horizons',fr:'dans l’univers'},{w:'انفسهم',n:1,ar:'وَفِي أَنفُسِهِمْ',tr:'wa fī anfusihim',en:'and within themselves',fr:'et en eux-mêmes'},
+   {w:'انه',n:2,ar:'أَنَّهُ الْحَقُّ',tr:'annahu l-ḥaqq',en:'that it is the truth',fr:'que c’est la vérité',sign:{tag:'Fourteen centuries',text:'Clay, drop, clinging form, chewed lump, bones, flesh, a new creation: stages described in verses recited in seventh-century Mecca, centuries before modern embryology.',fr:{tag:'Quatorze siècles',text:'Argile, goutte, chose qui s’accroche, masse mâchée, os, chair, une tout autre création : des stades décrits par des versets récités à La Mecque au VIIe siècle, des siècles avant l’embryologie moderne.'},ar:{tag:'أربعة عشر قرنًا',text:'طين، فنطفة، فعلقة، فمضغة، فعظام، فلحم، فخلق آخر: أطوار وصفتها آيات تُليت في مكة في القرن السابع الميلادي، قبل ظهور علم الأجنة الحديث بقرون.'}}},
+   {w:'شهيد',n:1,ar:'عَلَىٰ كُلِّ شَيْءٍ شَهِيدٌ',tr:'ʿalā kulli shayʾin shahīd',en:'over all things, a Witness',fr:'témoin de toute chose'}],
  draw(f){const{t,p}=f,hz=eo(clamp(f.since(1)/3)),inn=eo(clamp(f.since(2)/3)),tru=eo(clamp(f.since(3)/3.6));
    ctx.save();ctx.translate(cx,cy);ctx.rotate(t*.012);ctx.translate(-cx,-cy);plate('galaxy',{fx:.5,fy:.5,z:lerp(1.6,1.15,eio(clamp(p*1.3))),bright:.55+.5*hz});ctx.restore();
    if(inn>0){add();glowAt(cx,cy,U*.9,[255,200,170],.3*inn);norml();subject('fetus',inn,t,U*1.7*(.9+.1*inn))}
@@ -418,12 +420,16 @@ for(const sc of SCENES){
 // ───────────────────────── audio: quran.com reciters carry word timestamps
 const LANGS={en:{title:'Signs Within Yourselves',sub:'The human cycle in the Qur’an, from dust to resurrection, in fifteen passages. Painted scenes and live light follow each recited word, and each stage in the womb sits beside what embryology found centuries later.',
   alt1:'Begin with the recitation of ',alt2:', or ',silent:'watch in silence',alt3:'.',fine:'Space pauses, the arrow keys move between passages, F is fullscreen. Headphones help.',again:'Watch again',
-  recOn:'Recitation on',recOff:'Recitation off',fail:'The recitation could not load, so the film continues in silence.',other:'العربية',doc:'Signs Within Yourselves · The Human Cycle in the Qur’an'},
+  recOn:'Recitation on',recOff:'Recitation off',fail:'The recitation could not load, so the film continues in silence.',doc:'Signs Within Yourselves · The Human Cycle in the Qur’an',
+  q1i:'“And in yourselves. Then will you not see?” (51:21)',q1e:'“We will show them Our signs in the horizons and within themselves until it becomes clear to them that it is the truth.” (41:53)'},
  ar:{title:'آيات في أنفسكم',sub:'دورة حياة الإنسان في القرآن، من التراب إلى البعث، في خمسة عشر مقطعًا. ترافق المشاهد المرسومة وحركة الضوء كل كلمة تُتلى، ويُعرض كل طور من أطوار الجنين إلى جانب ما توصل إليه علم الأجنة بعد قرون.',
   alt1:'ابدأ بتلاوة ',alt2:'، أو ',silent:'شاهد دون صوت',alt3:'.',fine:'مفتاح المسافة للإيقاف المؤقت، والسهمان للتنقل بين المقاطع، ومفتاح F لملء الشاشة. يُنصح بسماعات الرأس.',again:'شاهد من جديد',
-  recOn:'مع التلاوة',recOff:'دون تلاوة',fail:'تعذّر تحميل التلاوة، فيستمر الفيلم دون صوت.',other:'English',doc:'آيات في أنفسكم · دورة حياة الإنسان في القرآن'}};
+  recOn:'مع التلاوة',recOff:'دون تلاوة',fail:'تعذّر تحميل التلاوة، فيستمر الفيلم دون صوت.',q1i:'',q1e:'',doc:'آيات في أنفسكم · دورة حياة الإنسان في القرآن'},
+ fr:{title:'Les signes en vous-mêmes',sub:'Le cycle de la vie humaine dans le Coran, de la poussière à la résurrection, en quinze passages. Les scènes peintes et la lumière suivent chaque mot récité. Les passages sur le développement dans le ventre maternel sont mis en regard des connaissances de l’embryologie moderne.',alt1:'Commencer avec la récitation de ',alt2:', ou ',silent:'regarder sans le son',alt3:'.',fine:'La barre d’espace met en pause, les touches fléchées changent de passage et la touche F active le plein écran. Un casque est recommandé.',again:'Revoir',recOn:'Avec récitation',recOff:'Sans récitation',fail:'La récitation n’a pas pu être chargée, le film continue sans le son.',doc:'Les signes en vous-mêmes · Le cycle humain dans le Coran',q1i:'« Et en vous-mêmes. N’observez-vous donc pas ? » (51:21)',q1e:'« Nous leur montrerons Nos signes dans l’univers et en eux-mêmes, jusqu’à ce qu’il leur devienne évident que c’est la vérité. » (41:53)'}};
 let LANG=localStorage.getItem('signs.lang')||'ar';
-const tr=k=>LANGS[LANG][k],isAr=()=>LANG==='ar',LF=f=>isAr()?'"Amiri",serif':f,L=(en,ar)=>isAr()?ar:en;
+if(!LANGS[LANG])LANG='ar';
+const tr=k=>LANGS[LANG][k],isAr=()=>LANG==='ar',isFr=()=>LANG==='fr',LF=f=>isAr()?'"Amiri",serif':f,L=(en,ar,fr)=>isAr()?ar:isFr()&&fr!=null?fr:en,gloss=P=>isFr()&&P.fr?P.fr:P.en;
+const LNAME={ar:'العربية',fr:'Français',en:'English'};
 const QARI_AR={qc7:'مشاري العفاسي',qc6:'محمود خليل الحصري',qc9:'محمد صديق المنشاوي',qc2:'عبد الباسط عبد الصمد',MaherAlMuaiqly128kbps:'ماهر المعيقلي'};
 const QARIS=[['qc7','Mishary Alafasy'],['qc6','Mahmoud Khalil Al-Husary'],['qc9','Muhammad Siddiq Al-Minshawi'],['qc2','Abdul Basit Abdul Samad'],['MaherAlMuaiqly128kbps','Maher Al-Muaiqly']];
 let qari=localStorage.getItem('signs.qari2')||'qc7',recite=true;
@@ -473,15 +479,15 @@ function showVerse(){const v=$('#verse'),sc=R.sc,my=++vTok;v.classList.remove('o
   setTimeout(()=>{if(my!==vTok)return;v.classList.toggle('long',sc.long);v.querySelector('.ar').innerHTML=sc.html;v.querySelector('.ref').textContent=isAr()?sc.refAr:sc.ref;
     void v.offsetWidth;v.classList.add('on');R.ayk=-1;R.say=-1;applyHL()},420)}
 function applyHL(){document.querySelectorAll('#verse .w.hl').forEach(e=>e.classList.remove('hl'));const p=R.sc.ph[Math.max(0,R.phase)];if(!p||p.g<0)return;for(let j=0;j<p.n;j++){const e=document.getElementById(`w-${R.sc.id}-${p.g+j}`);if(e)e.classList.add('hl')}}
-function onPhase(){const sc=R.sc,P=sc.phases[R.phase],L=$('#label');L.classList.add('out');clearTimeout(lTm);lTm=setTimeout(()=>{if(R.sc!==sc)return;L.querySelector('.ar').textContent=P.ar.replace(MARKS,'');L.querySelector('.tr').textContent=P.tr||'';L.querySelector('.en').textContent=P.en||'';L.classList.remove('out')},380);
-  applyHL();if(P.sign){const S=$('#sign');hideSign();sTm=setTimeout(()=>{if(R.sc!==sc)return;const G=isAr()&&P.sign.ar?P.sign.ar:P.sign;S.querySelector('.tag span').textContent=G.tag;S.querySelector('.tx').textContent=G.text;S.classList.add('on');const a=S.getBoundingClientRect(),b=$('#verse .ar').getBoundingClientRect();document.body.classList.toggle('signon',b.height>0&&a.bottom>b.top+4);
+function onPhase(){const sc=R.sc,P=sc.phases[R.phase],L=$('#label');L.classList.add('out');clearTimeout(lTm);lTm=setTimeout(()=>{if(R.sc!==sc)return;L.querySelector('.ar').textContent=P.ar.replace(MARKS,'');L.querySelector('.tr').textContent=P.tr||'';L.querySelector('.en').textContent=gloss(P)||'';L.classList.remove('out')},380);
+  applyHL();if(P.sign){const S=$('#sign');hideSign();sTm=setTimeout(()=>{if(R.sc!==sc)return;const G=isAr()&&P.sign.ar?P.sign.ar:isFr()&&P.sign.fr?P.sign.fr:P.sign;S.querySelector('.tag span').textContent=G.tag;S.querySelector('.tx').textContent=G.text;S.classList.add('on');const a=S.getBoundingClientRect(),b=$('#verse .ar').getBoundingClientRect();document.body.classList.toggle('signon',b.height>0&&a.bottom>b.top+4);
     // film time, so a paused film keeps the card: it leaves at the first phase change after a skim read, or after a full read
     const words=G.text.split(/\s+/).length;SG={age:0,min:Math.max(4.5,words*.17),max:Math.max(7,words*.3),ph:R.phase}},520)}
   else if(SG&&SG.ph!==R.phase)SG.moved=true}
 let SG=null;
 function signTick(dt){if(!SG)return;SG.age+=dt;if(SG.age>=SG.max||(SG.moved&&SG.age>=SG.min))hideSign()}
 function hideSign(){clearTimeout(sTm);SG=null;$('#sign').classList.remove('on');document.body.classList.remove('signon')}
-function buildNav(){const nav=$('#path');SCENES.forEach((sc,i)=>{const b=document.createElement('button');b.title=`${L(sc.navEn,sc.navAr)}, ${sc.keys[0]}`;b.innerHTML=`<svg viewBox="-6 -6 12 12"><path d="M0-5 5 0 0 5-5 0Z" fill="none" stroke="currentColor" stroke-width="1" style="color:var(--gold)"/></svg><span class="l">${sc.nav}</span>`;b.onclick=()=>{if(!started)begin(recite);enter(i);setPaused(false)};nav.appendChild(b)})}
+function buildNav(){const nav=$('#path');SCENES.forEach((sc,i)=>{const b=document.createElement('button');b.title=`${L(sc.navEn,sc.navAr,sc.navFr)}, ${sc.keys[0]}`;b.innerHTML=`<svg viewBox="-6 -6 12 12"><path d="M0-5 5 0 0 5-5 0Z" fill="none" stroke="currentColor" stroke-width="1" style="color:var(--gold)"/></svg><span class="l">${sc.nav}</span>`;b.onclick=()=>{if(!started)begin(recite);enter(i);setPaused(false)};nav.appendChild(b)})}
 function updateNav(){document.querySelectorAll('#path button').forEach((b,i)=>{b.classList.toggle('cur',i===R.i);b.classList.toggle('done',i<R.i)});const c=document.querySelectorAll('#path button')[R.i];if(c)c.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'})}
 let tTm=0;function toast(m){const e=$('#toast');e.textContent=m;e.classList.add('on');clearTimeout(tTm);tTm=setTimeout(()=>e.classList.remove('on'),3800)}
 
@@ -520,16 +526,16 @@ let idleT=0;const wake=()=>{document.body.classList.remove('idle');clearTimeout(
 $('#introAr').textContent=AYAT['51:21'].ar;
 const keyRef=s=>s.keys.length>1?s.keys[0]+'–'+s.keys[s.keys.length-1].split(':')[1]:s.keys[0];
 function applyLang(){document.documentElement.lang=LANG;document.body.classList.toggle('lang-ar',isAr());document.title=tr('doc');
-  document.querySelectorAll('[data-t]').forEach(e=>{e.textContent=tr(e.dataset.t)});$('#langI').textContent=$('#bLang').textContent=tr('other');
+  document.querySelectorAll('[data-t]').forEach(e=>{e.textContent=tr(e.dataset.t)});$('#sLang').value=LANG;$('#langI').innerHTML=Object.keys(LNAME).filter(k=>k!==LANG).map(k=>`<button data-l="${k}" lang="${k}">${LNAME[k]}</button>`).join('');
   document.querySelectorAll('#sQari option,#sQari0 option').forEach(o=>{o.textContent=isAr()?QARI_AR[o.value]:o.dataset.en});
   $('#bRec').textContent=tr(recite?'recOn':'recOff');
   // an Arabic reader gets the whole of 41:53 instead of its translation
   $('#endAr').textContent=isAr()?AYAT['41:53'].ar:AYAT['41:53'].ar.split(' ').slice(0,6).join(' ');
-  $('#endList').innerHTML=SCENES.map(s=>isAr()?`${s.navAr}، <span dir="ltr">${arNum(keyRef(s))}</span>`:`${s.navEn}, ${keyRef(s)}`).join('<br>');
-  document.querySelectorAll('#path button').forEach((b,i)=>{b.title=`${L(SCENES[i].navEn,SCENES[i].navAr)}, ${SCENES[i].keys[0]}`});
+  $('#endList').innerHTML=SCENES.map(s=>isAr()?`${s.navAr}، <span dir="ltr">${arNum(keyRef(s))}</span>`:`${L(s.navEn,s.navAr,s.navFr)}, ${keyRef(s)}`).join('<br>');
+  document.querySelectorAll('#path button').forEach((b,i)=>{b.title=`${L(SCENES[i].navEn,SCENES[i].navAr,SCENES[i].navFr)}, ${SCENES[i].keys[0]}`});
   if(started&&R&&!ended){showVerse();onPhase()}}
-const flipLang=()=>{LANG=isAr()?'en':'ar';localStorage.setItem('signs.lang',LANG);applyLang()};
-$('#bLang').onclick=flipLang;$('#langI').onclick=flipLang;
+const setLang=l=>{LANG=l;localStorage.setItem('signs.lang',LANG);applyLang()};
+$('#sLang').onchange=e=>setLang(e.target.value);$('#langI').onclick=e=>{const b=e.target.closest('button');if(b)setLang(b.dataset.l)};
 ['500 20px "Reem Kufi"','italic 20px Alegreya','20px Alegreya','20px "Alegreya Sans"'].forEach(f=>document.fonts.load(f));
 buildNav();applyLang();loadPlates(fr=>{$('#go').style.opacity=.35+.65*fr});requestAnimationFrame(frame);
 window.__signs={SCENES,get R(){return R},enter,setPaused,seek(i,q){if(!started)begin(false);enter(i);fade=null;R.t=LEAD+q*R.T.speech;paused=false;update(0);setPaused(true)},play(ms){setPaused(false);setTimeout(()=>setPaused(true),ms)}};
